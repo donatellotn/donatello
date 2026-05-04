@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://donatellotn.github.io/donatello/sitemap.xml
