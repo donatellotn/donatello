@@ -168,16 +168,6 @@ const FoodCard = memo(({ item, onClick, trDetails }: { item: MenuItem; onClick: 
 // ── Local / GitHub Pages URL ──
 const MENU_RAW_URL = import.meta.env.BASE_URL + 'menu-data.html';
 
-function getTranslatedCategory(cat: string, tr: (k: string) => string) {
-  if (cat.includes("Boisson chaude")) return tr('cat_boisson_chaude');
-  if (cat.includes("Boisson fraîche")) return tr('cat_boisson_fraiche');
-  if (cat.includes("Viennoiserie")) return tr('cat_viennoiseries');
-  if (cat.includes("Gâteaux")) return tr('cat_gateaux');
-  if (cat.includes("Plats")) return tr('cat_plats');
-  if (cat.includes("Autres")) return tr('cat_autres');
-  return cat;
-}
-
 const MenuPage = () => {
   const [plats, setPlats] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -186,6 +176,13 @@ const MenuPage = () => {
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [, startTransition] = useTransition();
   const { tr, lang } = useLang();
+
+  // Dynamic category translator using embedded database fields
+  const getCategoryLabel = useCallback((cat: string) => {
+    if (lang !== 'en') return cat;
+    const item = plats.find(p => p.category === cat);
+    return item?.category_en || cat;
+  }, [lang, plats]);
 
   // Create a language-aware copy of items
   const displayedPlats = plats.map(p => {
@@ -333,7 +330,7 @@ const MenuPage = () => {
                     ),
                   }}
                 >
-                  {getTranslatedCategory(cat, tr)}
+                  {getCategoryLabel(cat)}
                 </button>
               ))}
             </div>
@@ -421,7 +418,7 @@ const MenuPage = () => {
                   </span>
                 </div>
                 <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.72rem', color: '#A68A6D', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginBottom: '12px' }}>
-                  {getTranslatedCategory(selectedItem.category, tr)}
+                  {getCategoryLabel(selectedItem.category)}
                 </p>
                 {selectedItem.description && (
                   <p style={{ fontFamily: '"Merriweather",serif', fontSize: '0.9rem', color: 'rgba(58,42,34,0.6)', lineHeight: 1.8, fontWeight: 300, marginBottom: '24px' }}>

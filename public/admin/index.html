@@ -807,12 +807,12 @@
         <input type="hidden" id="item-index" />
         <div class="form-row">
           <div class="form-group">
-            <label>Nom du plat (FR) *</label>
-            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" />
+            <label>Nom du plat (FR) * <span id="f-title-spinner" style="display:none;font-size:11px;">🤖...</span></label>
+            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" onblur="handleAutoTranslate('f-title', 'f-title-en', 'fr', 'en', 'f-title-spinner')" />
           </div>
           <div class="form-group">
-            <label>Nom du plat (EN)</label>
-            <input type="text" id="f-title-en" placeholder="Ex: Donatello Cappuccino" />
+            <label>Nom du plat (EN) <span id="f-title-en-spinner" style="display:none;font-size:11px;">🤖...</span></label>
+            <input type="text" id="f-title-en" placeholder="Ex: Donatello Cappuccino" onblur="handleAutoTranslate('f-title-en', 'f-title', 'en', 'fr', 'f-title-en-spinner')" />
           </div>
           <div class="form-group">
             <label>Prix (DT) *</label>
@@ -842,12 +842,12 @@
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Description (FR)</label>
-            <textarea id="f-description" placeholder="Description courte du plat..."></textarea>
+            <label>Description (FR) <span id="f-desc-spinner" style="display:none;font-size:11px;">🤖...</span></label>
+            <textarea id="f-description" placeholder="Description courte du plat..." onblur="handleAutoTranslate('f-description', 'f-description-en', 'fr', 'en', 'f-desc-spinner')"></textarea>
           </div>
           <div class="form-group">
-            <label>Description (EN)</label>
-            <textarea id="f-description-en" placeholder="Short description of the dish..."></textarea>
+            <label>Description (EN) <span id="f-desc-en-spinner" style="display:none;font-size:11px;">🤖...</span></label>
+            <textarea id="f-description-en" placeholder="Short description of the dish..." onblur="handleAutoTranslate('f-description-en', 'f-description', 'en', 'fr', 'f-desc-en-spinner')"></textarea>
           </div>
         </div>
         <div class="modal-actions">
@@ -1047,6 +1047,7 @@
         menuItems.push({
           id: div.id,
           category: div.getAttribute('data-category') || '',
+          category_en: div.getAttribute('data-category-en') || '',
           title: div.querySelector('.item-title')?.textContent || '',
           title_en: div.querySelector('.item-title-en')?.textContent || '',
           price: parseFloat(div.querySelector('.item-price')?.textContent) || 0,
@@ -1072,9 +1073,10 @@
         const safeDescEn = escapeHTML(item.description_en || '');
         const safeImage = escapeHTML(item.image || '');
         const safeCategory = escapeHTML(item.category || '');
+        const safeCategoryEn = escapeHTML(item.category_en || '');
         const price = typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0;
 
-        lines.push(`  <div id="${item.id}" class="menu-item" data-category="${safeCategory}">`);
+        lines.push(`  <div id="${item.id}" class="menu-item" data-category="${safeCategory}" data-category-en="${safeCategoryEn}">`);
         lines.push(`    <img src="${safeImage}" alt="${safeTitle}" class="item-image" />`);
         lines.push(`    <h3 class="item-title">${safeTitle}</h3>`);
         if (safeTitleEn) lines.push(`    <h3 class="item-title-en" style="display:none;">${safeTitleEn}</h3>`);
@@ -1371,8 +1373,14 @@
     function saveItem(e) {
       e.preventDefault();
       const idxStr = document.getElementById('item-index').value;
+      
+      const selectedCatFr = document.getElementById('f-category').value;
+      const cats = getCategories();
+      const catObj = cats.find(c => c.fr === selectedCatFr) || { fr: selectedCatFr, en: selectedCatFr };
+
       const newData = {
-        category: document.getElementById('f-category').value,
+        category: catObj.fr,
+        category_en: catObj.en,
         title: document.getElementById('f-title').value.trim(),
         title_en: document.getElementById('f-title-en').value.trim(),
         price: parseFloat(document.getElementById('f-price').value),
@@ -1531,22 +1539,55 @@
     }
 
     // ══════════════════════════════════════════
+    // ██  AUTO-TRANSLATE API                  ██
+    // ══════════════════════════════════════════
+    async function autoTranslateAPI(text, targetLang) {
+      if (!text) return '';
+      try {
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        return data[0].map(x => x[0]).join('');
+      } catch (e) {
+        console.error('Translation error', e);
+        return text;
+      }
+    }
+
+    async function handleAutoTranslate(sourceId, targetId, targetLang, spinnerId) {
+      const sourceEl = document.getElementById(sourceId);
+      const targetEl = document.getElementById(targetId);
+      const spinnerEl = document.getElementById(spinnerId);
+      
+      const text = sourceEl.value.trim();
+      if (!text || targetEl.value.trim()) return; // Skip if empty or target already has text
+      
+      if (spinnerEl) spinnerEl.style.display = 'inline';
+      const translated = await autoTranslateAPI(text, targetLang);
+      targetEl.value = translated;
+      if (spinnerEl) spinnerEl.style.display = 'none';
+    }
+
+    // ══════════════════════════════════════════
     // ██  CATEGORY MANAGEMENT                 ██
     // ══════════════════════════════════════════
 
     const DEFAULT_CATEGORIES = [
-      "☕ Boisson chaude",
-      "🧃 Boisson fraîche",
-      "🥐 Viennoiseries",
-      "🍰 Gâteaux et tartes",
-      "🍽️ Plats",
-      "✨ Autres"
+      { fr: "☕ Boisson chaude", en: "☕ Hot Drinks" },
+      { fr: "🧃 Boisson fraîche", en: "🧃 Cold Drinks" },
+      { fr: "🥐 Viennoiseries", en: "🥐 Pastries" },
+      { fr: "🍰 Gâteaux et tartes", en: "🍰 Cakes & Tarts" },
+      { fr: "🍽️ Plats", en: "🍽️ Dishes" },
+      { fr: "✨ Autres", en: "✨ Others" }
     ];
 
     function getCategories() {
       const saved = localStorage.getItem('donatello_categories');
       if (saved) {
-        try { return JSON.parse(saved); } catch(e) {}
+        try { 
+          const parsed = JSON.parse(saved);
+          return parsed.map(c => typeof c === 'string' ? { fr: c, en: c } : c);
+        } catch(e) {}
       }
       return [...DEFAULT_CATEGORIES];
     }
@@ -1561,10 +1602,10 @@
       if (!select) return;
       const currentVal = select.value;
       select.innerHTML = '<option value="">-- Choisir --</option>';
-      getCategories().forEach(cat => {
+      getCategories().forEach(catObj => {
         const opt = document.createElement('option');
-        opt.value = cat;
-        opt.textContent = cat;
+        opt.value = catObj.fr;
+        opt.textContent = catObj.fr;
         select.appendChild(opt);
       });
       if (currentVal) select.value = currentVal;
@@ -1584,45 +1625,61 @@
       const list = document.getElementById('category-list');
       const cats = getCategories();
       list.innerHTML = '';
-      cats.forEach((cat, i) => {
+      cats.forEach((catObj, i) => {
         const row = document.createElement('div');
         row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--cream);border:1px solid var(--border);border-radius:10px;';
         row.innerHTML = `
-          <span style="flex:1;font-size:14px;font-weight:500">${cat}</span>
+          <div style="flex:1;display:flex;flex-direction:column;gap:2px;">
+            <span style="font-size:14px;font-weight:500">${catObj.fr}</span>
+            <span style="font-size:12px;color:var(--text-muted)">${catObj.en}</span>
+          </div>
           <button class="btn btn-danger btn-sm" onclick="removeCategory(${i})" title="Supprimer">✕</button>
         `;
         list.appendChild(row);
       });
     }
 
-    function addCategory() {
+    async function addCategory() {
       const input = document.getElementById('new-cat-input');
       const val = input.value.trim();
       if (!val) return;
+      
+      const btn = event.target;
+      const origText = btn.textContent;
+      btn.textContent = '🤖...';
+      btn.disabled = true;
+
+      const enVal = await autoTranslateAPI(val, 'en');
+
       const cats = getCategories();
-      if (cats.includes(val)) {
+      if (cats.some(c => c.fr === val)) {
         toast('⚠️ Cette catégorie existe déjà', 'error');
+        btn.textContent = origText;
+        btn.disabled = false;
         return;
       }
-      cats.push(val);
+      cats.push({ fr: val, en: enVal });
       saveCategories(cats);
       input.value = '';
       renderCategoryList();
       toast(`✅ Catégorie "${val}" ajoutée`);
+      
+      btn.textContent = origText;
+      btn.disabled = false;
     }
 
     function removeCategory(index) {
       const cats = getCategories();
       const removed = cats[index];
       // Check if any items use this category
-      const itemsUsingCat = menuItems.filter(item => item.category === removed);
+      const itemsUsingCat = menuItems.filter(item => item.category === removed.fr);
       if (itemsUsingCat.length > 0) {
-        if (!confirm(`⚠️ ${itemsUsingCat.length} plat(s) utilisent "${removed}". Supprimer quand même ?`)) return;
+        if (!confirm(`⚠️ ${itemsUsingCat.length} plat(s) utilisent "${removed.fr}". Supprimer quand même ?`)) return;
       }
       cats.splice(index, 1);
       saveCategories(cats);
       renderCategoryList();
-      toast(`Catégorie "${removed}" supprimée`);
+      toast(`Catégorie "${removed.fr}" supprimée`);
     }
 
     function saveCategoriesAndClose() {
@@ -1636,7 +1693,7 @@
       const container = document.getElementById('filter-tabs');
       const cats = getCategories();
       const usedCats = new Set(menuItems.map(i => i.category));
-      const allCats = ['all', ...cats.filter(c => usedCats.has(c))];
+      const allCats = ['all', ...cats.filter(c => usedCats.has(c.fr)).map(c => c.fr)];
       container.innerHTML = allCats.map(c =>
         `<button class="filter-tab${activeFilter === c ? ' active' : ''}" onclick="filterBy('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tous' : c}</button>`
       ).join('');
