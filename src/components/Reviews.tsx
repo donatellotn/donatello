@@ -20,7 +20,7 @@ const reviews = [
 ];
 
 const StarIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '18px', height: '18px', color: '#B45309' }}>
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '18px', height: '18px', color: '#C15C3D' }}>
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
   </svg>
 );
@@ -40,7 +40,7 @@ export const Reviews = () => {
   return (
     <section
       id="testimonials"
-      style={{ background: '#F5E6D3', padding: '100px 0', position: 'relative', overflow: 'hidden' }}
+      style={{ background: '#F8F5F0', padding: '100px 0', position: 'relative', overflow: 'hidden' }}
     >
       {/* Big decorative quote */}
       <div
@@ -51,7 +51,7 @@ export const Reviews = () => {
           transform: 'translateX(-50%)',
           fontSize: '16rem',
           fontFamily: '"Abril Fatface",serif',
-          color: '#B45309',
+          color: '#C15C3D',
           opacity: 0.05,
           lineHeight: 1,
           pointerEvents: 'none',
@@ -106,7 +106,7 @@ export const Reviews = () => {
                   fontFamily: '"Merriweather",serif',
                   fontSize: '1.05rem',
                   fontStyle: 'italic',
-                  color: '#44280B',
+                  color: '#4A3424',
                   lineHeight: 1.9,
                   marginBottom: '24px',
                   fontWeight: 300,
@@ -120,7 +120,7 @@ export const Reviews = () => {
                   fontFamily: '"Inter",sans-serif',
                   fontWeight: 600,
                   fontSize: '0.82rem',
-                  color: '#9A7B5A',
+                  color: '#A68A6D',
                   letterSpacing: '1px',
                   textTransform: 'uppercase',
                 }}
@@ -143,7 +143,7 @@ export const Reviews = () => {
                 width: current === i ? '24px' : '8px',
                 height: '8px',
                 borderRadius: current === i ? '4px' : '50%',
-                background: '#B45309',
+                background: '#C15C3D',
                 opacity: current === i ? 1 : 0.2,
                 border: 'none',
               }}

@@ -19,7 +19,7 @@ export const OurStory = () => {
   return (
     <section
       id="about"
-      style={{ background: '#F5E6D3', padding: '120px 0', overflow: 'hidden' }}
+      style={{ background: '#F8F5F0', padding: '120px 0', overflow: 'hidden' }}
     >
       <div className="max-w-[1140px] mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-[5fr_6fr] gap-20 items-center">
@@ -44,7 +44,7 @@ export const OurStory = () => {
             {/* Accent border */}
             <div
               className="absolute -bottom-5 -right-5 w-[120px] h-[120px] rounded-xl -z-10"
-              style={{ border: '3px solid #B45309' }}
+              style={{ border: '3px solid #C15C3D' }}
             />
           </motion.div>
 
@@ -61,15 +61,15 @@ export const OurStory = () => {
               style={{
                 fontFamily: '"Abril Fatface",serif',
                 fontSize: 'clamp(1.7rem, 3vw, 2.4rem)',
-                color: '#78350F',
+                color: '#5E3A25',
               }}
             >
               Un Oasis Rétro au Cœur de Bizerte
             </h2>
-            <p style={{ color: '#9A7B5A', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
+            <p style={{ color: '#A68A6D', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
               Donatello mêle magistralement une esthétique nostalgique et rétro à une atmosphère fraîche et moderne — une oasis accueillante riche en texture et en couleur.
             </p>
-            <p style={{ color: '#9A7B5A', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
+            <p style={{ color: '#A68A6D', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
               Tables en bois brut massif, fauteuils velours, étagère de curiosités vintage — platine vinyle, téléphone à cadran, appareils photo anciens — chaque détail vous transporte dans le temps.
             </p>
 
@@ -84,8 +84,8 @@ export const OurStory = () => {
                     fontWeight: 500,
                     padding: '8px 16px',
                     borderRadius: '50px',
-                    color: '#78350F',
-                    background: 'rgba(180,83,9,0.08)',
+                    color: '#5E3A25',
+                    background: 'rgba(193,92,61,0.08)',
                     letterSpacing: '0.5px',
                   }}
                 >

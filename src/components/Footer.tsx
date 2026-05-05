@@ -10,7 +10,7 @@ export const Footer = () => {
 
       <footer
         id="footer"
-        style={{ background: '#1C1917', color: 'rgba(253,248,239,0.6)', padding: '56px 0 28px' }}
+        style={{ background: '#3A2A22', color: 'rgba(253,248,239,0.6)', padding: '56px 0 28px' }}
       >
         <div className="max-w-[1140px] mx-auto px-6">
           {/* Grid */}
@@ -25,7 +25,7 @@ export const Footer = () => {
                 alt="Donatello"
                 className="h-12 w-12 rounded-full object-cover"
               />
-              <h3 style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#FDF8EF' }}>
+              <h3 style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#FFFFFF' }}>
                 Donatello
               </h3>
               <p style={{ fontSize: '0.85rem', lineHeight: 1.7, maxWidth: '300px' }}>
@@ -36,7 +36,7 @@ export const Footer = () => {
                 <a
                   href="#"
                   aria-label="Instagram"
-                  className="flex items-center justify-center transition-all duration-300 hover:bg-[#1A6B6A] hover:-translate-y-0.5 cursor-pointer"
+                  className="flex items-center justify-center transition-all duration-300 hover:bg-[#2C5E5A] hover:-translate-y-0.5 cursor-pointer"
                   style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)' }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(253,248,239,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -46,7 +46,7 @@ export const Footer = () => {
                 <a
                   href="#"
                   aria-label="Facebook"
-                  className="flex items-center justify-center transition-all duration-300 hover:bg-[#1A6B6A] hover:-translate-y-0.5 cursor-pointer"
+                  className="flex items-center justify-center transition-all duration-300 hover:bg-[#2C5E5A] hover:-translate-y-0.5 cursor-pointer"
                   style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)' }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(253,248,239,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,7 +56,7 @@ export const Footer = () => {
                 <a
                   href="tel:+21655540520"
                   aria-label="Téléphone"
-                  className="flex items-center justify-center transition-all duration-300 hover:bg-[#1A6B6A] hover:-translate-y-0.5 cursor-pointer"
+                  className="flex items-center justify-center transition-all duration-300 hover:bg-[#2C5E5A] hover:-translate-y-0.5 cursor-pointer"
                   style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)' }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(253,248,239,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,7 +82,7 @@ export const Footer = () => {
                     key={link.href}
                     to={link.href}
                     id={`footer-nav-${link.label.toLowerCase().replace(/\W+/g, '-')}`}
-                    className="transition-colors duration-300 hover:!text-[#B45309] cursor-pointer"
+                    className="transition-colors duration-300 hover:!text-[#C15C3D] cursor-pointer"
                     style={{ fontSize: '0.85rem', color: 'rgba(253,248,239,0.6)' }}
                   >
                     {link.label}
@@ -97,7 +97,7 @@ export const Footer = () => {
                 Contact
               </h4>
               <div className="flex flex-col gap-2.5">
-                <a href="tel:+21655540520" className="transition-colors duration-300 hover:!text-[#B45309] cursor-pointer" style={{ fontSize: '0.85rem' }}>
+                <a href="tel:+21655540520" className="transition-colors duration-300 hover:!text-[#C15C3D] cursor-pointer" style={{ fontSize: '0.85rem' }}>
                   +216 55 540 520
                 </a>
                 <span style={{ fontSize: '0.85rem' }}>Bizerte, Tunisie</span>

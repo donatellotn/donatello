@@ -11,7 +11,7 @@ export const Hero = () => {
     <section
       id="hero"
       className={`relative min-h-screen grid overflow-hidden ${visible ? 'hero-visible' : ''}`}
-      style={{ gridTemplateColumns: '1fr 1fr', background: '#1C1917' }}
+      style={{ gridTemplateColumns: '1fr 1fr', background: '#3A2A22' }}
     >
       {/* Left — Image */}
       <div className="relative overflow-hidden hero-visual max-md:h-[50vh]">
@@ -28,11 +28,11 @@ export const Hero = () => {
         />
         <div
           className="absolute inset-0 max-md:hidden"
-          style={{ background: 'linear-gradient(to right, transparent 60%, #1C1917)' }}
+          style={{ background: 'linear-gradient(to right, transparent 60%, #3A2A22)' }}
         />
         <div
           className="absolute inset-0 md:hidden"
-          style={{ background: 'linear-gradient(to bottom, transparent 50%, #1C1917)' }}
+          style={{ background: 'linear-gradient(to bottom, transparent 50%, #3A2A22)' }}
         />
       </div>
 
@@ -47,7 +47,7 @@ export const Hero = () => {
           alt="Donatello"
           className="w-[100px] h-[100px] rounded-full object-cover mb-8 transition-all duration-700"
           style={{
-            boxShadow: '0 0 40px rgba(180,83,9,0.3)',
+            boxShadow: '0 0 40px rgba(193,92,61,0.3)',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(20px)',
           }}
@@ -62,7 +62,7 @@ export const Hero = () => {
             fontWeight: 600,
             letterSpacing: '4px',
             textTransform: 'uppercase',
-            color: '#B45309',
+            color: '#C15C3D',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(16px)',
             transitionDelay: '150ms',
@@ -77,7 +77,7 @@ export const Hero = () => {
           style={{
             fontFamily: '"Abril Fatface",serif',
             fontSize: 'clamp(2.6rem, 5vw, 4.2rem)',
-            color: '#FDF8EF',
+            color: '#FFFFFF',
             lineHeight: 1.05,
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(24px)',
@@ -93,7 +93,7 @@ export const Hero = () => {
           style={{
             width: '48px',
             height: '2px',
-            background: '#B45309',
+            background: '#C15C3D',
             opacity: visible ? 1 : 0,
             transform: visible ? 'scaleX(1)' : 'scaleX(0)',
             transformOrigin: 'left',

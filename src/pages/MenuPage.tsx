@@ -50,13 +50,13 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
     onClick={onClick}
     style={{
       background: '#fff',
-      border: '1px solid rgba(180,83,9,0.08)',
+      border: '1px solid rgba(193,92,61,0.08)',
       boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
     }}
   >
     <div className="flex-shrink-0 w-14 h-14 sm:w-[72px] sm:h-[72px] mr-3.5">
       {item.image ? (
-        <div className="w-full h-full rounded-lg overflow-hidden" style={{ background: '#F5E6D3' }}>
+        <div className="w-full h-full rounded-lg overflow-hidden" style={{ background: '#F8F5F0' }}>
           <img
             src={item.image}
             alt={item.title}
@@ -69,7 +69,7 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
           />
         </div>
       ) : (
-        <div className="w-full h-full rounded-lg flex items-center justify-center" style={{ background: 'rgba(28,25,23,0.04)' }}>
+        <div className="w-full h-full rounded-lg flex items-center justify-center" style={{ background: 'rgba(58,42,34,0.04)' }}>
           <span className="text-xl">🍹</span>
         </div>
       )}
@@ -78,21 +78,21 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-0.5 gap-0.5">
         <h3
           className="truncate"
-          style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1rem', color: '#1C1917', fontWeight: 400 }}
+          style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1rem', color: '#3A2A22', fontWeight: 400 }}
         >
           {item.title}
         </h3>
-        <span style={{ fontFamily: '"Inter",sans-serif', fontWeight: 700, fontSize: '0.88rem', color: '#B45309', whiteSpace: 'nowrap' }}>
+        <span style={{ fontFamily: '"Inter",sans-serif', fontWeight: 700, fontSize: '0.88rem', color: '#C15C3D', whiteSpace: 'nowrap' }}>
           {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
         </span>
       </div>
       {item.description && (
-        <p className="line-clamp-2" style={{ fontSize: '0.78rem', color: '#9A7B5A', fontFamily: '"Merriweather",serif', fontWeight: 300 }}>
+        <p className="line-clamp-2" style={{ fontSize: '0.78rem', color: '#A68A6D', fontFamily: '"Merriweather",serif', fontWeight: 300 }}>
           {item.description}
         </p>
       )}
     </div>
-    <div className="flex-shrink-0 ml-auto mr-1 transition-colors" style={{ color: 'rgba(180,83,9,0.2)' }}>
+    <div className="flex-shrink-0 ml-auto mr-1 transition-colors" style={{ color: 'rgba(193,92,61,0.2)' }}>
       <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
     </div>
   </div>
@@ -105,12 +105,12 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
     style={{
       background: '#fff',
       borderRadius: '16px',
-      border: '1px solid rgba(180,83,9,0.06)',
+      border: '1px solid rgba(193,92,61,0.06)',
       boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
     }}
     onClick={onClick}
   >
-    <div className="relative h-40 sm:h-56 overflow-hidden" style={{ background: '#F5E6D3' }}>
+    <div className="relative h-40 sm:h-56 overflow-hidden" style={{ background: '#F8F5F0' }}>
       {item.image && (
         <img
           src={item.image}
@@ -126,13 +126,13 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
       <div
         className="absolute top-3 right-3"
         style={{
-          background: 'rgba(28,25,23,0.85)',
+          background: 'rgba(58,42,34,0.85)',
           backdropFilter: 'blur(8px)',
           padding: '6px 14px',
           borderRadius: '6px',
         }}
       >
-        <span style={{ fontFamily: '"Inter",sans-serif', fontWeight: 700, fontSize: '0.82rem', color: '#FDF8EF' }}>
+        <span style={{ fontFamily: '"Inter",sans-serif', fontWeight: 700, fontSize: '0.82rem', color: '#FFFFFF' }}>
           {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
         </span>
       </div>
@@ -140,19 +140,19 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
     <div className="p-4 sm:p-6">
       <h3
         className="mb-1.5 transition-colors duration-300"
-        style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(1rem, 1.2vw, 1.25rem)', color: '#1C1917', fontWeight: 400 }}
+        style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(1rem, 1.2vw, 1.25rem)', color: '#3A2A22', fontWeight: 400 }}
       >
         {item.title}
       </h3>
       <p
         className="line-clamp-2 mb-4"
-        style={{ fontSize: '0.8rem', color: '#9A7B5A', fontFamily: '"Merriweather",serif', fontWeight: 300, lineHeight: 1.7 }}
+        style={{ fontSize: '0.8rem', color: '#A68A6D', fontFamily: '"Merriweather",serif', fontWeight: 300, lineHeight: 1.7 }}
       >
         {item.description}
       </p>
       <span
         className="flex items-center gap-1.5 group-hover:gap-3 transition-all"
-        style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#1A6B6A', cursor: 'pointer' }}
+        style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#2C5E5A', cursor: 'pointer' }}
       >
         Détails <span>→</span>
       </span>
@@ -249,13 +249,13 @@ const MenuPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: '#F5E6D3' }}>
+      <div className="min-h-screen flex flex-col" style={{ background: '#F8F5F0' }}>
         <Header />
         <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
           <div className="min-h-[50vh] flex items-center justify-center">
             <div className="flex flex-col items-center animate-fadeIn">
-              <div className="w-8 h-8 rounded-full animate-spin mb-4" style={{ border: '3px solid rgba(26,107,106,0.15)', borderTopColor: '#1A6B6A' }} />
-              <div style={{ fontFamily: '"Merriweather",serif', color: '#9A7B5A', fontSize: '0.9rem' }}>Chargement...</div>
+              <div className="w-8 h-8 rounded-full animate-spin mb-4" style={{ border: '3px solid rgba(44,94,90,0.15)', borderTopColor: '#2C5E5A' }} />
+              <div style={{ fontFamily: '"Merriweather",serif', color: '#A68A6D', fontSize: '0.9rem' }}>Chargement...</div>
             </div>
           </div>
         </main>
@@ -265,7 +265,7 @@ const MenuPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#F5E6D3' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#F8F5F0' }}>
       <Header />
 
       <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
@@ -275,9 +275,9 @@ const MenuPage = () => {
             <span className="section-label">La Carte</span>
             <h2
               className="mb-4"
-              style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: '#78350F', lineHeight: 1.1 }}
+              style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: '#5E3A25', lineHeight: 1.1 }}
             >
-              Menu <span style={{ color: '#B45309' }}>Donatello</span>
+              Menu <span style={{ color: '#C15C3D' }}>Donatello</span>
             </h2>
             <div className="divider" />
           </div>
@@ -300,8 +300,8 @@ const MenuPage = () => {
                     textTransform: 'uppercase',
                     border: '1px solid',
                     ...(activeTab === cat
-                      ? { background: '#1C1917', color: '#FDF8EF', borderColor: '#1C1917' }
-                      : { background: 'transparent', color: '#9A7B5A', borderColor: 'rgba(180,83,9,0.15)' }
+                      ? { background: '#3A2A22', color: '#FFFFFF', borderColor: '#3A2A22' }
+                      : { background: 'transparent', color: '#A68A6D', borderColor: 'rgba(193,92,61,0.15)' }
                     ),
                   }}
                 >
@@ -348,7 +348,7 @@ const MenuPage = () => {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
             className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
-            style={{ background: 'rgba(28,25,23,0.5)', backdropFilter: 'blur(6px)' }}
+            style={{ background: 'rgba(58,42,34,0.5)', backdropFilter: 'blur(6px)' }}
             onClick={closeModal}
           >
             <motion.div
@@ -361,7 +361,7 @@ const MenuPage = () => {
               onClick={(e) => e.stopPropagation()}
             >
               {selectedItem.image && (
-                <div className="h-64 overflow-hidden" style={{ background: '#F5E6D3' }}>
+                <div className="h-64 overflow-hidden" style={{ background: '#F8F5F0' }}>
                   <img
                     src={selectedItem.image}
                     alt={selectedItem.title}
@@ -375,11 +375,11 @@ const MenuPage = () => {
               )}
               <div className="p-7">
                 <div className="flex items-start justify-between mb-3">
-                  <h3 style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#1C1917', fontWeight: 400 }}>{selectedItem.title}</h3>
+                  <h3 style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#3A2A22', fontWeight: 400 }}>{selectedItem.title}</h3>
                   <span
                     style={{
-                      background: 'rgba(180,83,9,0.08)',
-                      color: '#B45309',
+                      background: 'rgba(193,92,61,0.08)',
+                      color: '#C15C3D',
                       fontFamily: '"Inter",sans-serif',
                       fontWeight: 700,
                       padding: '6px 16px',
@@ -392,11 +392,11 @@ const MenuPage = () => {
                     {typeof selectedItem.price === 'number' ? selectedItem.price.toFixed(1) : selectedItem.price} DT
                   </span>
                 </div>
-                <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.72rem', color: '#9A7B5A', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginBottom: '12px' }}>
+                <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.72rem', color: '#A68A6D', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginBottom: '12px' }}>
                   {selectedItem.category}
                 </p>
                 {selectedItem.description && (
-                  <p style={{ fontFamily: '"Merriweather",serif', fontSize: '0.9rem', color: 'rgba(28,25,23,0.6)', lineHeight: 1.8, fontWeight: 300, marginBottom: '24px' }}>
+                  <p style={{ fontFamily: '"Merriweather",serif', fontSize: '0.9rem', color: 'rgba(58,42,34,0.6)', lineHeight: 1.8, fontWeight: 300, marginBottom: '24px' }}>
                     {selectedItem.description}
                   </p>
                 )}
@@ -404,8 +404,8 @@ const MenuPage = () => {
                   onClick={closeModal}
                   className="w-full py-3 cursor-pointer transition-colors duration-300 hover:bg-[#115E5D]"
                   style={{
-                    background: '#1A6B6A',
-                    color: '#FDF8EF',
+                    background: '#2C5E5A',
+                    color: '#FFFFFF',
                     borderRadius: '8px',
                     fontFamily: '"Inter",sans-serif',
                     fontSize: '0.72rem',

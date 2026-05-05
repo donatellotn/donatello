@@ -23,7 +23,7 @@ const infoItems = [
 export const ContactForm = () => (
   <section
     id="info"
-    style={{ background: '#F5E6D3', padding: '100px 0' }}
+    style={{ background: '#F8F5F0', padding: '100px 0' }}
   >
     <div className="max-w-[1140px] mx-auto px-6">
       {/* Header */}
@@ -59,22 +59,22 @@ export const ContactForm = () => (
                   width: '40px',
                   height: '40px',
                   borderRadius: '10px',
-                  background: '#1C1917',
-                  color: '#FDF8EF',
+                  background: '#3A2A22',
+                  color: '#FFFFFF',
                 }}
               >
                 {item.icon}
               </div>
               <div>
-                <h4 style={{ fontFamily: '"Inter",sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#78350F', marginBottom: '2px' }}>
+                <h4 style={{ fontFamily: '"Inter",sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#5E3A25', marginBottom: '2px' }}>
                   {item.label}
                 </h4>
                 {item.href ? (
-                  <a href={item.href} style={{ fontSize: '0.88rem', color: '#1A6B6A', fontWeight: 600, cursor: 'pointer', fontFamily: '"Merriweather",serif' }}>
+                  <a href={item.href} style={{ fontSize: '0.88rem', color: '#2C5E5A', fontWeight: 600, cursor: 'pointer', fontFamily: '"Merriweather",serif' }}>
                     {item.value}
                   </a>
                 ) : (
-                  <p style={{ fontSize: '0.88rem', color: '#9A7B5A', fontWeight: 300, fontFamily: '"Merriweather",serif' }}>
+                  <p style={{ fontSize: '0.88rem', color: '#A68A6D', fontWeight: 300, fontFamily: '"Merriweather",serif' }}>
                     {item.value}
                   </p>
                 )}

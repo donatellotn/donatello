@@ -16,7 +16,7 @@ export const Home = () => {
       {/* ── Menu Teaser — Cinematic ── */}
       <section
         id="menu-teaser"
-        style={{ background: '#F5E6D3', padding: '100px 0' }}
+        style={{ background: '#F8F5F0', padding: '100px 0' }}
       >
         <div className="max-w-[1140px] mx-auto px-6">
           {/* Header */}
@@ -32,7 +32,7 @@ export const Home = () => {
             <p style={{
               fontFamily: '"Merriweather",serif',
               fontSize: '0.95rem',
-              color: '#9A7B5A',
+              color: '#A68A6D',
               maxWidth: '480px',
               fontWeight: 300,
               lineHeight: 1.8,

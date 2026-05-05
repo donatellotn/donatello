@@ -54,7 +54,7 @@ export const Header = () => {
             alt="Donatello"
             className="h-11 w-11 rounded-full object-cover"
           />
-          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#78350F' }}>
+          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#5E3A25' }}>
             Donatello
           </span>
         </Link>
@@ -70,13 +70,13 @@ export const Header = () => {
                 fontFamily: '"Inter",sans-serif',
                 fontSize: '0.82rem',
                 fontWeight: 500,
-                color: '#9A7B5A',
+                color: '#A68A6D',
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase' as const,
                 transition: 'color 300ms',
                 cursor: 'pointer',
               }}
-              className="hover:!text-[#78350F]"
+              className="hover:!text-[#5E3A25]"
             >
               {item.label}
             </Link>
@@ -88,10 +88,10 @@ export const Header = () => {
           <a
             href="tel:+21655540520"
             id="nav-phone-btn"
-            className="flex items-center gap-2 transition-all duration-300 hover:bg-[#1A6B6A]"
+            className="flex items-center gap-2 transition-all duration-300 hover:bg-[#2C5E5A]"
             style={{
-              background: '#1C1917',
-              color: '#FDF8EF',
+              background: '#3A2A22',
+              color: '#FFFFFF',
               padding: '10px 22px',
               borderRadius: '6px',
               fontFamily: '"Inter",sans-serif',
@@ -112,7 +112,7 @@ export const Header = () => {
           id="nav-mobile-toggle"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden p-2 cursor-pointer"
-          style={{ background: 'none', border: 'none', color: '#78350F' }}
+          style={{ background: 'none', border: 'none', color: '#5E3A25' }}
           aria-label="Ouvrir le menu"
         >
           {isMobileMenuOpen ? (
@@ -139,7 +139,7 @@ export const Header = () => {
           <button
             onClick={() => setIsMobileMenuOpen(false)}
             className="absolute top-5 right-6 cursor-pointer"
-            style={{ background: 'none', border: 'none', color: '#78350F' }}
+            style={{ background: 'none', border: 'none', color: '#5E3A25' }}
             aria-label="Fermer"
           >
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -151,8 +151,8 @@ export const Header = () => {
               key={item.href}
               to={item.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#78350F', cursor: 'pointer', transition: 'color 300ms' }}
-              className="hover:!text-[#B45309]"
+              style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#5E3A25', cursor: 'pointer', transition: 'color 300ms' }}
+              className="hover:!text-[#C15C3D]"
             >
               {item.label}
             </Link>
