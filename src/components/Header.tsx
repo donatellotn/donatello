@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu as MenuIcon, X, Phone } from 'lucide-react';
+import { Menu as MenuIcon, X, Phone, Instagram } from 'lucide-react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ export const Header = () => {
 
   const navItems = [
     { label: 'Le Menu',   href: '/menu',      external: true  },
-    { label: "L'Espace",  href: '/#our-story',  external: false },
+    { label: "L'Atelier", href: '/#our-story',  external: false },
     { label: 'Contact',   href: '/#contact',  external: false },
   ];
 
@@ -24,7 +24,7 @@ export const Header = () => {
       id="site-header"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#FFFAF5]/90 backdrop-blur-xl py-3 border-b border-[#1A6B6A]/10 shadow-[0_2px_24px_rgba(26,107,106,0.06)]'
+          ? 'bg-[#FAF7F4]/90 backdrop-blur-xl py-3 border-b border-[#A64B2A]/10 shadow-[0_2px_24px_rgba(166,75,42,0.06)]'
           : 'bg-transparent py-6'
       }`}
     >
@@ -35,7 +35,7 @@ export const Header = () => {
           to="/" 
           id="nav-logo" 
           className="flex items-center group" 
-          aria-label="Donatello — Accueil"
+          aria-label="madélina — Accueil"
           onClick={(e) => {
             if (window.location.pathname === '/') {
               e.preventDefault();
@@ -43,11 +43,11 @@ export const Header = () => {
             }
           }}
         >
-          <div className="relative transition-transform duration-500 group-hover:scale-105 h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden bg-black shadow-sm border border-[#1A6B6A]/20 flex items-center justify-center">
+          <div className="relative transition-transform duration-500 group-hover:scale-105 h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden bg-white shadow-sm border border-[#A64B2A]/20 flex items-center justify-center">
             <img
-              src="/logos/Logo-donatello.jpg"
-              alt="Donatello — Salon de Thé"
-              className="w-full h-full object-cover scale-[1.1]"
+              src={`${import.meta.env.BASE_URL}logos/logo_madelina-4.png`}
+              alt="madélina par Haifa Ben Salem"
+              className="w-full h-full object-cover scale-[1.45]"
             />
           </div>
         </Link>
@@ -64,10 +64,10 @@ export const Header = () => {
               <Link
                 to={item.href}
                 id={`nav-${item.label.toLowerCase().replace(/\W+/g, '-')}`}
-                className="relative text-[11px] uppercase tracking-[0.2em] font-medium text-[#1C1C1C] hover:text-[#1A6B6A] transition-colors duration-300 group"
+                className="relative text-[11px] uppercase tracking-[0.2em] font-medium text-[#2A2118] hover:text-[#A64B2A] transition-colors duration-300 group"
               >
                 {item.label}
-                <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 bg-[#1A6B6A] transition-all duration-500 group-hover:w-full" />
+                <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 bg-[#A64B2A] transition-all duration-500 group-hover:w-full" />
               </Link>
             </motion.div>
           ))}
@@ -75,15 +75,25 @@ export const Header = () => {
 
         {/* ── CTA ── */}
         <div className="hidden md:flex items-center gap-4">
+          <a
+            href="https://www.instagram.com/madelina_bizerte/"
+            target="_blank"
+            rel="noopener noreferrer"
+            id="nav-instagram"
+            className="flex items-center justify-center bg-[#A64B2A]/10 text-[#A64B2A] rounded-full w-9 h-9 hover:bg-[#A64B2A] hover:text-white transition-all shadow-sm"
+            aria-label="Instagram"
+          >
+            <Instagram size={16} strokeWidth={1.5} />
+          </a>
           <motion.a
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.97 }}
-            href="tel:55540520"
+            href="tel:72413676"
             id="nav-phone-btn"
             className="btn-primary flex items-center gap-2 text-[12px] px-5 py-2.5"
           >
             <Phone size={14} strokeWidth={1.5} />
-            55 540 520
+            72 413 676
           </motion.a>
         </div>
 
@@ -91,7 +101,7 @@ export const Header = () => {
         <button
           id="nav-mobile-toggle"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-[#1C1C1C] hover:text-[#1A6B6A] transition-colors"
+          className="md:hidden p-2 text-[#2A2118] hover:text-[#A64B2A] transition-colors"
           aria-label="Ouvrir le menu"
         >
           {isMobileMenuOpen ? <X size={22} strokeWidth={1.5} /> : <MenuIcon size={22} strokeWidth={1.5} />}
@@ -105,7 +115,7 @@ export const Header = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#FFFAF5] border-b border-[#1A6B6A]/10 overflow-hidden"
+            className="md:hidden bg-[#FAF7F4] border-b border-[#A64B2A]/10 overflow-hidden"
           >
             <div className="px-6 py-10 flex flex-col gap-7">
               {navItems.map((item) => (
@@ -113,15 +123,15 @@ export const Header = () => {
                   key={item.href}
                   to={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-serif text-[#1C1C1C] hover:text-[#1A6B6A] transition-colors"
+                  className="text-2xl font-serif text-[#2A2118] hover:text-[#A64B2A] transition-colors"
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="h-px bg-[#1A6B6A]/10 my-2" />
-              <a href="tel:55540520" className="flex items-center gap-2 text-[#1A6B6A] font-medium">
+              <div className="h-px bg-[#A64B2A]/10 my-2" />
+              <a href="tel:72413676" className="flex items-center gap-2 text-[#A64B2A] font-medium">
                 <Phone size={16} strokeWidth={1.5} />
-                55 540 520
+                72 413 676
               </a>
             </div>
           </motion.div>

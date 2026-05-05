@@ -34,7 +34,7 @@ function parseMenuHTML(html: string): MenuItem[] {
 
 // ── Local / GitHub Pages URL ──
 // We use the deployed file on GitHub Pages to avoid the 5-minute cache of raw.githubusercontent.com
-const MENU_RAW_URL = '/menu-data.html';
+const MENU_RAW_URL = import.meta.env.BASE_URL + 'menu-data.html';
 
 export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
   const [plats, setPlats] = useState<MenuItem[]>([]);
@@ -107,7 +107,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
     <section id="menu" className={`section-padding bg-white relative overflow-hidden ${isPreview ? 'pt-0 pb-10' : ''}`}>
       {!isPreview && (
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-[0.02] flex items-center justify-center">
-          <span className="text-[30vw] font-display whitespace-nowrap select-none">DONATELLO</span>
+          <span className="text-[30vw] font-display whitespace-nowrap select-none">MADELINA</span>
         </div>
       )}
 
@@ -120,7 +120,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
               viewport={{ once: true }}
               className="text-5xl md:text-7xl mb-6 font-allenoire text-madelina-navy"
             >
-              Menu <span className="text-madelina-terracotta font-allenoire">Donatello</span>
+              Menu <span className="text-madelina-terracotta font-allenoire">madélina</span>
             </motion.h2>
             <motion.div 
               initial={{ width: 0 }}
@@ -161,36 +161,24 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
                           key={item.id}
                           className="group glass-card rounded-[2.5rem] overflow-hidden hover:shadow-2xl transition-all duration-500 bg-white border border-madelina-terracotta/5"
                         >
-                          {item.image ? (
-                            <div className="relative h-72 overflow-hidden bg-madelina-cream">
-                              <img
-                                src={item.image}
-                                alt={item.title}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                                loading="eager"
-                                fetchPriority="high"
-                                decoding="async"
-                                onLoad={e => (e.currentTarget.style.opacity = '1')}
-                                style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
-                              />
-                              <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-                                <span className="font-bold text-madelina-terracotta tracking-tight">
-                                  {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
-                                </span>
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="relative h-40 overflow-hidden flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(26,107,106,0.06) 0%, rgba(242,201,76,0.08) 100%)' }}>
-                              <span className="text-5xl opacity-30 group-hover:scale-110 transition-transform duration-500">
-                                {item.category.includes('Pâtisserie') ? '🍰' : item.category.includes('Brunch') ? '🍽️' : item.category.includes('Boisson') && item.category.includes('chaude') ? '☕' : '🧃'}
+                          {/* Skeleton shimmer while image loads */}
+                          <div className="relative h-72 overflow-hidden bg-madelina-cream">
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                              loading="eager"
+                              fetchPriority="high"
+                              decoding="async"
+                              onLoad={e => (e.currentTarget.style.opacity = '1')}
+                              style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
+                            />
+                            <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
+                              <span className="font-bold text-madelina-terracotta tracking-tight">
+                                {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
                               </span>
-                              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
-                                <span className="font-bold text-madelina-terracotta tracking-tight">
-                                  {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
-                                </span>
-                              </div>
                             </div>
-                          )}
+                          </div>
                           <div className="p-8 text-left">
                             <h3 className="text-2xl mb-3 font-display text-madelina-navy group-hover:text-madelina-terracotta transition-colors duration-300">
                               {item.title}

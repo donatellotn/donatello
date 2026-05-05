@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Donatello · Admin</title>
+  <title>Madelina · Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@1&display=swap"
@@ -19,14 +19,14 @@
     }
 
     :root {
-      --terracotta: #1A6B6A;
-      --navy: #1C1C1C;
-      --cream: #FDF6EE;
+      --terracotta: #C4704F;
+      --navy: #1a2332;
+      --cream: #FAF7F2;
       --white: #ffffff;
-      --border: #e0d8cf;
+      --border: #e8e2da;
       --danger: #e05252;
       --success: #52a060;
-      --text-muted: #6B5E50;
+      --text-muted: #8a7f74;
     }
 
     body {
@@ -124,7 +124,7 @@
     }
 
     .gate-card button:hover {
-      background: #145554;
+      background: #b5603f;
       transform: translateY(-1px);
     }
 
@@ -219,7 +219,7 @@
     }
 
     .btn-primary:hover {
-      background: #145554;
+      background: #b5603f;
     }
 
     .btn-secondary {
@@ -743,9 +743,9 @@
   <div id="app">
     <header>
       <div class="header-brand">
-        <div class="header-logo"><img src="../logos/Logo-donatello.jpg" alt="Donatello"></div>
+        <div class="header-logo"><img src="../logos/logo_madelina-4.png" alt="madelina"></div>
         <div>
-          <h2>Donatello</h2>
+          <h2>Madelina</h2>
           <p>Dashboard Admin</p>
         </div>
       </div>
@@ -798,7 +798,7 @@
         <div class="form-row">
           <div class="form-group">
             <label>Nom du plat *</label>
-            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" />
+            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Madelina" />
           </div>
           <div class="form-group">
             <label>Prix (DT) *</label>
@@ -809,10 +809,12 @@
           <label>Catégorie *</label>
           <select id="f-category" required>
             <option value="">-- Choisir --</option>
-            <option value="☕ Boissons chaudes">☕ Boissons chaudes</option>
-            <option value="🧃 Boissons fraîches">🧃 Boissons fraîches</option>
-            <option value="🍰 Pâtisseries">🍰 Pâtisseries</option>
-            <option value="🍽️ Brunch">🍽️ Brunch</option>
+            <option value="☕ Boisson chaude">☕ Boisson chaude</option>
+            <option value="🧃 Boisson fraîche">🧃 Boisson fraîche</option>
+            <option value="🍰 Gâteaux et tartes">🍰 Gâteaux et tartes</option>
+            <option value="🍽️ Plats">🍽️ Plats</option>
+            <option value="🥐 Viennoiseries">🥐 Viennoiseries</option>
+            <option value="✨ Autres">✨ Autres</option>
           </select>
         </div>
         <div class="form-group">
@@ -889,9 +891,14 @@
 
     // ── GITHUB CONFIG ──
     function getGH() {
+      let savedRepo = localStorage.getItem('gh_repo');
+      if (savedRepo === 'madelina-coffee' || savedRepo === 'madelina-coffeev3' || savedRepo === 'madelina-coffeev5' || savedRepo === 'madelina') {
+        savedRepo = 'donatello';
+        localStorage.setItem('gh_repo', savedRepo);
+      }
       return {
         owner: localStorage.getItem('gh_owner') || 'donatellotn',
-        repo: localStorage.getItem('gh_repo') || 'donatello',
+        repo: savedRepo || 'donatello',
         token: localStorage.getItem('gh_token') || '',
       };
     }
@@ -1104,10 +1111,12 @@
     }
 
     const CATEGORY_ORDER = [
-      "☕ Boissons chaudes",
-      "🧃 Boissons fraîches",
-      "🍰 Pâtisseries",
-      "🍽️ Brunch"
+      "☕ Boisson chaude",
+      "🥐 Viennoiseries",
+      "🧃 Boisson fraîche",
+      "🍰 Gâteaux et tartes",
+      "🍽️ Plats",
+      "✨ Autres"
     ];
 
     function renderFilters() {

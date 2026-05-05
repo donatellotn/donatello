@@ -17,7 +17,7 @@ export const Home = () => {
       {/* ── Menu Preview ── */}
       <section
         id="menu"
-        style={{ background: '#FFFAF5', padding: '7rem 1.5rem', textAlign: 'center' }}
+        style={{ background: '#FAF7F4', padding: '7rem 1.5rem', textAlign: 'center' }}
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -27,27 +27,28 @@ export const Home = () => {
             transition={{ duration: 0.6 }}
           >
             {/* label */}
-            <span style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.65rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#1A6B6A', fontWeight: 500 }}>
+            <span style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.65rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#A64B2A', fontWeight: 500 }}>
               Notre Menu
             </span>
 
             {/* heading */}
-            <h2 style={{ fontFamily: '"Playfair Display",Georgia,serif', fontSize: 'clamp(2rem,4.5vw,3.2rem)', color: '#1C1C1C', marginTop: '1rem', marginBottom: '1rem', lineHeight: 1.1 }}>
+            <h2 style={{ fontFamily: '"Playfair Display",Georgia,serif', fontSize: 'clamp(2rem,4.5vw,3.2rem)', color: '#2A2118', marginTop: '1rem', marginBottom: '1rem', lineHeight: 1.1 }}>
               Découvrez notre Menu
             </h2>
 
-            {/* sunset divider */}
+            {/* arch line divider */}
             <div className="flex items-center justify-center gap-5 mb-10">
-              <span className="h-px w-16 bg-[#1A6B6A] opacity-20" />
-              <svg width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-                <circle cx="32" cy="32" r="20" stroke="#1A6B6A" strokeWidth="2" fill="none" opacity="0.3"/>
-                <path d="M16 38 Q32 12 48 38" stroke="#F2C94C" strokeWidth="2" fill="none"/>
+              <span className="h-px w-16 bg-[#A64B2A] opacity-20" />
+              <svg width="20" height="26" viewBox="0 0 100 130" fill="none" aria-hidden="true">
+                <path d="M10 130 V52 Q10 10 50 10 Q90 10 90 52 V130 Z" stroke="#A64B2A" strokeWidth="6" fill="none"/>
+                <line x1="10" y1="72" x2="90" y2="72" stroke="#A64B2A" strokeWidth="3"/>
+                <line x1="50" y1="72" x2="50" y2="130" stroke="#A64B2A" strokeWidth="3"/>
               </svg>
-              <span className="h-px w-16 bg-[#1A6B6A] opacity-20" />
+              <span className="h-px w-16 bg-[#A64B2A] opacity-20" />
             </div>
 
-            <p style={{ fontFamily: '"Inter",sans-serif', color: '#6B5E50', maxWidth: '36rem', margin: '0 auto 3rem', lineHeight: 1.75, fontSize: '1.0625rem' }}>
-              Cheesecake, cappuccino, jus d'orange frais et bien plus encore.
+            <p style={{ fontFamily: '"Inter",sans-serif', color: '#7A6A5A', maxWidth: '36rem', margin: '0 auto 3rem', lineHeight: 1.75, fontSize: '1.0625rem' }}>
+              Pâtisseries fines, café d'exception et brunchs gourmands.
               Consultez notre menu complet en ligne.
             </p>
           </motion.div>

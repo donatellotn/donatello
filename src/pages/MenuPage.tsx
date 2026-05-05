@@ -13,10 +13,12 @@ interface MenuItem {
 }
 
 const ORDER = [
-  "☕ Boissons chaudes",
-  "🧃 Boissons fraîches",
-  "🍰 Pâtisseries",
-  "🍽️ Brunch"
+  "☕ Boisson chaude",
+  "🧃 Boisson fraîche",
+  "🥐 Viennoiseries",
+  "🍰 Gâteaux et tartes",
+  "🍽️ Plats",
+  "✨ Autres"
 ];
 
 // ── Parse menu-data.html fragment → MenuItem[] ──
@@ -86,8 +88,8 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
 
 const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void }) => (
   <div className="group glass-card rounded-[1.75rem] sm:rounded-[2.5rem] overflow-hidden bg-white border border-madelina-terracotta/5 shadow-sm hover:shadow-2xl transition-shadow duration-300">
-    {item.image ? (
-      <div className="relative h-40 sm:h-72 overflow-hidden bg-madelina-cream">
+    <div className="relative h-40 sm:h-72 overflow-hidden bg-madelina-cream">
+      {item.image && (
         <img
           src={item.image}
           alt={item.title}
@@ -98,24 +100,13 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
           onLoad={e => (e.currentTarget.style.opacity = '1')}
           style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
         />
-        <div className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-white/90 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg">
-          <span className="font-bold text-[13px] sm:text-base text-madelina-terracotta tracking-tight">
-            {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
-          </span>
-        </div>
-      </div>
-    ) : (
-      <div className="relative h-32 sm:h-40 overflow-hidden flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(26,107,106,0.06) 0%, rgba(242,201,76,0.08) 100%)' }}>
-        <span className="text-4xl sm:text-5xl opacity-30 group-hover:scale-110 transition-transform duration-500">
-          {item.category.includes('Pâtisserie') ? '🍰' : item.category.includes('Brunch') ? '🍽️' : '☕'}
+      )}
+      <div className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-white/90 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg">
+        <span className="font-bold text-[13px] sm:text-base text-madelina-terracotta tracking-tight">
+          {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
         </span>
-        <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white/90 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg">
-          <span className="font-bold text-[13px] sm:text-base text-madelina-terracotta tracking-tight">
-            {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
-          </span>
-        </div>
       </div>
-    )}
+    </div>
     <div className="p-4 sm:p-8">
       <h3 className="text-[17px] sm:text-2xl mb-1.5 sm:mb-3 font-display text-madelina-navy group-hover:text-madelina-terracotta transition-colors">{item.title}</h3>
       <p className="text-madelina-navy/60 text-[13px] sm:text-sm mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3 leading-snug">{item.description}</p>
@@ -131,7 +122,7 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
 
 // ── Local / GitHub Pages URL ──
 // We use the deployed file on GitHub Pages to avoid the 5-minute cache of raw.githubusercontent.com
-const MENU_RAW_URL = '/menu-data.html';
+const MENU_RAW_URL = import.meta.env.BASE_URL + 'menu-data.html';
 
 const MenuPage = () => {
   const [plats, setPlats] = useState<MenuItem[]>([]);
@@ -206,7 +197,7 @@ const MenuPage = () => {
   }, [plats]);
 
   // We compute whether a category is drink-like to apply the correct grid structure per category.
-  const isCategoryDrinkLike = (cat: string) => cat.includes("Boisson");
+  const isCategoryDrinkLike = (cat: string) => cat.includes("Boisson") || cat.includes("Viennoiserie");
 
   // Instant switch — no blocking, images appear as they load
   const handleCategoryChange = useCallback((cat: string) => {
@@ -246,7 +237,7 @@ const MenuPage = () => {
           {/* Heading */}
           <div className="text-center mb-6 sm:mb-10 md:mb-16">
             <h2 className="text-5xl md:text-7xl mb-6 font-allenoire text-madelina-navy">
-              Menu <span className="text-madelina-terracotta font-allenoire">Donatello</span>
+              Menu <span className="text-madelina-terracotta font-allenoire">madélina</span>
             </h2>
             <div className="h-1 w-24 bg-madelina-terracotta mx-auto" />
           </div>
