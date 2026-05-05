@@ -891,7 +891,7 @@
       <div id="category-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px"></div>
       <div style="display:flex;gap:8px">
         <input id="new-cat-input" type="text" placeholder="Ex: 🍕 Pizza" style="flex:1;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--cream)" />
-        <button class="btn btn-primary" onclick="addCategory()">+ Ajouter</button>
+        <button class="btn btn-primary" onclick="addCategory(event)">+ Ajouter</button>
       </div>
       <label style="margin-top:10px;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer">
         <input type="checkbox" id="new-cat-is-list" />
@@ -1393,6 +1393,11 @@
       const idxStr = document.getElementById('item-index').value;
       
       const selectedCatFr = document.getElementById('f-category').value;
+      if (!selectedCatFr) {
+        toast('⚠️ Veuillez sélectionner une catégorie', 'error');
+        return;
+      }
+      
       const cats = getCategories();
       const catObj = cats.find(c => c.fr === selectedCatFr) || { fr: selectedCatFr, en: selectedCatFr };
 
@@ -1673,34 +1678,42 @@
       });
     }
 
-    async function addCategory() {
+    async function addCategory(e) {
       const input = document.getElementById('new-cat-input');
       const val = input.value.trim();
       if (!val) return;
       
-      const btn = event.target;
-      const origText = btn.textContent;
-      btn.textContent = '🤖...';
-      btn.disabled = true;
-
-      const enVal = await autoTranslateAPI(val, 'en');
-
-      const cats = getCategories();
-      if (cats.some(c => c.fr === val)) {
-        toast('⚠️ Cette catégorie existe déjà', 'error');
-        btn.textContent = origText;
-        btn.disabled = false;
-        return;
+      const btn = e ? e.target : document.querySelector('button[onclick="addCategory(event)"]');
+      const origText = btn ? btn.textContent : '+ Ajouter';
+      if (btn) {
+        btn.textContent = '🤖...';
+        btn.disabled = true;
       }
-      const isList = document.getElementById('new-cat-is-list').checked;
-      cats.push({ fr: val, en: enVal, isList: isList });
-      saveCategories(cats);
-      input.value = '';
-      renderCategoryList();
-      toast(`✅ Catégorie "${val}" ajoutée`);
-      
-      btn.textContent = origText;
-      btn.disabled = false;
+
+      try {
+        const enVal = await autoTranslateAPI(val, 'en');
+
+        const cats = getCategories();
+        if (cats.some(c => c.fr.toLowerCase() === val.toLowerCase())) {
+          toast('⚠️ Cette catégorie existe déjà', 'error');
+          if (btn) { btn.textContent = origText; btn.disabled = false; }
+          return;
+        }
+        const isList = document.getElementById('new-cat-is-list').checked;
+        cats.push({ fr: val, en: enVal, isList: isList });
+        saveCategories(cats);
+        input.value = '';
+        renderCategoryList();
+        toast(`✅ Catégorie "${val}" ajoutée`);
+      } catch (err) {
+        toast('❌ Erreur lors de l\'ajout', 'error');
+        console.error(err);
+      } finally {
+        if (btn) {
+          btn.textContent = origText;
+          btn.disabled = false;
+        }
+      }
     }
 
     function removeCategory(index) {
