@@ -227,8 +227,6 @@ const MenuPage = () => {
     }
   }, [plats]);
 
-  const isCategoryDrinkLike = (cat: string) => cat.includes("Boisson") || cat.includes("Viennoiserie");
-
   const handleCategoryChange = useCallback((cat: string) => {
     if (activeTab === cat) return;
     startTransition(() => {
@@ -309,16 +307,17 @@ const MenuPage = () => {
             <div style={{ animation: 'fadeIn 0.2s ease-out' }}>
               {categories.map((cat) => {
                 if (activeCategory !== cat) return null;
-                const drinkLike = isCategoryDrinkLike(cat);
                 const itemsInCat = displayedPlats.filter(item => item.category === cat);
+                // Determine layout from the first item's property, default to false (grid)
+                const isList = itemsInCat[0]?.category_is_list ?? false;
                 return (
                   <div
                     key={cat}
                     style={{ animation: 'fadeIn 0.2s ease-out' }}
-                    className={drinkLike ? "flex flex-col gap-3 max-w-3xl mx-auto" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"}
+                    className={isList ? "flex flex-col gap-3 max-w-3xl mx-auto" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"}
                   >
                     {itemsInCat.map((item) =>
-                      drinkLike ? (
+                      isList ? (
                         <DrinkCard key={item.id} item={item} onClick={() => openModal(item)} />
                       ) : (
                         <FoodCard key={item.id} item={item} onClick={() => openModal(item)} trDetails={tr('menu_details')} />

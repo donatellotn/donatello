@@ -893,6 +893,10 @@
         <input id="new-cat-input" type="text" placeholder="Ex: 🍕 Pizza" style="flex:1;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--cream)" />
         <button class="btn btn-primary" onclick="addCategory()">+ Ajouter</button>
       </div>
+      <label style="margin-top:10px;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer">
+        <input type="checkbox" id="new-cat-is-list" />
+        Format liste simple (sans grandes images)
+      </label>
       <div style="display:flex;gap:10px;margin-top:24px">
         <button class="btn btn-primary" style="flex:1" onclick="saveCategoriesAndClose()">✅ Valider</button>
         <button class="btn btn-secondary" style="flex:1" onclick="closeCategoryManager()">Fermer</button>
@@ -1065,6 +1069,8 @@
       // Rebuild #menu-container from menuItems (the authoritative source)
       // This is safer than modifying the parsed DOM piecemeal
       const lines = ['<!-- menu-data.html — Pure content fragment. Dashboard edits this directly. -->', '<div id="menu-container">'];
+      
+      const allCats = getCategories();
 
       menuItems.forEach(item => {
         const safeTitle = escapeHTML(item.title);
@@ -1075,8 +1081,11 @@
         const safeCategory = escapeHTML(item.category || '');
         const safeCategoryEn = escapeHTML(item.category_en || '');
         const price = typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0;
+        
+        const catObj = allCats.find(c => c.fr === item.category) || { isList: false };
+        const isList = catObj.isList ? 'true' : 'false';
 
-        lines.push(`  <div id="${item.id}" class="menu-item" data-category="${safeCategory}" data-category-en="${safeCategoryEn}">`);
+        lines.push(`  <div id="${item.id}" class="menu-item" data-category="${safeCategory}" data-category-en="${safeCategoryEn}" data-is-list="${isList}">`);
         lines.push(`    <img src="${safeImage}" alt="${safeTitle}" class="item-image" />`);
         lines.push(`    <h3 class="item-title">${safeTitle}</h3>`);
         if (safeTitleEn) lines.push(`    <h3 class="item-title-en" style="display:none;">${safeTitleEn}</h3>`);
@@ -1651,7 +1660,7 @@
         row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--cream);border:1px solid var(--border);border-radius:10px;';
         row.innerHTML = `
           <div style="flex:1;display:flex;flex-direction:column;gap:2px;">
-            <span style="font-size:14px;font-weight:500">${catObj.fr}</span>
+            <span style="font-size:14px;font-weight:500">${catObj.fr} ${catObj.isList ? '<span style="font-size:11px;background:#e2e8f0;padding:2px 6px;border-radius:4px;margin-left:6px">Liste</span>' : ''}</span>
             <span style="font-size:12px;color:var(--text-muted)">${catObj.en}</span>
           </div>
           <button class="btn btn-danger btn-sm" onclick="removeCategory(${i})" title="Supprimer">✕</button>
@@ -1679,7 +1688,8 @@
         btn.disabled = false;
         return;
       }
-      cats.push({ fr: val, en: enVal });
+      const isList = document.getElementById('new-cat-is-list').checked;
+      cats.push({ fr: val, en: enVal, isList: isList });
       saveCategories(cats);
       input.value = '';
       renderCategoryList();

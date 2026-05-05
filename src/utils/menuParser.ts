@@ -2,6 +2,7 @@ export interface MenuItem {
   id: string;
   category: string;
   category_en?: string;
+  category_is_list?: boolean;
   title: string;
   title_en?: string;
   price: number;
@@ -22,6 +23,7 @@ export function parseMenuHTML(html: string): MenuItem[] {
       id: div.id,
       category: div.getAttribute('data-category') || '',
       category_en: div.getAttribute('data-category-en') || '',
+      category_is_list: div.getAttribute('data-is-list') === 'true',
       title: div.querySelector('.item-title')?.textContent || '',
       title_en: div.querySelector('.item-title-en')?.textContent || '',
       price: parseFloat(div.querySelector('.item-price')?.textContent || '0') || 0,
