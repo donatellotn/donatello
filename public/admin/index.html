@@ -1261,18 +1261,27 @@
       if (idx !== null) {
         const item = menuItems[idx];
         document.getElementById('f-title').value = item.title || '';
+        document.getElementById('f-title').dataset.lastTranslated = item.title || '';
         document.getElementById('f-title-en').value = item.title_en || '';
+        document.getElementById('f-title-en').dataset.lastTranslated = item.title_en || '';
         document.getElementById('f-price').value = item.price || '';
         document.getElementById('f-category').value = item.category || '';
         document.getElementById('f-image').value = item.image || '';
         document.getElementById('f-description').value = item.description || '';
+        document.getElementById('f-description').dataset.lastTranslated = item.description || '';
         document.getElementById('f-description-en').value = item.description_en || '';
+        document.getElementById('f-description-en').dataset.lastTranslated = item.description_en || '';
         previewImg(item.image);
       } else {
         document.getElementById('item-form').reset();
         document.getElementById('f-title-en').value = '';
         document.getElementById('f-description-en').value = '';
         document.getElementById('img-preview').className = '';
+        
+        document.getElementById('f-title').dataset.lastTranslated = '';
+        document.getElementById('f-title-en').dataset.lastTranslated = '';
+        document.getElementById('f-description').dataset.lastTranslated = '';
+        document.getElementById('f-description-en').dataset.lastTranslated = '';
       }
 
       document.getElementById('modal-overlay').classList.add('open');
@@ -1560,11 +1569,13 @@
       const spinnerEl = document.getElementById(spinnerId);
       
       const text = sourceEl.value.trim();
-      if (!text || targetEl.value.trim()) return; // Skip if empty or target already has text
+      // Skip if empty or if the text hasn't changed since last translation
+      if (!text || sourceEl.dataset.lastTranslated === text) return; 
       
       if (spinnerEl) spinnerEl.style.display = 'inline';
       const translated = await autoTranslateAPI(text, targetLang);
       targetEl.value = translated;
+      sourceEl.dataset.lastTranslated = text; // track so we don't re-translate unnecessarily
       if (spinnerEl) spinnerEl.style.display = 'none';
     }
 
