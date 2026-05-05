@@ -25,7 +25,8 @@ export const Reviews = () => {
   return (
     <section
       id="testimonials"
-      style={{ background: '#F8F5F0', padding: '100px 0', position: 'relative', overflow: 'hidden' }}
+      className="py-16 md:py-[100px]"
+      style={{ background: '#F8F5F0', position: 'relative', overflow: 'hidden' }}
     >
       {/* Big decorative quote */}
       <div

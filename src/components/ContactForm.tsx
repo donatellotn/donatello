@@ -27,7 +27,8 @@ export const ContactForm = () => {
   return (
     <section
       id="info"
-      style={{ background: '#F8F5F0', padding: '100px 0' }}
+      className="py-16 md:py-[100px]"
+      style={{ background: '#F8F5F0' }}
     >
       <div className="max-w-[1140px] mx-auto px-6">
         {/* Header */}

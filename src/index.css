@@ -228,6 +228,15 @@
   background: linear-gradient(90deg, #FBBF24, #F59E0B, #EA580C, #DC2626, #9333EA, #1E3A8A);
 }
 
+/* ── Utilities ── */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

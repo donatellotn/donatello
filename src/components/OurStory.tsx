@@ -20,10 +20,11 @@ export const OurStory = () => {
   return (
     <section
       id="about"
-      style={{ background: '#F8F5F0', padding: '120px 0', overflow: 'hidden' }}
+      className="py-16 md:py-[120px] overflow-hidden"
+      style={{ background: '#F8F5F0' }}
     >
       <div className="max-w-[1140px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-[5fr_6fr] gap-20 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-[5fr_6fr] gap-12 md:gap-20 items-center">
 
           {/* Left — Image */}
           <motion.div

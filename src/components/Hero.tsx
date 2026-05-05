@@ -141,7 +141,14 @@ export const Hero = () => {
       <style>{`
         @media (max-width: 900px) {
           #hero { grid-template-columns: 1fr !important; min-height: auto !important; }
-          #hero > div:last-child { padding: 48px 24px 64px !important; }
+          #hero > div:last-child { 
+            padding: 40px 24px 64px !important; 
+            align-items: center !important;
+            text-align: center !important;
+          }
+          #hero > div:last-child > img { margin: 0 auto 24px auto !important; width: 80px !important; height: 80px !important; }
+          #hero > div:last-child > p { margin: 0 auto 32px auto !important; }
+          #hero > div:last-child > div.flex { justify-content: center !important; }
         }
       `}</style>
     </section>
