@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Hero }        from '../components/Hero';
 import { OurStory }    from '../components/OurStory';
 import { Reviews }     from '../components/Reviews';
@@ -5,11 +6,36 @@ import { ContactForm } from '../components/ContactForm';
 import { Link }        from 'react-router-dom';
 import { motion }      from 'framer-motion';
 import { useLang }     from '../i18n/LangContext';
+import { MenuItem, parseMenuHTML } from '../utils/menuParser';
 
 const base = import.meta.env.BASE_URL;
+const MENU_RAW_URL = base + 'menu-data.html';
 
 export const Home = () => {
-  const { tr } = useLang();
+  const { tr, lang } = useLang();
+  const [featuredItems, setFeaturedItems] = useState<MenuItem[]>([]);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const res = await fetch(`${MENU_RAW_URL}?t=${Date.now()}`);
+        if (!res.ok) return;
+        const html = await res.text();
+        const items = parseMenuHTML(html);
+        const withImages = items.filter(i => i.image && i.image.trim() !== '');
+        setFeaturedItems(withImages.slice(0, 3));
+      } catch (e) {
+        console.error('Failed to load featured menu:', e);
+      }
+    };
+    fetchFeatured();
+  }, []);
+
+  const displayItems = featuredItems.map(p => ({
+    ...p,
+    title: lang === 'en' ? (p.title_en || p.title) : p.title
+  }));
+
   return (
     <main className="flex-grow">
       <Hero />
@@ -57,71 +83,74 @@ export const Home = () => {
               className="grid gap-3"
               style={{ gridTemplateColumns: '1.3fr 1fr', gridTemplateRows: '1fr 1fr' }}
             >
-              {/* Large — Brunch */}
-              <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
-                <img
-                  src={`https://i.ibb.co/d0G5cVfP/donatello-brunch.jpg`}
-                  alt="Brunch Donatello"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: '400px' }}
-                  loading="lazy"
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 px-5 py-4"
-                  style={{
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
-                    fontFamily: '"Abril Fatface",serif',
-                    fontSize: '1rem',
-                    color: '#fff',
-                  }}
-                >
-                  Brunch Gourmand
-                </div>
-              </Link>
+              {displayItems[0] && (
+                <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
+                  <img
+                    src={displayItems[0].image}
+                    alt={displayItems[0].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ minHeight: '400px' }}
+                    loading="lazy"
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 right-0 px-5 py-4"
+                    style={{
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
+                      fontFamily: '"Abril Fatface",serif',
+                      fontSize: '1rem',
+                      color: '#fff',
+                    }}
+                  >
+                    {displayItems[0].title}
+                  </div>
+                </Link>
+              )}
 
-              {/* Cappuccino */}
-              <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
-                <img
-                  src={`https://i.ibb.co/7tZtzyw6/donatello-cappuccino.jpg`}
-                  alt="Cappuccino"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: '190px' }}
-                  loading="lazy"
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 px-5 py-4"
-                  style={{
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
-                    fontFamily: '"Abril Fatface",serif',
-                    fontSize: '1rem',
-                    color: '#fff',
-                  }}
-                >
-                  Cappuccino
-                </div>
-              </Link>
+              {displayItems[1] && (
+                <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
+                  <img
+                    src={displayItems[1].image}
+                    alt={displayItems[1].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ minHeight: '190px' }}
+                    loading="lazy"
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 right-0 px-5 py-4"
+                    style={{
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
+                      fontFamily: '"Abril Fatface",serif',
+                      fontSize: '1rem',
+                      color: '#fff',
+                    }}
+                  >
+                    {displayItems[1].title}
+                  </div>
+                </Link>
+              )}
 
-              {/* Mojito */}
-              <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
-                <img
-                  src={`https://i.ibb.co/VWcK9Rcx/donatello-mojito.jpg`}
-                  alt="Mojito"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  style={{ minHeight: '190px' }}
-                  loading="lazy"
-                />
-                <div
-                  className="absolute bottom-0 left-0 right-0 px-5 py-4"
-                  style={{
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
-                    fontFamily: '"Abril Fatface",serif',
-                    fontSize: '1rem',
-                    color: '#fff',
-                  }}
-                >
-                  Mojito Fruits
-                </div>
-              </Link>
+              {displayItems[2] && (
+                <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
+                  <img
+                    src={displayItems[2].image}
+                    alt={displayItems[2].title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    style={{ minHeight: '190px' }}
+                    loading="lazy"
+                  />
+                  <div
+                    className="absolute bottom-0 left-0 right-0 px-5 py-4"
+                    style={{
+                      background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
+                      fontFamily: '"Abril Fatface",serif',
+                      fontSize: '1rem',
+                      color: '#fff',
+                    }}
+                  >
+                    {displayItems[2].title}
+                  </div>
+                </Link>
+              )}
             </div>
 
             {/* CTA */}

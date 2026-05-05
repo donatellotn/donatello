@@ -4,16 +4,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { useLang } from '../i18n/LangContext';
 
-interface MenuItem {
-  id: string;
-  category: string;
-  title: string;
-  title_en?: string;
-  price: number;
-  image?: string;
-  description?: string;
-  description_en?: string;
-}
+import { MenuItem, parseMenuHTML } from '../utils/menuParser';
 
 const ORDER = [
   "☕ Boisson chaude",
@@ -23,29 +14,6 @@ const ORDER = [
   "🍽️ Plats",
   "✨ Autres"
 ];
-
-// ── Parse menu-data.html fragment → MenuItem[] ──
-function parseMenuHTML(html: string): MenuItem[] {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(`<div>${html}</div>`, 'text/html');
-  const container = doc.querySelector('#menu-container');
-  if (!container) return [];
-
-  const items: MenuItem[] = [];
-  container.querySelectorAll('.menu-item').forEach(div => {
-    items.push({
-      id: div.id,
-      category: div.getAttribute('data-category') || '',
-      title: div.querySelector('.item-title')?.textContent || '',
-      title_en: div.querySelector('.item-title-en')?.textContent || '',
-      price: parseFloat(div.querySelector('.item-price')?.textContent || '0') || 0,
-      image: div.querySelector('.item-image')?.getAttribute('src') || '',
-      description: div.querySelector('.item-description')?.textContent || '',
-      description_en: div.querySelector('.item-description-en')?.textContent || '',
-    });
-  });
-  return items;
-}
 
 
 // ── Drink card — compact list style ──
