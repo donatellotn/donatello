@@ -1593,28 +1593,32 @@
     // ══════════════════════════════════════════
 
     const DEFAULT_CATEGORIES = [
-      { fr: "☕ Cafés & Signatures", en: "☕ Coffee & Signatures" },
-      { fr: "🍵 Thés & Infusions", en: "🍵 Teas & Infusions" },
-      { fr: "🍹 Boissons Fraîches", en: "🍹 Cold Drinks" },
-      { fr: "🥐 Boulangerie & Viennoiseries", en: "🥐 Bakery & Pastries" },
-      { fr: "🍰 Pâtisseries Fines", en: "🍰 Fine Desserts" },
-      { fr: "🍳 Brunch & Salé", en: "🍳 Brunch & Savory" }
+      { fr: "🍰 Pâtisseries Fines", en: "🍰 Cakes & Tarts", isList: false },
+      { fr: "🍳 Petit-Déjeuner & Brunch", en: "🍳 Breakfast & Brunch", isList: false },
+      { fr: "🍽️ Plats & Pizzas", en: "🍽️ Dishes & Pizzas", isList: false },
+      { fr: "☕ Cafés & Signatures", en: "☕ Coffee & Signatures", isList: true },
+      { fr: "🧋 Boissons Glacées", en: "🧋 Iced Drinks", isList: true },
+      { fr: "🍵 Thés & Tisanes", en: "🍵 Teas & Infusions", isList: true },
+      { fr: "🍹 Jus & Mocktails", en: "🍹 Juices & Mocktails", isList: true },
+      { fr: "🥐 Boulangerie & Viennoiseries", en: "🥐 Bakery & Pastries", isList: true },
+      { fr: "🥞 Crêpes & Gaufres", en: "🥞 Crepes & Waffles", isList: true },
+      { fr: "🥪 Sandwichs & Snacks", en: "🥪 Sandwiches & Snacks", isList: true }
     ];
 
     function getCategories() {
-      const saved = localStorage.getItem('donatello_categories_v2');
+      const saved = localStorage.getItem('donatello_categories_v4');
       if (saved) {
         try { 
           const parsed = JSON.parse(saved);
           const mapped = parsed.map(c => {
             if (typeof c === 'string') {
               const def = DEFAULT_CATEGORIES.find(d => d.fr === c);
-              return def ? def : { fr: c, en: c };
+              return def ? def : { fr: c, en: c, isList: false };
             }
             return c;
           });
           if (parsed.some(c => typeof c === 'string')) {
-            localStorage.setItem('donatello_categories_v2', JSON.stringify(mapped));
+            localStorage.setItem('donatello_categories_v4', JSON.stringify(mapped));
           }
           return mapped;
         } catch(e) {}
@@ -1623,7 +1627,7 @@
     }
 
     function saveCategories(cats) {
-      localStorage.setItem('donatello_categories_v2', JSON.stringify(cats));
+      localStorage.setItem('donatello_categories_v4', JSON.stringify(cats));
       repopulateCategorySelect();
     }
 
