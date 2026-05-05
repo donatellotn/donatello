@@ -29,7 +29,7 @@ export const Footer = () => {
                 Donatello
               </h3>
               <p style={{ fontSize: '0.85rem', lineHeight: 1.7, maxWidth: '300px' }}>
-                Salon de Thé à Bizerte — Un voyage entre vintage et modernité où chaque visite est une expérience unique.
+                Un bel endroit à Bizerte pour passer un moment agréable et boire un bon café.
               </p>
               {/* Social */}
               <div className="flex gap-2.5 mt-2">

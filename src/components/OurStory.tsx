@@ -64,13 +64,13 @@ export const OurStory = () => {
                 color: '#5E3A25',
               }}
             >
-              Un Oasis Rétro au Cœur de Bizerte
+              Bienvenue chez Donatello Bizerte
             </h2>
             <p style={{ color: '#A68A6D', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
-              Donatello mêle magistralement une esthétique nostalgique et rétro à une atmosphère fraîche et moderne — une oasis accueillante riche en texture et en couleur.
+              Donatello est un salon de thé chaleureux avec une belle ambiance vintage. Un endroit parfait pour se détendre, boire un bon café et passer un bon moment.
             </p>
             <p style={{ color: '#A68A6D', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
-              Tables en bois brut massif, fauteuils velours, étagère de curiosités vintage — platine vinyle, téléphone à cadran, appareils photo anciens — chaque détail vous transporte dans le temps.
+              Découvrez notre décoration rétro avec des tables en bois, des fauteuils confortables et de beaux objets anciens qui donnent un charme unique à notre café.
             </p>
 
             {/* Tags */}

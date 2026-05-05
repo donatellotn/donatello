@@ -34,8 +34,8 @@ export const ContactForm = () => (
         transition={{ duration: 0.8 }}
         className="text-center mb-14"
       >
-        <span className="section-label">Rendez-nous Visite</span>
-        <h2 className="section-title">Informations Pratiques</h2>
+        <span className="section-label">Où nous trouver</span>
+        <h2 className="section-title">Contact</h2>
         <div className="divider" />
       </motion.div>
 

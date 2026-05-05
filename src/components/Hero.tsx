@@ -116,7 +116,7 @@ export const Hero = () => {
             transitionDelay: '450ms',
           }}
         >
-          Un voyage entre vintage et modernité — où chaque tasse raconte une histoire.
+          Un bel endroit pour boire un bon café et passer un moment agréable.
         </p>
 
         {/* CTAs */}

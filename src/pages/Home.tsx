@@ -28,7 +28,7 @@ export const Home = () => {
             className="text-center mb-14"
           >
             <span className="section-label">Nos Spécialités</span>
-            <h2 className="section-title">Un Festin pour les Sens</h2>
+            <h2 className="section-title">Notre Menu</h2>
             <p style={{
               fontFamily: '"Merriweather",serif',
               fontSize: '0.95rem',
@@ -38,7 +38,7 @@ export const Home = () => {
               lineHeight: 1.8,
               margin: '0 auto',
             }}>
-              Du café d'exception aux créations gourmandes — chaque saveur est une œuvre d'art.
+              Découvrez nos bons cafés, nos boissons fraîches et nos plats délicieux.
             </p>
             <div className="divider" />
           </motion.div>

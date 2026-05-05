@@ -71,7 +71,7 @@ export const Reviews = () => {
           className="text-center mb-14"
         >
           <span className="section-label">Avis Clients</span>
-          <h2 className="section-title">Ce Qu'ils en Disent</h2>
+          <h2 className="section-title">Avis de nos clients</h2>
           <div className="divider" />
         </motion.div>
 
