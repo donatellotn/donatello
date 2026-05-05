@@ -44,7 +44,9 @@ export const Footer = () => {
               {/* Social */}
               <div className="flex gap-2.5 mt-2">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/donatello_coffee/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Instagram"
                   className="flex items-center justify-center transition-all duration-300 hover:bg-[#2C5E5A] hover:-translate-y-0.5 cursor-pointer"
                   style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)' }}
@@ -54,7 +56,9 @@ export const Footer = () => {
                   </svg>
                 </a>
                 <a
-                  href="#"
+                  href="https://www.facebook.com/p/Donatello-Coffee-61578106934628/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label="Facebook"
                   className="flex items-center justify-center transition-all duration-300 hover:bg-[#2C5E5A] hover:-translate-y-0.5 cursor-pointer"
                   style={{ width: '36px', height: '36px', borderRadius: '8px', background: 'rgba(255,255,255,0.06)' }}
