@@ -446,7 +446,8 @@
     }
 
     #modal-overlay,
-    #settings-overlay {
+    #settings-overlay,
+    #category-overlay {
       display: none;
       position: fixed;
       inset: 0;
@@ -459,7 +460,8 @@
     }
 
     #modal-overlay.open,
-    #settings-overlay.open {
+    #settings-overlay.open,
+    #category-overlay.open {
       display: flex;
     }
 
@@ -759,6 +761,7 @@
       <div class="header-actions">
         <button class="btn btn-secondary" onclick="openSettings()" title="Paramètres">⚙️</button>
         <a href="../" class="btn btn-secondary" target="_blank">⬡ Voir le site</a>
+        <button class="btn btn-secondary" onclick="openCategoryManager()">📂 Catégories</button>
         <button class="btn btn-primary" onclick="openModal(null)">+ Ajouter un plat</button>
       </div>
     </header>
@@ -774,7 +777,6 @@
           <div class="filter-tabs" id="filter-tabs"></div>
         </div>
         <div style="display:flex;gap:8px;">
-          <button class="btn btn-secondary" onclick="openCategoryManager()">📂 Catégories</button>
           <button class="btn btn-primary" id="save-btn" onclick="saveToFile()">💾 Sauvegarder</button>
         </div>
       </div>
