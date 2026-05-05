@@ -7,7 +7,7 @@ export const t = {
     nav_menu: 'Menu',
     nav_reviews: 'Avis',
     nav_contact: 'Contact',
-    nav_call: 'Appelez-nous',
+    nav_call: '55 540 520',
     nav_open: 'Ouvrir le menu',
     nav_close: 'Fermer',
 
@@ -81,7 +81,7 @@ export const t = {
     nav_menu: 'Menu',
     nav_reviews: 'Reviews',
     nav_contact: 'Contact',
-    nav_call: 'Call Us',
+    nav_call: '55 540 520',
     nav_open: 'Open menu',
     nav_close: 'Close',
 
