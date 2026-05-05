@@ -1586,7 +1586,18 @@
       if (saved) {
         try { 
           const parsed = JSON.parse(saved);
-          return parsed.map(c => typeof c === 'string' ? { fr: c, en: c } : c);
+          const mapped = parsed.map(c => {
+            if (typeof c === 'string') {
+              const def = DEFAULT_CATEGORIES.find(d => d.fr === c);
+              return def ? def : { fr: c, en: c };
+            }
+            return c;
+          });
+          // Update localStorage with the fixed format if it contained strings
+          if (parsed.some(c => typeof c === 'string')) {
+            localStorage.setItem('donatello_categories', JSON.stringify(mapped));
+          }
+          return mapped;
         } catch(e) {}
       }
       return [...DEFAULT_CATEGORIES];
