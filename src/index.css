@@ -31,13 +31,13 @@
   --color-text: #44280B;
   --color-muted: #9A7B5A;
 
-  /* Legacy aliases for menu components (keep untouched) */
-  --color-madelina-terracotta: #B45309;
-  --color-madelina-peach: #C0654A;
-  --color-madelina-navy: #1C1917;
-  --color-madelina-mustard: #F5E6D3;
-  --color-madelina-cream: #FDF8EF;
-  --color-madelina-wood: #9A7B5A;
+  /* Donatello menu aliases */
+  --color-donatello-terracotta: #B45309;
+  --color-donatello-peach: #D97706;
+  --color-donatello-navy: #1C1917;
+  --color-donatello-mustard: #F5E6D3;
+  --color-donatello-cream: #FDF8EF;
+  --color-donatello-wood: #9A7B5A;
 
   /* Donatello semantic aliases */
   --color-terracotta: #B45309;

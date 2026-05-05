@@ -34,7 +34,7 @@ export const OurStory = () => {
           >
             <div className="rounded-2xl overflow-hidden relative" style={{ boxShadow: '0 24px 48px rgba(0,0,0,0.12)' }}>
               <img
-                src={`${base}images/about-interior.png`}
+                src={`https://i.ibb.co/JFz4G42k/donatello-about.jpg`}
                 alt="Intérieur vintage de Donatello"
                 className="w-full object-cover transition-transform duration-[8s] ease hover:scale-[1.04]"
                 style={{ height: '520px' }}

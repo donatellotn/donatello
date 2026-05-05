@@ -58,7 +58,7 @@ export const Home = () => {
               {/* Large — Brunch */}
               <div className="relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
                 <img
-                  src={`${base}images/menu-brunch.png`}
+                  src={`https://i.ibb.co/d0G5cVfP/donatello-brunch.jpg`}
                   alt="Brunch Donatello"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   style={{ minHeight: '400px' }}
@@ -80,7 +80,7 @@ export const Home = () => {
               {/* Cappuccino */}
               <div className="relative overflow-hidden rounded-xl cursor-pointer group">
                 <img
-                  src={`${base}images/menu-cappuccino.png`}
+                  src={`https://i.ibb.co/7tZtzyw6/donatello-cappuccino.jpg`}
                   alt="Cappuccino"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   style={{ minHeight: '190px' }}
@@ -102,7 +102,7 @@ export const Home = () => {
               {/* Mojito */}
               <div className="relative overflow-hidden rounded-xl cursor-pointer group">
                 <img
-                  src={`${base}images/menu-mojito.png`}
+                  src={`https://i.ibb.co/VWcK9Rcx/donatello-mojito.jpg`}
                   alt="Mojito"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   style={{ minHeight: '190px' }}

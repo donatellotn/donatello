@@ -50,7 +50,7 @@ export const Header = () => {
           }}
         >
           <img
-            src={`${import.meta.env.BASE_URL}logos/Logo-donatello.jpg`}
+            src={'https://i.ibb.co/XfZJNgWQ/donatello-logo.jpg'}
             alt="Donatello"
             className="h-11 w-11 rounded-full object-cover"
           />

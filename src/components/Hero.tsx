@@ -16,7 +16,7 @@ export const Hero = () => {
       {/* Left — Image */}
       <div className="relative overflow-hidden hero-visual max-md:h-[50vh]">
         <img
-          src={`${base}images/hero-bg.png`}
+          src={`https://i.ibb.co/SXv4yBx0/donatello-hero.jpg`}
           alt="Intérieur Donatello"
           className="w-full h-full object-cover transition-transform duration-[12s] ease-out"
           style={{
@@ -43,7 +43,7 @@ export const Hero = () => {
       >
         {/* Logo badge */}
         <img
-          src={`${base}logos/Logo-donatello.jpg`}
+          src={`https://i.ibb.co/XfZJNgWQ/donatello-logo.jpg`}
           alt="Donatello"
           className="w-[100px] h-[100px] rounded-full object-cover mb-8 transition-all duration-700"
           style={{
