@@ -1161,6 +1161,7 @@
       renderFilters();
       buildTable();
       applyFilter();
+      repopulateCategorySelect();
     }
 
     function renderStats() {
@@ -1788,9 +1789,7 @@
     }
 
     // Override init to use dynamic categories
-    document.addEventListener('DOMContentLoaded', () => {
-      repopulateCategorySelect();
-    });
+    // (Categories are now populated via render() after loadMenu)
   </script>
 </body>
 
