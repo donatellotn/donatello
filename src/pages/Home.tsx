@@ -58,7 +58,7 @@ export const Home = () => {
               style={{ gridTemplateColumns: '1.3fr 1fr', gridTemplateRows: '1fr 1fr' }}
             >
               {/* Large — Brunch */}
-              <div className="relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
+              <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
                 <img
                   src={`https://i.ibb.co/d0G5cVfP/donatello-brunch.jpg`}
                   alt="Brunch Donatello"
@@ -77,10 +77,10 @@ export const Home = () => {
                 >
                   Brunch Gourmand
                 </div>
-              </div>
+              </Link>
 
               {/* Cappuccino */}
-              <div className="relative overflow-hidden rounded-xl cursor-pointer group">
+              <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
                 <img
                   src={`https://i.ibb.co/7tZtzyw6/donatello-cappuccino.jpg`}
                   alt="Cappuccino"
@@ -99,10 +99,10 @@ export const Home = () => {
                 >
                   Cappuccino
                 </div>
-              </div>
+              </Link>
 
               {/* Mojito */}
-              <div className="relative overflow-hidden rounded-xl cursor-pointer group">
+              <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
                 <img
                   src={`https://i.ibb.co/VWcK9Rcx/donatello-mojito.jpg`}
                   alt="Mojito"
@@ -121,7 +121,7 @@ export const Home = () => {
                 >
                   Mojito Fruits
                 </div>
-              </div>
+              </Link>
             </div>
 
             {/* CTA */}
