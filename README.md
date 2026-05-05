@@ -1,18 +1,7 @@
 # Madelina
 
-A premium digital experience for **Madélina** — an artisan pastry shop and café in Bizerte, Tunisia.
+A premium digital experience for **Donatello** — café in Bizerte, Tunisia.
 
----
-
-## Live
-
-🌐 [madelina.tn](madelina.tn)
-
----
-
-## About the Project
-
-Madelina is a high-end website designed to reflect the elegance and authenticity of the Madélina brand. It serves as a digital showcase for the café's menu, story, and contact information — crafted with precision and attention to detail.
 
 ---
 
