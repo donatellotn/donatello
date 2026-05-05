@@ -23,7 +23,7 @@ const infoItems = [
 export const ContactForm = () => (
   <section
     id="info"
-    style={{ background: '#FDF8EF', padding: '100px 0' }}
+    style={{ background: '#F5E6D3', padding: '100px 0' }}
   >
     <div className="max-w-[1140px] mx-auto px-6">
       {/* Header */}

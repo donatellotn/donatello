@@ -249,7 +249,7 @@ const MenuPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: '#FDF8EF' }}>
+      <div className="min-h-screen flex flex-col" style={{ background: '#F5E6D3' }}>
         <Header />
         <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
           <div className="min-h-[50vh] flex items-center justify-center">
@@ -265,7 +265,7 @@ const MenuPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#FDF8EF' }}>
+    <div className="min-h-screen flex flex-col" style={{ background: '#F5E6D3' }}>
       <Header />
 
       <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
