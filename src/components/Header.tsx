@@ -2,22 +2,57 @@ import { useState, useEffect } from 'react';
 import { Phone } from 'lucide-react';
 import { useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useLang } from '../i18n/LangContext';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
+  const { lang, setLang, tr } = useLang();
 
   useEffect(() => {
     return scrollY.on('change', (v) => setIsScrolled(v > 60));
   }, [scrollY]);
 
   const navItems = [
-    { label: 'À Propos', href: '/#about' },
-    { label: 'Menu',     href: '/menu' },
-    { label: 'Avis',     href: '/#testimonials' },
-    { label: 'Contact',  href: '/#info' },
+    { label: tr('nav_about'), href: '/#about' },
+    { label: tr('nav_menu'),  href: '/menu' },
+    { label: tr('nav_reviews'), href: '/#testimonials' },
+    { label: tr('nav_contact'),  href: '/#info' },
   ];
+
+  const LangToggle = ({ className = '' }: { className?: string }) => (
+    <button
+      onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
+      aria-label="Switch language"
+      className={className}
+      style={{
+        fontFamily: '"Inter",sans-serif',
+        fontSize: '0.72rem',
+        fontWeight: 700,
+        letterSpacing: '1.5px',
+        textTransform: 'uppercase' as const,
+        padding: '6px 12px',
+        borderRadius: '6px',
+        border: '1.5px solid rgba(193,92,61,0.35)',
+        background: 'transparent',
+        color: '#C15C3D',
+        cursor: 'pointer',
+        transition: 'all 200ms',
+        lineHeight: 1,
+      }}
+      onMouseEnter={e => {
+        (e.target as HTMLButtonElement).style.background = '#C15C3D';
+        (e.target as HTMLButtonElement).style.color = '#fff';
+      }}
+      onMouseLeave={e => {
+        (e.target as HTMLButtonElement).style.background = 'transparent';
+        (e.target as HTMLButtonElement).style.color = '#C15C3D';
+      }}
+    >
+      {lang === 'fr' ? 'EN' : 'FR'}
+    </button>
+  );
 
   return (
     <header
@@ -28,7 +63,7 @@ export const Header = () => {
           : 'py-5'
       }`}
       style={{
-        background: isScrolled ? 'rgba(253,248,239,0.88)' : 'transparent',
+        background: isScrolled ? 'rgba(248,245,240,0.92)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(20px)' : 'none',
         WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
         boxShadow: isScrolled ? '0 1px 0 rgba(0,0,0,0.06)' : 'none',
@@ -83,8 +118,9 @@ export const Header = () => {
           ))}
         </nav>
 
-        {/* CTA */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* CTA + Lang toggle */}
+        <div className="hidden md:flex items-center gap-3">
+          <LangToggle />
           <a
             href="tel:+21655540520"
             id="nav-phone-btn"
@@ -103,7 +139,7 @@ export const Header = () => {
             }}
           >
             <Phone size={14} strokeWidth={1.5} />
-            Appelez-nous
+            {tr('nav_call')}
           </a>
         </div>
 
@@ -113,7 +149,7 @@ export const Header = () => {
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className="md:hidden p-2 cursor-pointer"
           style={{ background: 'none', border: 'none', color: '#5E3A25' }}
-          aria-label="Ouvrir le menu"
+          aria-label={tr('nav_open')}
         >
           {isMobileMenuOpen ? (
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -132,7 +168,7 @@ export const Header = () => {
         <div
           className="md:hidden fixed inset-0 z-[999] flex flex-col items-center justify-center gap-7"
           style={{
-            background: 'rgba(253,248,239,0.98)',
+            background: 'rgba(248,245,240,0.98)',
             backdropFilter: 'blur(20px)',
           }}
         >
@@ -140,7 +176,7 @@ export const Header = () => {
             onClick={() => setIsMobileMenuOpen(false)}
             className="absolute top-5 right-6 cursor-pointer"
             style={{ background: 'none', border: 'none', color: '#5E3A25' }}
-            aria-label="Fermer"
+            aria-label={tr('nav_close')}
           >
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
@@ -157,7 +193,8 @@ export const Header = () => {
               {item.label}
             </Link>
           ))}
-          <a href="tel:+21655540520" className="btn-primary mt-4">Appelez-nous</a>
+          <LangToggle className="mt-2" />
+          <a href="tel:+21655540520" className="btn-primary mt-2">{tr('nav_call')}</a>
         </div>
       )}
     </header>

@@ -5,6 +5,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import MenuPage from './pages/MenuPage';
+import { LangProvider } from './i18n/LangContext';
 
 
 // Scroll to #hash after navigation
@@ -26,17 +27,19 @@ function ScrollToHash() {
 
 export default function App() {
   return (
-    <Router basename="/donatello/">
-      <ScrollToHash />
-      <div className="min-h-screen flex flex-col" style={{ background: '#F8F5F0' }}>
-        <Routes>
-          <Route path="/" element={<><Header /><Home /><Footer /></>} />
-          <Route path="/menu" element={<MenuPage />} />
+    <LangProvider>
+      <Router basename="/donatello/">
+        <ScrollToHash />
+        <div className="min-h-screen flex flex-col" style={{ background: '#F8F5F0' }}>
+          <Routes>
+            <Route path="/" element={<><Header /><Home /><Footer /></>} />
+            <Route path="/menu" element={<MenuPage />} />
 
-          
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </div>
-    </Router>
+            
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+      </Router>
+    </LangProvider>
   );
 }

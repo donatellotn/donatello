@@ -4,10 +4,12 @@ import { Reviews }     from '../components/Reviews';
 import { ContactForm } from '../components/ContactForm';
 import { Link }        from 'react-router-dom';
 import { motion }      from 'framer-motion';
+import { useLang }     from '../i18n/LangContext';
 
 const base = import.meta.env.BASE_URL;
 
 export const Home = () => {
+  const { tr } = useLang();
   return (
     <main className="flex-grow">
       <Hero />
@@ -27,8 +29,8 @@ export const Home = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-14"
           >
-            <span className="section-label">Nos Spécialités</span>
-            <h2 className="section-title">Notre Menu</h2>
+            <span className="section-label">{tr('specials_label')}</span>
+            <h2 className="section-title">{tr('specials_title')}</h2>
             <p style={{
               fontFamily: '"Merriweather",serif',
               fontSize: '0.95rem',
@@ -38,7 +40,7 @@ export const Home = () => {
               lineHeight: 1.8,
               margin: '0 auto',
             }}>
-              Découvrez nos bons cafés, nos boissons fraîches et nos plats délicieux.
+              {tr('specials_desc')}
             </p>
             <div className="divider" />
           </motion.div>
@@ -125,7 +127,7 @@ export const Home = () => {
             {/* CTA */}
             <div className="text-center mt-9">
               <Link to="/menu" id="home-full-menu-btn" className="btn-primary">
-                Voir le Menu Complet
+                {tr('specials_cta')}
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                 </svg>

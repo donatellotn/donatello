@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLang } from '../i18n/LangContext';
 
 export const Hero = () => {
   const [visible, setVisible] = useState(false);
   useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
-
-  const base = import.meta.env.BASE_URL;
+  const { tr } = useLang();
 
   return (
     <section
@@ -68,7 +68,7 @@ export const Hero = () => {
             transitionDelay: '150ms',
           }}
         >
-          Salon de Thé · Bizerte
+          {tr('hero_label')}
         </div>
 
         {/* Title */}
@@ -107,7 +107,7 @@ export const Hero = () => {
           style={{
             fontFamily: '"Merriweather",serif',
             fontSize: '1rem',
-            color: 'rgba(253,248,239,0.6)',
+            color: 'rgba(248,245,240,0.6)',
             fontWeight: 300,
             maxWidth: '380px',
             lineHeight: 1.8,
@@ -116,7 +116,7 @@ export const Hero = () => {
             transitionDelay: '450ms',
           }}
         >
-          Un bel endroit pour boire un bon café et passer un moment agréable.
+          {tr('hero_tagline')}
         </p>
 
         {/* CTAs */}
@@ -129,10 +129,10 @@ export const Hero = () => {
           }}
         >
           <Link to="/menu" id="hero-menu-btn" className="btn-primary">
-            Découvrir le Menu
+            {tr('hero_cta_menu')}
           </Link>
           <a href="tel:+21655540520" id="hero-contact-btn" className="btn-outline">
-            Nous Contacter
+            {tr('hero_cta_contact')}
           </a>
         </div>
       </div>

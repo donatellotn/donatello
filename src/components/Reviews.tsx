@@ -1,23 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-
-const reviews = [
-  {
-    stars: 5,
-    text: 'Excellent café ! Musique et paix. Un endroit parfait pour se détendre et profiter d\'un moment de tranquillité absolue.',
-    author: 'NaNa G.',
-  },
-  {
-    stars: 5,
-    text: 'L\'ambiance est incroyable — le décor vintage, la musique, l\'accueil chaleureux. Un vrai coup de cœur à Bizerte.',
-    author: 'Moez Z.',
-  },
-  {
-    stars: 5,
-    text: 'Le brunch est un festin pour les yeux et le palais. Les mojitos aux fruits sont absolument spectaculaires !',
-    author: 'Sarah M.',
-  },
-];
+import { useLang } from '../i18n/LangContext';
 
 const StarIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '18px', height: '18px', color: '#C15C3D' }}>
@@ -27,10 +10,12 @@ const StarIcon = () => (
 
 export const Reviews = () => {
   const [current, setCurrent] = useState(0);
+  const { tr, trArr } = useLang();
+  const reviews = trArr('reviews') as { text: string; author: string; stars?: number }[];
 
   const next = useCallback(() => {
     setCurrent(prev => (prev + 1) % reviews.length);
-  }, []);
+  }, [reviews.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 5000);
@@ -70,8 +55,8 @@ export const Reviews = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-14"
         >
-          <span className="section-label">Avis Clients</span>
-          <h2 className="section-title">Avis de nos clients</h2>
+          <span className="section-label">{tr('reviews_label')}</span>
+          <h2 className="section-title">{tr('reviews_title')}</h2>
           <div className="divider" />
         </motion.div>
 
@@ -98,7 +83,7 @@ export const Reviews = () => {
             >
               {/* Stars */}
               <div className="flex gap-0.5 mb-6">
-                {[...Array(review.stars)].map((_, j) => <StarIcon key={j} />)}
+                {[...Array(review.stars ?? 5)].map((_, j) => <StarIcon key={j} />)}
               </div>
               {/* Quote */}
               <blockquote
@@ -109,43 +94,44 @@ export const Reviews = () => {
                   color: '#4A3424',
                   lineHeight: 1.9,
                   marginBottom: '24px',
-                  fontWeight: 300,
                 }}
               >
-                «&nbsp;{review.text}&nbsp;»
+                "{review.text}"
               </blockquote>
               {/* Author */}
-              <div
+              <cite
                 style={{
                   fontFamily: '"Inter",sans-serif',
-                  fontWeight: 600,
-                  fontSize: '0.82rem',
-                  color: '#A68A6D',
-                  letterSpacing: '1px',
+                  fontSize: '0.78rem',
+                  fontWeight: 700,
+                  letterSpacing: '2px',
                   textTransform: 'uppercase',
+                  color: '#C15C3D',
+                  fontStyle: 'normal',
                 }}
               >
-                {review.author}
-              </div>
+                — {review.author}
+              </cite>
             </div>
           ))}
         </motion.div>
 
         {/* Dots */}
-        <div className="flex gap-2 justify-center mt-9">
+        <div className="flex justify-center gap-2 mt-10">
           {reviews.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              aria-label={`Avis ${i + 1}`}
-              className="transition-all duration-300 cursor-pointer"
+              aria-label={`Review ${i + 1}`}
               style={{
-                width: current === i ? '24px' : '8px',
+                width: current === i ? '28px' : '8px',
                 height: '8px',
-                borderRadius: current === i ? '4px' : '50%',
-                background: '#C15C3D',
-                opacity: current === i ? 1 : 0.2,
+                borderRadius: '4px',
+                background: current === i ? '#C15C3D' : 'rgba(193,92,61,0.25)',
                 border: 'none',
+                cursor: 'pointer',
+                transition: 'all 300ms',
+                padding: 0,
               }}
             />
           ))}

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useLang } from '../i18n/LangContext';
 
 const fadeIn = {
   hidden:  { opacity: 0, y: 32 },
@@ -13,9 +14,9 @@ const fadeRight = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
 };
 
-const base = import.meta.env.BASE_URL;
-
 export const OurStory = () => {
+  const { tr, trArr } = useLang();
+
   return (
     <section
       id="about"
@@ -55,7 +56,7 @@ export const OurStory = () => {
             whileInView="visible"
             viewport={{ once: true }}
           >
-            <span className="section-label" style={{ textAlign: 'left' }}>Notre Histoire</span>
+            <span className="section-label" style={{ textAlign: 'left' }}>{tr('story_label')}</span>
             <h2
               className="mb-6"
               style={{
@@ -64,18 +65,18 @@ export const OurStory = () => {
                 color: '#5E3A25',
               }}
             >
-              Bienvenue chez Donatello Bizerte
+              {tr('story_title')}
             </h2>
             <p style={{ color: '#A68A6D', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
-              Donatello est un salon de thé chaleureux avec une belle ambiance vintage. Un endroit parfait pour se détendre, boire un bon café et passer un bon moment.
+              {tr('story_p1')}
             </p>
             <p style={{ color: '#A68A6D', fontWeight: 300, lineHeight: 1.9, marginBottom: '20px', fontSize: '0.95rem', fontFamily: '"Merriweather",serif' }}>
-              Découvrez notre décoration rétro avec des tables en bois, des fauteuils confortables et de beaux objets anciens qui donnent un charme unique à notre café.
+              {tr('story_p2')}
             </p>
 
             {/* Tags */}
             <div className="flex flex-wrap gap-2.5 mt-7">
-              {['Café d\'Exception', 'Ouvert dès 7h', 'Musique & Ambiance', 'Décor Vintage', 'Terrasse Ensoleillée'].map(tag => (
+              {trArr('story_tags').map((tag: string) => (
                 <span
                   key={tag}
                   style={{
