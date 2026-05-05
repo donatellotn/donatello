@@ -28,7 +28,7 @@ export default function App() {
   return (
     <Router basename="/donatello/">
       <ScrollToHash />
-      <div className="min-h-screen flex flex-col selection:bg-madelina-terracotta selection:text-white">
+      <div className="min-h-screen flex flex-col" style={{ background: '#FDF8EF' }}>
         <Routes>
           <Route path="/" element={<><Header /><Home /><Footer /></>} />
           <Route path="/menu" element={<MenuPage />} />

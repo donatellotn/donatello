@@ -1,72 +1,146 @@
-import { Hero }     from '../components/Hero';
-import { OurStory } from '../components/OurStory';
-import { Menu }     from '../components/Menu';
-import { Reviews }  from '../components/Reviews';
+import { Hero }        from '../components/Hero';
+import { OurStory }    from '../components/OurStory';
+import { Reviews }     from '../components/Reviews';
 import { ContactForm } from '../components/ContactForm';
-import { Link }     from 'react-router-dom';
-import { motion }   from 'framer-motion';
+import { Link }        from 'react-router-dom';
+import { motion }      from 'framer-motion';
+
+const base = import.meta.env.BASE_URL;
 
 export const Home = () => {
   return (
     <main className="flex-grow">
       <Hero />
-
-      {/* ── Our Story ── */}
       <OurStory />
 
-      {/* ── Menu Preview ── */}
+      {/* ── Menu Teaser — Cinematic ── */}
       <section
-        id="menu"
-        style={{ background: '#FAF7F4', padding: '7rem 1.5rem', textAlign: 'center' }}
+        id="menu-teaser"
+        style={{ background: '#FDF8EF', padding: '100px 0' }}
       >
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1140px] mx-auto px-6">
+          {/* Header */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "150px" }}
-            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-14"
           >
-            {/* label */}
-            <span style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.65rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#A64B2A', fontWeight: 500 }}>
-              Notre Menu
-            </span>
+            <span className="section-label">Nos Spécialités</span>
+            <h2 className="section-title">Un Festin pour les Sens</h2>
+            <p style={{
+              fontFamily: '"Merriweather",serif',
+              fontSize: '0.95rem',
+              color: '#9A7B5A',
+              maxWidth: '480px',
+              fontWeight: 300,
+              lineHeight: 1.8,
+              margin: '0 auto',
+            }}>
+              Du café d'exception aux créations gourmandes — chaque saveur est une œuvre d'art.
+            </p>
+            <div className="divider" />
+          </motion.div>
 
-            {/* heading */}
-            <h2 style={{ fontFamily: '"Playfair Display",Georgia,serif', fontSize: 'clamp(2rem,4.5vw,3.2rem)', color: '#2A2118', marginTop: '1rem', marginBottom: '1rem', lineHeight: 1.1 }}>
-              Découvrez notre Menu
-            </h2>
+          {/* Image Grid */}
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="max-w-[900px] mx-auto"
+          >
+            <div
+              className="grid gap-3"
+              style={{ gridTemplateColumns: '1.3fr 1fr', gridTemplateRows: '1fr 1fr' }}
+            >
+              {/* Large — Brunch */}
+              <div className="relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
+                <img
+                  src={`${base}images/menu-brunch.png`}
+                  alt="Brunch Donatello"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ minHeight: '400px' }}
+                  loading="lazy"
+                />
+                <div
+                  className="absolute bottom-0 left-0 right-0 px-5 py-4"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
+                    fontFamily: '"Abril Fatface",serif',
+                    fontSize: '1rem',
+                    color: '#fff',
+                  }}
+                >
+                  Brunch Gourmand
+                </div>
+              </div>
 
-            {/* arch line divider */}
-            <div className="flex items-center justify-center gap-5 mb-10">
-              <span className="h-px w-16 bg-[#A64B2A] opacity-20" />
-              <svg width="20" height="26" viewBox="0 0 100 130" fill="none" aria-hidden="true">
-                <path d="M10 130 V52 Q10 10 50 10 Q90 10 90 52 V130 Z" stroke="#A64B2A" strokeWidth="6" fill="none"/>
-                <line x1="10" y1="72" x2="90" y2="72" stroke="#A64B2A" strokeWidth="3"/>
-                <line x1="50" y1="72" x2="50" y2="130" stroke="#A64B2A" strokeWidth="3"/>
-              </svg>
-              <span className="h-px w-16 bg-[#A64B2A] opacity-20" />
+              {/* Cappuccino */}
+              <div className="relative overflow-hidden rounded-xl cursor-pointer group">
+                <img
+                  src={`${base}images/menu-cappuccino.png`}
+                  alt="Cappuccino"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ minHeight: '190px' }}
+                  loading="lazy"
+                />
+                <div
+                  className="absolute bottom-0 left-0 right-0 px-5 py-4"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
+                    fontFamily: '"Abril Fatface",serif',
+                    fontSize: '1rem',
+                    color: '#fff',
+                  }}
+                >
+                  Cappuccino
+                </div>
+              </div>
+
+              {/* Mojito */}
+              <div className="relative overflow-hidden rounded-xl cursor-pointer group">
+                <img
+                  src={`${base}images/menu-mojito.png`}
+                  alt="Mojito"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ minHeight: '190px' }}
+                  loading="lazy"
+                />
+                <div
+                  className="absolute bottom-0 left-0 right-0 px-5 py-4"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
+                    fontFamily: '"Abril Fatface",serif',
+                    fontSize: '1rem',
+                    color: '#fff',
+                  }}
+                >
+                  Mojito Fruits
+                </div>
+              </div>
             </div>
 
-            <p style={{ fontFamily: '"Inter",sans-serif', color: '#7A6A5A', maxWidth: '36rem', margin: '0 auto 3rem', lineHeight: 1.75, fontSize: '1.0625rem' }}>
-              Pâtisseries fines, café d'exception et brunchs gourmands.
-              Consultez notre menu complet en ligne.
-            </p>
-          </motion.div>
-
-          <Menu isPreview={true} />
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "150px" }}
-            transition={{ delay: 0.1, duration: 0.5 }}
-            className="mt-14"
-          >
-            <Link to="/menu" id="home-full-menu-btn" className="btn-primary inline-flex">
-              Voir le Menu Complet
-            </Link>
+            {/* CTA */}
+            <div className="text-center mt-9">
+              <Link to="/menu" id="home-full-menu-btn" className="btn-primary">
+                Voir le Menu Complet
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+                </svg>
+              </Link>
+            </div>
           </motion.div>
         </div>
+
+        <style>{`
+          @media (max-width: 640px) {
+            #menu-teaser .grid { grid-template-columns: 1fr !important; }
+            #menu-teaser .grid > div:first-child { grid-row: span 1 !important; }
+            #menu-teaser .grid > div:first-child img { min-height: 240px !important; }
+          }
+        `}</style>
       </section>
 
       <Reviews />

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donatello — Salon de Thé | Bizerte</title>
+  <meta name="description" content="Donatello Salon de Thé à Bizerte. Un café vintage où nostalgie et modernité se rencontrent. Café, thé, brunch et cocktails dans une ambiance rétro unique.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="logos/Logo-donatello.jpg">
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="#hero" class="nav-logo"><img src="logos/Logo-donatello.jpg" alt="Donatello Logo"><span>Donatello</span></a>
+    <div class="nav-links">
+      <a href="#about">À Propos</a><a href="menu.html">Menu</a><a href="#testimonials">Avis</a><a href="#info">Contact</a>
+      <a href="tel:+21655540520" class="nav-cta"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Appelez-nous</a>
+    </div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menu"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Fermer"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="#about" class="mobile-link">À Propos</a><a href="menu.html" class="mobile-link">Menu</a><a href="#testimonials" class="mobile-link">Avis</a><a href="#info" class="mobile-link">Contact</a>
+  <a href="tel:+21655540520" class="btn-primary">Appelez-nous</a>
+</div>
+
+<!-- Hero — Split Editorial -->
+<section class="hero" id="hero">
+  <div class="hero-visual"><img src="images/hero-bg.png" alt="Intérieur Donatello"></div>
+  <div class="hero-content">
+    <img src="logos/Logo-donatello.jpg" alt="Donatello" class="hero-logo">
+    <div class="hero-eyebrow">Salon de Thé · Bizerte</div>
+    <h1>Donatello</h1>
+    <div class="hero-line"></div>
+    <p>Un voyage entre vintage et modernité — où chaque tasse raconte une histoire.</p>
+    <div class="hero-actions">
+      <a href="menu.html" class="btn-primary">Découvrir le Menu</a>
+      <a href="tel:+21655540520" class="btn-outline">Nous Contacter</a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="section about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap reveal-left">
+        <div class="about-image"><img src="images/about-interior.png" alt="Intérieur vintage de Donatello"></div>
+        <div class="about-accent"></div>
+      </div>
+      <div class="about-text reveal-right">
+        <span class="section-label">Notre Histoire</span>
+        <h2>Un Oasis Rétro au Cœur de Bizerte</h2>
+        <p>Donatello mêle magistralement une esthétique nostalgique et rétro à une atmosphère fraîche et moderne — une oasis accueillante riche en texture et en couleur.</p>
+        <p>Tables en bois brut massif, fauteuils velours, étagère de curiosités vintage — platine vinyle, téléphone à cadran, appareils photo anciens — chaque détail vous transporte dans le temps.</p>
+        <div class="about-tags">
+          <span class="about-tag">Café d'Exception</span>
+          <span class="about-tag">Ouvert dès 7h</span>
+          <span class="about-tag">Musique & Ambiance</span>
+          <span class="about-tag">Décor Vintage</span>
+          <span class="about-tag">Terrasse Ensoleillée</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu Teaser -->
+<section class="section menu-teaser" id="menu-teaser">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Nos Spécialités</span>
+      <h2 class="section-title">Un Festin pour les Sens</h2>
+      <p class="section-desc">Du café d'exception aux créations gourmandes — chaque saveur est une œuvre d'art.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="teaser-showcase reveal">
+      <div class="teaser-img-grid">
+        <div class="teaser-img teaser-img-large"><img src="images/menu-brunch.png" alt="Brunch Donatello"><div class="teaser-img-label">Brunch Gourmand</div></div>
+        <div class="teaser-img"><img src="images/menu-cappuccino.png" alt="Cappuccino"><div class="teaser-img-label">Cappuccino</div></div>
+        <div class="teaser-img"><img src="images/menu-mojito.png" alt="Mojito"><div class="teaser-img-label">Mojito Fruits</div></div>
+      </div>
+      <div class="teaser-cta">
+        <a href="menu.html" class="btn-primary">Voir le Menu Complet <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Avis Clients</span>
+      <h2 class="section-title">Ce Qu'ils en Disent</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="testimonial-slider reveal">
+      <div class="testimonial-card active">
+        <div class="testimonial-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>«&nbsp;Excellent café ! Musique et paix. Un endroit parfait pour se détendre et profiter d'un moment de tranquillité absolue.&nbsp;»</blockquote>
+        <div class="testimonial-author">NaNa G.</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>«&nbsp;L'ambiance est incroyable — le décor vintage, la musique, l'accueil chaleureux. Un vrai coup de cœur à Bizerte.&nbsp;»</blockquote>
+        <div class="testimonial-author">Moez Z.</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <blockquote>«&nbsp;Le brunch est un festin pour les yeux et le palais. Les mojitos aux fruits sont absolument spectaculaires !&nbsp;»</blockquote>
+        <div class="testimonial-author">Sarah M.</div>
+      </div>
+    </div>
+    <div class="testimonial-dots">
+      <button class="testimonial-dot active" data-index="0" aria-label="Avis 1"></button>
+      <button class="testimonial-dot" data-index="1" aria-label="Avis 2"></button>
+      <button class="testimonial-dot" data-index="2" aria-label="Avis 3"></button>
+    </div>
+  </div>
+</section>
+
+<!-- Info -->
+<section class="section info" id="info">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-label">Rendez-nous Visite</span>
+      <h2 class="section-title">Informations Pratiques</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-details reveal-left">
+        <div class="info-item"><div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div><div><h4>Adresse</h4><p>Bizerte, Tunisie</p></div></div>
+        <div class="info-item"><div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h4>Horaires</h4><p>Tous les jours : 7h00 — Tard le soir</p></div></div>
+        <div class="info-item"><div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.11 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><h4>Téléphone</h4><p><a href="tel:+21655540520" style="color:var(--teal);font-weight:600;cursor:pointer">+216 55 540 520</a></p></div></div>
+      </div>
+      <div class="info-map reveal-right">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12740.!2d9.87!3d37.27!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd1!2sDonatello!5e0!3m2!1sfr!2stn!4v1" allowfullscreen="" loading="lazy" title="Localisation Donatello"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<div class="sunset-bar"></div>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="logos/Logo-donatello.jpg" alt="Donatello">
+        <h3>Donatello</h3>
+        <p>Salon de Thé à Bizerte — Un voyage entre vintage et modernité où chaque visite est une expérience unique.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="tel:+21655540520" aria-label="Téléphone"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.11 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-links"><h4>Navigation</h4><a href="#hero">Accueil</a><a href="#about">À Propos</a><a href="menu.html">Menu</a><a href="#testimonials">Avis</a></div>
+      <div class="footer-links"><h4>Contact</h4><a href="tel:+21655540520">+216 55 540 520</a><a>Bizerte, Tunisie</a><a>Ouvert dès 7h00</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2025 Donatello Salon de Thé. Tous droits réservés.</span><span>Fait avec passion à Bizerte</span></div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox"><button class="lightbox-close" id="lightboxClose" aria-label="Fermer"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button><img src="" alt="" id="lightboxImg"></div>
+
+<script src="script.js"></script>
+</body>
+</html>

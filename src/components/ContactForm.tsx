@@ -5,148 +5,114 @@ const infoItems = [
   {
     icon: <MapPin size={18} strokeWidth={1.5} />,
     label: 'Adresse',
-    value: 'Sidi Salem, Bizerte, Tunisie',
-  },
-  {
-    icon: <Phone size={18} strokeWidth={1.5} />,
-    label: 'Téléphone',
-    value: '72 413 676',
-    href: 'tel:72413676',
+    value: 'Bizerte, Tunisie',
   },
   {
     icon: <Clock size={18} strokeWidth={1.5} />,
     label: 'Horaires',
-    value: '07:00 — 23:00 · Mar—Dim',
+    value: 'Tous les jours : 7h00 — Tard le soir',
+  },
+  {
+    icon: <Phone size={18} strokeWidth={1.5} />,
+    label: 'Téléphone',
+    value: '+216 55 540 520',
+    href: 'tel:+21655540520',
   },
 ];
 
 export const ContactForm = () => (
   <section
-    id="contact"
-    style={{ background: '#F2E9E1', paddingTop: '4rem', paddingBottom: '7rem', paddingLeft: '1.5rem', paddingRight: '1.5rem', position: 'relative', overflow: 'hidden' }}
+    id="info"
+    style={{ background: '#FDF8EF', padding: '100px 0' }}
   >
-    {/* background circle accent */}
-    <div
-      style={{
-        position: 'absolute', top: '50%', left: '50%',
-        transform: 'translate3d(-50%,-50%,0)',
-        willChange: 'transform',
-        width: '56rem', height: '56rem',
-        background: 'rgba(166,75,42,0.04)',
-        borderRadius: '9999px',
-        filter: 'blur(80px)',
-        pointerEvents: 'none',
-      }}
-    />
+    <div className="max-w-[1140px] mx-auto px-6">
+      {/* Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="text-center mb-14"
+      >
+        <span className="section-label">Rendez-nous Visite</span>
+        <h2 className="section-title">Informations Pratiques</h2>
+        <div className="divider" />
+      </motion.div>
 
-    <div className="max-w-7xl mx-auto" style={{ position: 'relative', zIndex: 1 }}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-
-        {/* ── Left: info ── */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        {/* Left — Info items */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, x: -32 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
         >
-          <span style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.65rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#A64B2A', fontWeight: 500 }}>
-            Nous Trouver
-          </span>
-
-          <h2 style={{ fontFamily: '"Allenoire",serif', fontSize: 'clamp(2rem,5vw,3.5rem)', color: '#2A2118', marginTop: '0.875rem', marginBottom: '1.25rem', lineHeight: 1.1 }}>
-            Venez nous
-            <br />
-            <span style={{ color: '#A64B2A' }}>Rendre Visite</span>
-          </h2>
-
-          {/* divider */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-            <span style={{ height: '1px', width: '3rem', background: '#A64B2A', opacity: 0.25 }} />
-            <svg width="16" height="21" viewBox="0 0 100 130" fill="none" aria-hidden="true">
-              <path d="M10 130 V52 Q10 10 50 10 Q90 10 90 52 V130 Z" stroke="#A64B2A" strokeWidth="7" fill="none" opacity="0.4"/>
-            </svg>
-            <span style={{ height: '1px', flex: 1, background: '#A64B2A', opacity: 0.25 }} />
-          </div>
-
-          <p style={{ fontFamily: '"Inter",sans-serif', color: '#7A6A5A', fontSize: '1.0625rem', lineHeight: 1.8, maxWidth: '30rem', marginBottom: '2.5rem' }}>
-            Une commande spéciale, une réservation ou simplement l&rsquo;envie de partager un moment gourmand ? Passez nous voir ou appelez-nous.
-          </p>
-
-          {/* Info cards */}
-          <div className="space-y-4">
-            {infoItems.map((item) => (
+          {infoItems.map((item) => (
+            <div
+              key={item.label}
+              id={`info-${item.label.toLowerCase()}`}
+              className="flex gap-4 mb-6 items-start"
+            >
               <div
-                key={item.label}
-                id={`contact-${item.label.toLowerCase()}`}
+                className="flex items-center justify-center shrink-0"
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1.25rem',
-                  padding: '1.25rem 1.5rem',
-                  background: '#FAF7F4',
-                  borderRadius: '1rem',
-                  border: '1px solid rgba(166,75,42,0.1)',
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '10px',
+                  background: '#1C1917',
+                  color: '#FDF8EF',
                 }}
               >
-                <div style={{ width: '2.5rem', height: '2.5rem', borderRadius: '0.75rem', background: 'rgba(166,75,42,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#A64B2A', flexShrink: 0 }}>
-                  {item.icon}
-                </div>
-                <div>
-                  <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.6rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(42,33,24,0.4)', marginBottom: '0.2rem' }}>{item.label}</p>
-                  {item.href
-                    ? <a href={item.href} style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.9375rem', color: '#2A2118', fontWeight: 500 }}>{item.value}</a>
-                    : <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.9375rem', color: '#2A2118', fontWeight: 500 }}>{item.value}</p>
-                  }
-                </div>
+                {item.icon}
               </div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div style={{ marginTop: '2.5rem' }}>
-            <a
-              href="tel:72413676"
-              id="contact-call-btn"
-              className="btn-primary inline-flex"
-            >
-              <Phone size={16} strokeWidth={1.5} />
-              Appeler Maintenant
-            </a>
-          </div>
+              <div>
+                <h4 style={{ fontFamily: '"Inter",sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#78350F', marginBottom: '2px' }}>
+                  {item.label}
+                </h4>
+                {item.href ? (
+                  <a href={item.href} style={{ fontSize: '0.88rem', color: '#1A6B6A', fontWeight: 600, cursor: 'pointer', fontFamily: '"Merriweather",serif' }}>
+                    {item.value}
+                  </a>
+                ) : (
+                  <p style={{ fontSize: '0.88rem', color: '#9A7B5A', fontWeight: 300, fontFamily: '"Merriweather",serif' }}>
+                    {item.value}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
         </motion.div>
 
-        {/* ── Right: Google Map ── */}
+        {/* Right — Map */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ delay: 0.1, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, x: 32 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1 }}
           style={{
-            borderRadius: '2rem',
+            borderRadius: '16px',
             overflow: 'hidden',
-            height: '520px',
-            boxShadow: '0 24px 80px rgba(42,33,24,0.12)',
-            border: '6px solid #FAF7F4',
-            transform: 'translateZ(0)',
-            willChange: 'transform, opacity'
+            boxShadow: '0 12px 32px rgba(0,0,0,0.08)',
+            height: '380px',
           }}
-          className="group relative"
         >
-          <div className="absolute inset-0 bg-[#2A2118]/5 group-hover:bg-transparent transition-colors duration-700 pointer-events-none z-10" />
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3184.862413481232!2d9.87020031530733!3d37.28678007985145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12e31f004e47d6bb%3A0xc204697bd9860a29!2smadelina%20%F0%9F%A7%A1!5e0!3m2!1sen!2stn!4v1711910452000!5m2!1sen!2stn"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12740.!2d9.87!3d37.27!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd1!2sDonatello!5e0!3m2!1sfr!2stn!4v1"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Localisation madélina — Sidi Salem, Bizerte"
-            className="transition-transform duration-700"
+            title="Localisation Donatello"
           />
         </motion.div>
-
       </div>
     </div>
+
+    <style>{`
+      @media (max-width: 768px) {
+        #info iframe { height: 280px !important; }
+      }
+    `}</style>
   </section>
 );

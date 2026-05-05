@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Menu as MenuIcon, X, Phone, Instagram } from 'lucide-react';
-import { motion, AnimatePresence, useScroll } from 'framer-motion';
+import { Phone } from 'lucide-react';
+import { useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-
 export const Header = () => {
-  const [isScrolled, setIsScrolled]       = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
@@ -14,9 +13,10 @@ export const Header = () => {
   }, [scrollY]);
 
   const navItems = [
-    { label: 'Le Menu',   href: '/menu',      external: true  },
-    { label: "L'Atelier", href: '/#our-story',  external: false },
-    { label: 'Contact',   href: '/#contact',  external: false },
+    { label: 'À Propos', href: '/#about' },
+    { label: 'Menu',     href: '/menu' },
+    { label: 'Avis',     href: '/#testimonials' },
+    { label: 'Contact',  href: '/#info' },
   ];
 
   return (
@@ -24,119 +24,142 @@ export const Header = () => {
       id="site-header"
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled
-          ? 'bg-[#FAF7F4]/90 backdrop-blur-xl py-3 border-b border-[#A64B2A]/10 shadow-[0_2px_24px_rgba(166,75,42,0.06)]'
-          : 'bg-transparent py-6'
+          ? 'py-3'
+          : 'py-5'
       }`}
+      style={{
+        background: isScrolled ? 'rgba(253,248,239,0.88)' : 'transparent',
+        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
+        boxShadow: isScrolled ? '0 1px 0 rgba(0,0,0,0.06)' : 'none',
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-[1140px] mx-auto px-6 flex items-center justify-between">
 
-        {/* ── Logo ── */}
-        <Link 
-          to="/" 
-          id="nav-logo" 
-          className="flex items-center group" 
-          aria-label="madélina — Accueil"
+        {/* Logo */}
+        <Link
+          to="/"
+          id="nav-logo"
+          className="flex items-center gap-3 group"
+          aria-label="Donatello — Accueil"
           onClick={(e) => {
-            if (window.location.pathname === '/') {
+            if (window.location.pathname === '/' || window.location.pathname === '/donatello/') {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }
           }}
         >
-          <div className="relative transition-transform duration-500 group-hover:scale-105 h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden bg-white shadow-sm border border-[#A64B2A]/20 flex items-center justify-center">
-            <img
-              src={`${import.meta.env.BASE_URL}logos/logo_madelina-4.png`}
-              alt="madélina par Haifa Ben Salem"
-              className="w-full h-full object-cover scale-[1.45]"
-            />
-          </div>
+          <img
+            src={`${import.meta.env.BASE_URL}logos/Logo-donatello.jpg`}
+            alt="Donatello"
+            className="h-11 w-11 rounded-full object-cover"
+          />
+          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#78350F' }}>
+            Donatello
+          </span>
         </Link>
 
-        {/* ── Desktop Nav ── */}
-        <nav className="hidden md:flex items-center gap-10" aria-label="Navigation principale">
-          {navItems.map((item, i) => (
-            <motion.div
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-9" aria-label="Navigation principale">
+          {navItems.map((item) => (
+            <Link
               key={item.href}
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * i, duration: 0.5 }}
+              to={item.href}
+              id={`nav-${item.label.toLowerCase().replace(/\W+/g, '-')}`}
+              style={{
+                fontFamily: '"Inter",sans-serif',
+                fontSize: '0.82rem',
+                fontWeight: 500,
+                color: '#9A7B5A',
+                letterSpacing: '1.5px',
+                textTransform: 'uppercase' as const,
+                transition: 'color 300ms',
+                cursor: 'pointer',
+              }}
+              className="hover:!text-[#78350F]"
             >
-              <Link
-                to={item.href}
-                id={`nav-${item.label.toLowerCase().replace(/\W+/g, '-')}`}
-                className="relative text-[11px] uppercase tracking-[0.2em] font-medium text-[#2A2118] hover:text-[#A64B2A] transition-colors duration-300 group"
-              >
-                {item.label}
-                <span className="absolute -bottom-0.5 left-0 h-[1.5px] w-0 bg-[#A64B2A] transition-all duration-500 group-hover:w-full" />
-              </Link>
-            </motion.div>
+              {item.label}
+            </Link>
           ))}
         </nav>
 
-        {/* ── CTA ── */}
+        {/* CTA */}
         <div className="hidden md:flex items-center gap-4">
           <a
-            href="https://www.instagram.com/madelina_bizerte/"
-            target="_blank"
-            rel="noopener noreferrer"
-            id="nav-instagram"
-            className="flex items-center justify-center bg-[#A64B2A]/10 text-[#A64B2A] rounded-full w-9 h-9 hover:bg-[#A64B2A] hover:text-white transition-all shadow-sm"
-            aria-label="Instagram"
-          >
-            <Instagram size={16} strokeWidth={1.5} />
-          </a>
-          <motion.a
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            href="tel:72413676"
+            href="tel:+21655540520"
             id="nav-phone-btn"
-            className="btn-primary flex items-center gap-2 text-[12px] px-5 py-2.5"
+            className="flex items-center gap-2 transition-all duration-300 hover:bg-[#1A6B6A]"
+            style={{
+              background: '#1C1917',
+              color: '#FDF8EF',
+              padding: '10px 22px',
+              borderRadius: '6px',
+              fontFamily: '"Inter",sans-serif',
+              fontSize: '0.78rem',
+              fontWeight: 600,
+              letterSpacing: '1px',
+              textTransform: 'uppercase' as const,
+              cursor: 'pointer',
+            }}
           >
             <Phone size={14} strokeWidth={1.5} />
-            72 413 676
-          </motion.a>
+            Appelez-nous
+          </a>
         </div>
 
-        {/* ── Mobile Toggle ── */}
+        {/* Mobile Toggle */}
         <button
           id="nav-mobile-toggle"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 text-[#2A2118] hover:text-[#A64B2A] transition-colors"
+          className="md:hidden p-2 cursor-pointer"
+          style={{ background: 'none', border: 'none', color: '#78350F' }}
           aria-label="Ouvrir le menu"
         >
-          {isMobileMenuOpen ? <X size={22} strokeWidth={1.5} /> : <MenuIcon size={22} strokeWidth={1.5} />}
+          {isMobileMenuOpen ? (
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          ) : (
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          )}
         </button>
       </div>
 
-      {/* ── Mobile Menu ── */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#FAF7F4] border-b border-[#A64B2A]/10 overflow-hidden"
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-[999] flex flex-col items-center justify-center gap-7"
+          style={{
+            background: 'rgba(253,248,239,0.98)',
+            backdropFilter: 'blur(20px)',
+          }}
+        >
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="absolute top-5 right-6 cursor-pointer"
+            style={{ background: 'none', border: 'none', color: '#78350F' }}
+            aria-label="Fermer"
           >
-            <div className="px-6 py-10 flex flex-col gap-7">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-2xl font-serif text-[#2A2118] hover:text-[#A64B2A] transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="h-px bg-[#A64B2A]/10 my-2" />
-              <a href="tel:72413676" className="flex items-center gap-2 text-[#A64B2A] font-medium">
-                <Phone size={16} strokeWidth={1.5} />
-                72 413 676
-              </a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#78350F', cursor: 'pointer', transition: 'color 300ms' }}
+              className="hover:!text-[#B45309]"
+            >
+              {item.label}
+            </Link>
+          ))}
+          <a href="tel:+21655540520" className="btn-primary mt-4">Appelez-nous</a>
+        </div>
+      )}
     </header>
   );
 };

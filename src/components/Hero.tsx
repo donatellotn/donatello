@@ -1,157 +1,149 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export const Hero = () => {
-  const { scrollY } = useScroll();
-  const bgY     = useTransform(scrollY, [0, 600], [0, 160]);
-  const opacity = useTransform(scrollY, [0, 350], [1, 0]);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
+
+  const base = import.meta.env.BASE_URL;
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: '#FAF7F4' }}
-      aria-label="Madelina — Pâtisserie Artisanale et Café à Bizerte"
+      className={`relative min-h-screen grid overflow-hidden ${visible ? 'hero-visible' : ''}`}
+      style={{ gridTemplateColumns: '1fr 1fr', background: '#1C1917' }}
     >
-      {/* ── SEO h1 (visible to Google, visually styled as tagline) ── */}
-      <h1 style={{
-        position: 'absolute',
-        width: '1px',
-        height: '1px',
-        padding: 0,
-        margin: '-1px',
-        overflow: 'hidden',
-        clip: 'rect(0,0,0,0)',
-        whiteSpace: 'nowrap',
-        border: 0,
-      }}>
-        Madelina — Pâtisserie Artisanale &amp; Café à Bizerte, Tunisie | Fait maison par Haifa Ben Salem
-      </h1>
-      {/* ── Parallax hero image ── */}
-      <motion.div style={{ y: bgY }} className="absolute inset-0 z-0">
+      {/* Left — Image */}
+      <div className="relative overflow-hidden hero-visual max-md:h-[50vh]">
         <img
-          src="https://i.ibb.co/NdDBpDYh/11.jpg"
-          alt="L'Atelier madélina — Pâtisserie artisanale"
-          className="w-full h-full object-cover scale-110"
+          src={`${base}images/hero-bg.png`}
+          alt="Intérieur Donatello"
+          className="w-full h-full object-cover transition-transform duration-[12s] ease-out"
+          style={{
+            filter: 'saturate(1.1) contrast(1.05)',
+            transform: visible ? 'scale(1)' : 'scale(1.08)',
+          }}
           loading="eager"
           fetchPriority="high"
-          decoding="async"
         />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 max-md:hidden"
+          style={{ background: 'linear-gradient(to right, transparent 60%, #1C1917)' }}
+        />
+        <div
+          className="absolute inset-0 md:hidden"
+          style={{ background: 'linear-gradient(to bottom, transparent 50%, #1C1917)' }}
+        />
+      </div>
+
+      {/* Right — Content */}
+      <div
+        className="flex flex-col justify-center relative z-10 max-md:px-6 max-md:py-12 max-md:pb-16"
+        style={{ padding: '120px 64px 80px 48px' }}
+      >
+        {/* Logo badge */}
+        <img
+          src={`${base}logos/Logo-donatello.jpg`}
+          alt="Donatello"
+          className="w-[100px] h-[100px] rounded-full object-cover mb-8 transition-all duration-700"
           style={{
-            background:
-              'linear-gradient(105deg, rgba(250,247,244,0.97) 0%, rgba(250,247,244,0.82) 50%, rgba(250,247,244,0.10) 100%)',
+            boxShadow: '0 0 40px rgba(180,83,9,0.3)',
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(20px)',
           }}
         />
-      </motion.div>
 
-      {/* ── Content ── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-16 sm:pt-28 pb-20 flex items-center justify-between">
-
-        {/* Left — text */}
-        <div className="max-w-2xl">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="inline-flex items-center gap-2 mb-4 text-[10px] uppercase tracking-[0.3em] text-[#A64B2A] font-medium"
-          >
-            <span className="w-6 h-px bg-[#A64B2A]" />
-            L&rsquo;Art de Vivre à Bizerte
-            <span className="w-6 h-px bg-[#A64B2A]" />
-          </motion.span>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="font-allenoire mb-8 leading-[0.92] whitespace-nowrap"
-            style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5rem)', color: '#2A2118' }}
-          >
-            Fait{' '}
-            <span style={{ color: '#A64B2A' }}>
-              maison
-            </span>
-            <br />
-            Fait avec le{' '}
-            <span style={{ color: '#A64B2A' }}>
-              cœur
-            </span>
-            <br />
-            Fait pour{' '}
-            <span style={{ color: '#A64B2A' }}>
-              vous
-            </span>
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.65 }}
-            className="text-lg leading-relaxed mb-12 text-balance"
-            style={{ color: '#7A6A5A', maxWidth: '36rem' }}
-          >
-            Une pâtisserie artisanale, du café bien fait et des brunchs généreux, voilà l&rsquo;esprit madélina.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.85 }}
-            className="flex flex-wrap gap-4"
-          >
-            <Link to="/menu" id="hero-menu-btn" className="btn-primary">
-              Découvrir le Menu
-            </Link>
-            <Link to="/#contact" id="hero-reserve-btn" className="btn-outline">
-              Réserver une Table
-            </Link>
-          </motion.div>
+        {/* Eyebrow */}
+        <div
+          className="mb-4 transition-all duration-600"
+          style={{
+            fontFamily: '"Inter",sans-serif',
+            fontSize: '0.72rem',
+            fontWeight: 600,
+            letterSpacing: '4px',
+            textTransform: 'uppercase',
+            color: '#B45309',
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(16px)',
+            transitionDelay: '150ms',
+          }}
+        >
+          Salon de Thé · Bizerte
         </div>
 
-        {/* Right — real sticker badge PNG */}
-        <div className="hidden lg:flex flex-col items-center gap-8 pr-8">
-          {/* Floating sticker badge — real brand asset */}
-          <motion.div
-            className="select-none relative animate-float"
-          >
-            <div className="absolute inset-0 rounded-full border border-[#A64B2A]/20 scale-105" />
-            <img
-              src={`${import.meta.env.BASE_URL}logos/logo_madelina-4.png`}
-              alt="madélina — Fait maison. Fait avec le cœur."
-              className="w-56 h-56 object-cover rounded-full shadow-[0_16px_40px_rgba(166,75,42,0.25)] border-[6px] border-white/60 bg-white"
-            />
-          </motion.div>
+        {/* Title */}
+        <h1
+          className="mb-5 transition-all duration-700"
+          style={{
+            fontFamily: '"Abril Fatface",serif',
+            fontSize: 'clamp(2.6rem, 5vw, 4.2rem)',
+            color: '#FDF8EF',
+            lineHeight: 1.05,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(24px)',
+            transitionDelay: '250ms',
+          }}
+        >
+          Donatello
+        </h1>
 
-          {/* Glass rating card */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="glass-card rounded-2xl px-6 py-4 flex items-center gap-4"
-          >
-            <span style={{ fontFamily: '"Playfair Display",serif', fontSize: '2rem', color: '#A64B2A', lineHeight: 1 }}>4.8</span>
-            <div>
-              <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.2em', color: '#7A6A5A' }}>Google Rating</p>
-              <p style={{ fontFamily: '"Playfair Display",serif', fontSize: '0.875rem', color: '#2A2118' }}>Excellent</p>
-            </div>
-          </motion.div>
+        {/* Accent line */}
+        <div
+          className="mb-5 transition-all duration-500"
+          style={{
+            width: '48px',
+            height: '2px',
+            background: '#B45309',
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'scaleX(1)' : 'scaleX(0)',
+            transformOrigin: 'left',
+            transitionDelay: '400ms',
+          }}
+        />
+
+        {/* Tagline */}
+        <p
+          className="mb-9 transition-all duration-600"
+          style={{
+            fontFamily: '"Merriweather",serif',
+            fontSize: '1rem',
+            color: 'rgba(253,248,239,0.6)',
+            fontWeight: 300,
+            maxWidth: '380px',
+            lineHeight: 1.8,
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(16px)',
+            transitionDelay: '450ms',
+          }}
+        >
+          Un voyage entre vintage et modernité — où chaque tasse raconte une histoire.
+        </p>
+
+        {/* CTAs */}
+        <div
+          className="flex gap-3.5 flex-wrap transition-all duration-600"
+          style={{
+            opacity: visible ? 1 : 0,
+            transform: visible ? 'translateY(0)' : 'translateY(16px)',
+            transitionDelay: '550ms',
+          }}
+        >
+          <Link to="/menu" id="hero-menu-btn" className="btn-primary">
+            Découvrir le Menu
+          </Link>
+          <a href="tel:+21655540520" id="hero-contact-btn" className="btn-outline">
+            Nous Contacter
+          </a>
         </div>
       </div>
 
-      {/* ── Scroll indicator ── */}
-      <motion.div
-        style={{ opacity }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer animate-bounce"
-        onClick={() => document.getElementById('our-story')?.scrollIntoView({ behavior: 'smooth' })}
-      >
-        <span style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.6rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(42,33,24,0.35)' }}>
-          Découvrir
-        </span>
-        <ArrowDown size={14} color="#A64B2A" strokeWidth={1.5} />
-      </motion.div>
+      {/* Mobile: stack layout override */}
+      <style>{`
+        @media (max-width: 900px) {
+          #hero { grid-template-columns: 1fr !important; min-height: auto !important; }
+          #hero > div:last-child { padding: 48px 24px 64px !important; }
+        }
+      `}</style>
     </section>
   );
 };
