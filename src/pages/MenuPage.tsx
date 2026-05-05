@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, memo, useTransition } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { useLang } from '../i18n/LangContext';
 
 interface MenuItem {
   id: string;
@@ -99,7 +100,7 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
 ));
 
 // ── Food card — visual card with image ──
-const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void }) => (
+const FoodCard = memo(({ item, onClick, trDetails }: { item: MenuItem; onClick: () => void; trDetails: string }) => (
   <div
     className="group overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1"
     style={{
@@ -154,7 +155,7 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
         className="flex items-center gap-1.5 group-hover:gap-3 transition-all"
         style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#2C5E5A', cursor: 'pointer' }}
       >
-        Détails <span>→</span>
+        {trDetails} <span>→</span>
       </span>
     </div>
   </div>
@@ -170,6 +171,7 @@ const MenuPage = () => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [, startTransition] = useTransition();
+  const { tr } = useLang();
 
   // Fetch menu-data.html from GitHub Raw API on mount
   useEffect(() => {
@@ -255,7 +257,7 @@ const MenuPage = () => {
           <div className="min-h-[50vh] flex items-center justify-center">
             <div className="flex flex-col items-center animate-fadeIn">
               <div className="w-8 h-8 rounded-full animate-spin mb-4" style={{ border: '3px solid rgba(44,94,90,0.15)', borderTopColor: '#2C5E5A' }} />
-              <div style={{ fontFamily: '"Merriweather",serif', color: '#A68A6D', fontSize: '0.9rem' }}>Chargement...</div>
+              <div style={{ fontFamily: '"Merriweather",serif', color: '#A68A6D', fontSize: '0.9rem' }}>{tr('menu_loading')}</div>
             </div>
           </div>
         </main>
@@ -272,12 +274,12 @@ const MenuPage = () => {
         <div className="max-w-[1140px] mx-auto relative z-10 px-6">
           {/* Heading */}
           <div className="text-center mb-6 sm:mb-10 md:mb-14">
-            <span className="section-label">La Carte</span>
+            <span className="section-label">{tr('menu_label')}</span>
             <h2
               className="mb-4"
               style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: '#5E3A25', lineHeight: 1.1 }}
             >
-              Menu <span style={{ color: '#C15C3D' }}>Donatello</span>
+              {tr('menu_title_prefix')} <span style={{ color: '#C15C3D' }}>{tr('menu_title_suffix')}</span>
             </h2>
             <div className="divider" />
           </div>
@@ -328,7 +330,7 @@ const MenuPage = () => {
                       drinkLike ? (
                         <DrinkCard key={item.id} item={item} onClick={() => openModal(item)} />
                       ) : (
-                        <FoodCard key={item.id} item={item} onClick={() => openModal(item)} />
+                        <FoodCard key={item.id} item={item} onClick={() => openModal(item)} trDetails={tr('menu_details')} />
                       )
                     )}
                   </div>
@@ -415,7 +417,7 @@ const MenuPage = () => {
                     border: 'none',
                   }}
                 >
-                  Fermer
+                  {tr('menu_close')}
                 </button>
               </div>
             </motion.div>

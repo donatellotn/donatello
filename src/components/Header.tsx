@@ -110,6 +110,9 @@ export const Header = () => {
                 textTransform: 'uppercase' as const,
                 transition: 'color 300ms',
                 cursor: 'pointer',
+                textAlign: 'center',
+                minWidth: '85px',
+                display: 'inline-block'
               }}
               className="hover:!text-[#5E3A25]"
             >
@@ -124,11 +127,12 @@ export const Header = () => {
           <a
             href="tel:+21655540520"
             id="nav-phone-btn"
-            className="flex items-center gap-2 transition-all duration-300 hover:bg-[#2C5E5A]"
+            className="flex justify-center items-center gap-2 transition-all duration-300 hover:bg-[#2C5E5A]"
             style={{
               background: '#3A2A22',
               color: '#FFFFFF',
-              padding: '10px 22px',
+              padding: '10px 0',
+              width: '160px',
               borderRadius: '6px',
               fontFamily: '"Inter",sans-serif',
               fontSize: '0.78rem',

@@ -51,11 +51,13 @@ export const t = {
 
     // Menu page
     menu_label: 'La Carte',
+    menu_title_prefix: 'Menu',
     menu_title_suffix: 'Donatello',
     menu_loading: 'Chargement…',
     menu_error: 'Impossible de charger le menu.',
     menu_close: 'Fermer',
     menu_all: 'Tous',
+    menu_details: 'Détails',
 
     // Footer
     footer_desc: 'Un bel endroit à Bizerte pour passer un moment agréable et boire un bon café.',
@@ -115,11 +117,13 @@ export const t = {
 
     // Menu page
     menu_label: 'The Menu',
+    menu_title_prefix: 'Menu',
     menu_title_suffix: 'Donatello',
     menu_loading: 'Loading…',
     menu_error: 'Unable to load the menu.',
     menu_close: 'Close',
     menu_all: 'All',
+    menu_details: 'Details',
 
     // Footer
     footer_desc: 'A great place in Bizerte to spend a pleasant moment and enjoy a good coffee.',
