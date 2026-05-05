@@ -807,8 +807,12 @@
         <input type="hidden" id="item-index" />
         <div class="form-row">
           <div class="form-group">
-            <label>Nom du plat *</label>
+            <label>Nom du plat (FR) *</label>
             <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" />
+          </div>
+          <div class="form-group">
+            <label>Nom du plat (EN)</label>
+            <input type="text" id="f-title-en" placeholder="Ex: Donatello Cappuccino" />
           </div>
           <div class="form-group">
             <label>Prix (DT) *</label>
@@ -836,9 +840,15 @@
             en cours...</div>
           <img id="img-preview" alt="Preview" />
         </div>
-        <div class="form-group">
-          <label>Description</label>
-          <textarea id="f-description" placeholder="Description courte du plat..."></textarea>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Description (FR)</label>
+            <textarea id="f-description" placeholder="Description courte du plat..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Description (EN)</label>
+            <textarea id="f-description-en" placeholder="Short description of the dish..."></textarea>
+          </div>
         </div>
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
@@ -1038,9 +1048,11 @@
           id: div.id,
           category: div.getAttribute('data-category') || '',
           title: div.querySelector('.item-title')?.textContent || '',
+          title_en: div.querySelector('.item-title-en')?.textContent || '',
           price: parseFloat(div.querySelector('.item-price')?.textContent) || 0,
           image: div.querySelector('.item-image')?.getAttribute('src') || '',
           description: div.querySelector('.item-description')?.textContent || '',
+          description_en: div.querySelector('.item-description-en')?.textContent || '',
         });
       });
     }
@@ -1055,7 +1067,9 @@
 
       menuItems.forEach(item => {
         const safeTitle = escapeHTML(item.title);
+        const safeTitleEn = escapeHTML(item.title_en || '');
         const safeDesc = escapeHTML(item.description || '');
+        const safeDescEn = escapeHTML(item.description_en || '');
         const safeImage = escapeHTML(item.image || '');
         const safeCategory = escapeHTML(item.category || '');
         const price = typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0;
@@ -1063,8 +1077,10 @@
         lines.push(`  <div id="${item.id}" class="menu-item" data-category="${safeCategory}">`);
         lines.push(`    <img src="${safeImage}" alt="${safeTitle}" class="item-image" />`);
         lines.push(`    <h3 class="item-title">${safeTitle}</h3>`);
+        if (safeTitleEn) lines.push(`    <h3 class="item-title-en" style="display:none;">${safeTitleEn}</h3>`);
         lines.push(`    <span class="item-price">${price}</span>`);
         lines.push(`    <p class="item-description">${safeDesc}</p>`);
+        if (safeDescEn) lines.push(`    <p class="item-description-en" style="display:none;">${safeDescEn}</p>`);
         lines.push(`  </div>`);
       });
 
@@ -1243,13 +1259,17 @@
       if (idx !== null) {
         const item = menuItems[idx];
         document.getElementById('f-title').value = item.title || '';
+        document.getElementById('f-title-en').value = item.title_en || '';
         document.getElementById('f-price').value = item.price || '';
         document.getElementById('f-category').value = item.category || '';
         document.getElementById('f-image').value = item.image || '';
         document.getElementById('f-description').value = item.description || '';
+        document.getElementById('f-description-en').value = item.description_en || '';
         previewImg(item.image);
       } else {
         document.getElementById('item-form').reset();
+        document.getElementById('f-title-en').value = '';
+        document.getElementById('f-description-en').value = '';
         document.getElementById('img-preview').className = '';
       }
 
@@ -1354,9 +1374,11 @@
       const newData = {
         category: document.getElementById('f-category').value,
         title: document.getElementById('f-title').value.trim(),
+        title_en: document.getElementById('f-title-en').value.trim(),
         price: parseFloat(document.getElementById('f-price').value),
         image: document.getElementById('f-image').value.trim(),
         description: document.getElementById('f-description').value.trim(),
+        description_en: document.getElementById('f-description-en').value.trim(),
       };
 
       if (idxStr === '') {

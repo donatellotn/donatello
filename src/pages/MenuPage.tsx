@@ -8,9 +8,11 @@ interface MenuItem {
   id: string;
   category: string;
   title: string;
+  title_en?: string;
   price: number;
   image?: string;
   description?: string;
+  description_en?: string;
 }
 
 const ORDER = [
@@ -35,9 +37,11 @@ function parseMenuHTML(html: string): MenuItem[] {
       id: div.id,
       category: div.getAttribute('data-category') || '',
       title: div.querySelector('.item-title')?.textContent || '',
+      title_en: div.querySelector('.item-title-en')?.textContent || '',
       price: parseFloat(div.querySelector('.item-price')?.textContent || '0') || 0,
       image: div.querySelector('.item-image')?.getAttribute('src') || '',
       description: div.querySelector('.item-description')?.textContent || '',
+      description_en: div.querySelector('.item-description-en')?.textContent || '',
     });
   });
   return items;
@@ -164,6 +168,16 @@ const FoodCard = memo(({ item, onClick, trDetails }: { item: MenuItem; onClick: 
 // ── Local / GitHub Pages URL ──
 const MENU_RAW_URL = import.meta.env.BASE_URL + 'menu-data.html';
 
+function getTranslatedCategory(cat: string, tr: (k: string) => string) {
+  if (cat.includes("Boisson chaude")) return tr('cat_boisson_chaude');
+  if (cat.includes("Boisson fraîche")) return tr('cat_boisson_fraiche');
+  if (cat.includes("Viennoiserie")) return tr('cat_viennoiseries');
+  if (cat.includes("Gâteaux")) return tr('cat_gateaux');
+  if (cat.includes("Plats")) return tr('cat_plats');
+  if (cat.includes("Autres")) return tr('cat_autres');
+  return cat;
+}
+
 const MenuPage = () => {
   const [plats, setPlats] = useState<MenuItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -171,7 +185,19 @@ const MenuPage = () => {
   const [activeTab, setActiveTab] = useState("");
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [, startTransition] = useTransition();
-  const { tr } = useLang();
+  const { tr, lang } = useLang();
+
+  // Create a language-aware copy of items
+  const displayedPlats = plats.map(p => {
+    if (lang === 'en') {
+      return {
+        ...p,
+        title: p.title_en || p.title,
+        description: p.description_en || p.description
+      };
+    }
+    return p;
+  });
 
   // Fetch menu-data.html from GitHub Raw API on mount
   useEffect(() => {
@@ -318,7 +344,7 @@ const MenuPage = () => {
                     ),
                   }}
                 >
-                  {cat}
+                  {getTranslatedCategory(cat, tr)}
                 </button>
               ))}
             </div>
@@ -330,7 +356,7 @@ const MenuPage = () => {
               {categories.map((cat) => {
                 if (activeCategory !== cat) return null;
                 const drinkLike = isCategoryDrinkLike(cat);
-                const itemsInCat = plats.filter(item => item.category === cat);
+                const itemsInCat = displayedPlats.filter(item => item.category === cat);
                 return (
                   <div
                     key={cat}
@@ -406,7 +432,7 @@ const MenuPage = () => {
                   </span>
                 </div>
                 <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.72rem', color: '#A68A6D', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginBottom: '12px' }}>
-                  {selectedItem.category}
+                  {getTranslatedCategory(selectedItem.category, tr)}
                 </p>
                 {selectedItem.description && (
                   <p style={{ fontFamily: '"Merriweather",serif', fontSize: '0.9rem', color: 'rgba(58,42,34,0.6)', lineHeight: 1.8, fontWeight: 300, marginBottom: '24px' }}>

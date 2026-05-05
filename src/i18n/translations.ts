@@ -59,6 +59,14 @@ export const t = {
     menu_all: 'Tous',
     menu_details: 'Détails',
 
+    // Menu Categories
+    cat_boisson_chaude: '☕ Boisson chaude',
+    cat_boisson_fraiche: '🧃 Boisson fraîche',
+    cat_viennoiseries: '🥐 Viennoiseries',
+    cat_gateaux: '🍰 Gâteaux et tartes',
+    cat_plats: '🍽️ Plats',
+    cat_autres: '✨ Autres',
+
     // Footer
     footer_desc: 'Un bel endroit à Bizerte pour passer un moment agréable et boire un bon café.',
     footer_nav: 'Navigation',
@@ -124,6 +132,14 @@ export const t = {
     menu_close: 'Close',
     menu_all: 'All',
     menu_details: 'Details',
+
+    // Menu Categories
+    cat_boisson_chaude: '☕ Hot Drinks',
+    cat_boisson_fraiche: '🧃 Cold Drinks',
+    cat_viennoiseries: '🥐 Pastries',
+    cat_gateaux: '🍰 Cakes & Tarts',
+    cat_plats: '🍽️ Dishes',
+    cat_autres: '✨ Others',
 
     // Footer
     footer_desc: 'A great place in Bizerte to spend a pleasant moment and enjoy a good coffee.',
