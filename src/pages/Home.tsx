@@ -71,105 +71,78 @@ export const Home = () => {
             <div className="divider" />
           </motion.div>
 
-          {/* Image Grid */}
+          {/* Madelina-style Card Grid */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="max-w-[900px] mx-auto"
+            className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            <div
-              className="grid gap-3"
-              style={{ gridTemplateColumns: '1.3fr 1fr', gridTemplateRows: '1fr 1fr' }}
-            >
-              {displayItems[0] && (
-                <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group" style={{ gridRow: 'span 2' }}>
+            {displayItems.map((item, idx) => (
+              <Link 
+                key={idx} 
+                to="/menu" 
+                className="group flex flex-col bg-white rounded-[3rem] overflow-hidden border border-[#EAE3D9] transition-all duration-500 hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2"
+                style={{ backgroundColor: '#FCFAF8' }}
+              >
+                {/* Image Section */}
+                <div className="relative h-[240px] w-full overflow-hidden">
                   <img
-                    src={displayItems[0].image}
-                    alt={displayItems[0].title}
+                    src={item.image}
+                    alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    style={{ minHeight: '400px' }}
                     loading="lazy"
                   />
-                  <div
-                    className="absolute bottom-0 left-0 right-0 px-5 py-4"
-                    style={{
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
-                      fontFamily: '"Abril Fatface",serif',
-                      fontSize: '1rem',
-                      color: '#fff',
-                    }}
+                  {/* Price Pill */}
+                  <div 
+                    className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-4 py-1.5 rounded-full shadow-sm"
+                    style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.85rem', fontWeight: 600, color: '#3A2A22' }}
                   >
-                    {displayItems[0].title}
+                    {item.price.toFixed(1)} DT
                   </div>
-                </Link>
-              )}
+                </div>
 
-              {displayItems[1] && (
-                <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
-                  <img
-                    src={displayItems[1].image}
-                    alt={displayItems[1].title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    style={{ minHeight: '190px' }}
-                    loading="lazy"
-                  />
-                  <div
-                    className="absolute bottom-0 left-0 right-0 px-5 py-4"
-                    style={{
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
-                      fontFamily: '"Abril Fatface",serif',
-                      fontSize: '1rem',
-                      color: '#fff',
-                    }}
+                {/* Text Content */}
+                <div className="p-8 flex flex-col flex-grow">
+                  <h3 
+                    style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.35rem', color: '#3A2A22', lineHeight: 1.2 }}
+                    className="mb-3 line-clamp-1"
                   >
-                    {displayItems[1].title}
-                  </div>
-                </Link>
-              )}
-
-              {displayItems[2] && (
-                <Link to="/menu" className="block relative overflow-hidden rounded-xl cursor-pointer group">
-                  <img
-                    src={displayItems[2].image}
-                    alt={displayItems[2].title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    style={{ minHeight: '190px' }}
-                    loading="lazy"
-                  />
-                  <div
-                    className="absolute bottom-0 left-0 right-0 px-5 py-4"
-                    style={{
-                      background: 'linear-gradient(to top, rgba(0,0,0,0.55), transparent 80%)',
-                      fontFamily: '"Abril Fatface",serif',
-                      fontSize: '1rem',
-                      color: '#fff',
-                    }}
+                    {item.title}
+                  </h3>
+                  
+                  <p 
+                    style={{ fontFamily: '"Merriweather",serif', fontSize: '0.85rem', color: '#A68A6D', lineHeight: 1.6, fontWeight: 300 }}
+                    className="mb-6 line-clamp-2 flex-grow"
                   >
-                    {displayItems[2].title}
-                  </div>
-                </Link>
-              )}
-            </div>
+                    {item.description || "Découvrez cette délicieuse création dans notre menu."}
+                  </p>
 
-            {/* CTA */}
-            <div className="text-center mt-9">
-              <Link to="/menu" id="home-full-menu-btn" className="btn-primary">
-                {tr('specials_cta')}
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-                </svg>
+                  <div 
+                    className="flex items-center gap-2 group-hover:gap-4 transition-all mt-auto"
+                    style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: '#2C5E5A' }}
+                  >
+                    <span>Détails</span>
+                    <span className="text-[1.1rem]">→</span>
+                  </div>
+                </div>
               </Link>
-            </div>
+            ))}
           </motion.div>
+
+          {/* CTA */}
+          <div className="text-center mt-14">
+            <Link to="/menu" id="home-full-menu-btn" className="btn-primary" style={{ padding: '16px 36px', borderRadius: '40px' }}>
+              {tr('specials_cta')}
+            </Link>
+          </div>
         </div>
 
         <style>{`
-          @media (max-width: 640px) {
-            #menu-teaser .grid { grid-template-columns: 1fr !important; }
-            #menu-teaser .grid > div:first-child { grid-row: span 1 !important; }
-            #menu-teaser .grid > div:first-child img { min-height: 240px !important; }
+          /* Ensure grid breaks nicely on small screens */
+          @media (max-width: 768px) {
+            #menu-teaser .grid { gap: 1.5rem !important; }
           }
         `}</style>
       </section>
