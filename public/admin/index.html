@@ -1053,6 +1053,7 @@
           id: div.id,
           category: div.getAttribute('data-category') || '',
           category_en: div.getAttribute('data-category-en') || '',
+          isList: div.getAttribute('data-is-list') === 'true',
           title: div.querySelector('.item-title')?.textContent || '',
           title_en: div.querySelector('.item-title-en')?.textContent || '',
           price: parseFloat(div.querySelector('.item-price')?.textContent) || 0,
@@ -1611,29 +1612,34 @@
       { fr: "🥪 Sandwichs & Snacks", en: "🥪 Sandwiches & Snacks", isList: true }
     ];
 
+    let runtimeCategories = null;
+
     function getCategories() {
-      const saved = localStorage.getItem('donatello_categories_v4');
-      if (saved) {
-        try { 
-          const parsed = JSON.parse(saved);
-          const mapped = parsed.map(c => {
-            if (typeof c === 'string') {
-              const def = DEFAULT_CATEGORIES.find(d => d.fr === c);
-              return def ? def : { fr: c, en: c, isList: false };
+      if (runtimeCategories === null) {
+        runtimeCategories = [];
+        const added = new Set();
+        
+        // 1. Add defaults
+        DEFAULT_CATEGORIES.forEach(c => {
+          runtimeCategories.push({ ...c });
+          added.add(c.fr);
+        });
+
+        // 2. Add any custom categories from menu items
+        if (typeof menuItems !== 'undefined') {
+          menuItems.forEach(item => {
+            if (!added.has(item.category) && item.category) {
+              runtimeCategories.push({ fr: item.category, en: item.category_en, isList: item.isList || false });
+              added.add(item.category);
             }
-            return c;
           });
-          if (parsed.some(c => typeof c === 'string')) {
-            localStorage.setItem('donatello_categories_v4', JSON.stringify(mapped));
-          }
-          return mapped;
-        } catch(e) {}
+        }
       }
-      return [...DEFAULT_CATEGORIES];
+      return runtimeCategories;
     }
 
     function saveCategories(cats) {
-      localStorage.setItem('donatello_categories_v4', JSON.stringify(cats));
+      runtimeCategories = cats;
       repopulateCategorySelect();
     }
 
