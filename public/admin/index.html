@@ -899,7 +899,7 @@
         Format liste simple (sans grandes images)
       </label>
       <div style="display:flex;gap:10px;margin-top:24px">
-        <button class="btn btn-primary" style="flex:1" onclick="saveCategoriesAndClose()">✅ Valider</button>
+        <button class="btn btn-primary" style="flex:1" onclick="saveCategoriesAndClose()">💾 Valider & Sauvegarder</button>
         <button class="btn btn-secondary" style="flex:1" onclick="closeCategoryManager()">Fermer</button>
       </div>
     </div>
@@ -1037,6 +1037,17 @@
       // Wrap in a root element for DOMParser
       const parser = new DOMParser();
       menuDoc = parser.parseFromString(`<div id="__root">${htmlString}</div>`, 'text/html');
+      
+      const metaNode = menuDoc.querySelector('#category-metadata');
+      if (metaNode) {
+        try {
+          const parsed = JSON.parse(metaNode.textContent);
+          if (Array.isArray(parsed)) runtimeCategories = parsed;
+        } catch(e) { console.warn("Failed to parse category metadata", e); runtimeCategories = null; }
+      } else {
+        runtimeCategories = null;
+      }
+      
       menuContainer = menuDoc.querySelector('#menu-container');
 
       if (!menuContainer) {
@@ -1070,9 +1081,13 @@
     function serializeMenuHTML() {
       // Rebuild #menu-container from menuItems (the authoritative source)
       // This is safer than modifying the parsed DOM piecemeal
-      const lines = ['<!-- menu-data.html — Pure content fragment. Dashboard edits this directly. -->', '<div id="menu-container">'];
-      
       const allCats = getCategories();
+      const metaJson = JSON.stringify(allCats);
+      const lines = [
+        '<!-- menu-data.html — Pure content fragment. Dashboard edits this directly. -->',
+        `<script id="category-metadata" type="application/json">${metaJson}</script>`,
+        '<div id="menu-container">'
+      ];
 
       menuItems.forEach(item => {
         const safeTitle = escapeHTML(item.title);
@@ -1615,25 +1630,25 @@
     let runtimeCategories = null;
 
     function getCategories() {
-      if (runtimeCategories === null) {
-        runtimeCategories = [];
-        const added = new Set();
-        
-        // 1. Add defaults
-        DEFAULT_CATEGORIES.forEach(c => {
-          runtimeCategories.push({ ...c });
-          added.add(c.fr);
-        });
+      if (runtimeCategories !== null) return runtimeCategories;
+      
+      runtimeCategories = [];
+      const added = new Set();
+      
+      // 1. Add defaults
+      DEFAULT_CATEGORIES.forEach(c => {
+        runtimeCategories.push({ ...c });
+        added.add(c.fr);
+      });
 
-        // 2. Add any custom categories from menu items
-        if (typeof menuItems !== 'undefined') {
-          menuItems.forEach(item => {
-            if (!added.has(item.category) && item.category) {
-              runtimeCategories.push({ fr: item.category, en: item.category_en, isList: item.isList || false });
-              added.add(item.category);
-            }
-          });
-        }
+      // 2. Add any custom categories from menu items
+      if (typeof menuItems !== 'undefined') {
+        menuItems.forEach(item => {
+          if (!added.has(item.category) && item.category) {
+            runtimeCategories.push({ fr: item.category, en: item.category_en, isList: item.isList || false });
+            added.add(item.category);
+          }
+        });
       }
       return runtimeCategories;
     }
@@ -1737,11 +1752,29 @@
       toast(`Catégorie "${removed.fr}" supprimée`);
     }
 
-    function saveCategoriesAndClose() {
+    async function saveCategoriesAndClose() {
       closeCategoryManager();
       // Refresh filter tabs
       renderFilterTabs();
-      toast('✅ Catégories mises à jour');
+      
+      const btn = document.querySelector('button[onclick="saveCategoriesAndClose()"]');
+      const origText = btn ? btn.textContent : 'Enregistrer les changements';
+      if (btn) { btn.textContent = '⏳ Enregistrement...'; btn.disabled = true; }
+      
+      if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        toast('Enregistrement des catégories...');
+        try {
+          await saveToFile();
+          toast('✅ Catégories mises à jour et sauvegardées');
+        } catch(e) {
+          console.error(e);
+          toast('❌ Erreur de sauvegarde', 'error');
+        }
+      } else {
+        toast('✅ Catégories mises à jour (local)');
+      }
+      
+      if (btn) { btn.textContent = origText; btn.disabled = false; }
     }
 
     function renderFilterTabs() {
