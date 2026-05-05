@@ -95,7 +95,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
           <div className="min-h-[50vh] flex items-center justify-center">
             <div className="flex flex-col items-center animate-fadeIn">
               <div className="w-8 h-8 border-4 border-donatello-terracotta/20 border-t-donatello-terracotta rounded-full animate-spin mb-4"></div>
-              <div className="font-display text-donatello-navy/40">Chargement...</div>
+              <div className="font-heading text-donatello-navy/40">Chargement...</div>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
     <section id="menu" className={`section-padding bg-white relative overflow-hidden ${isPreview ? 'pt-0 pb-10' : ''}`}>
       {!isPreview && (
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden opacity-[0.02] flex items-center justify-center">
-          <span className="text-[30vw] font-display whitespace-nowrap select-none">DONATELLO</span>
+          <span className="text-[30vw] font-heading whitespace-nowrap select-none">DONATELLO</span>
         </div>
       )}
 
@@ -118,7 +118,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-5xl md:text-7xl mb-6 font-allenoire text-donatello-navy"
+              className="text-5xl md:text-7xl mb-6 font-heading text-donatello-navy"
             >
               Menu <span className="text-donatello-terracotta font-heading">Donatello</span>
             </motion.h2>
@@ -180,7 +180,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
                             </div>
                           </div>
                           <div className="p-8 text-left">
-                            <h3 className="text-2xl mb-3 font-display text-donatello-navy group-hover:text-donatello-terracotta transition-colors duration-300">
+                            <h3 className="text-2xl mb-3 font-heading text-donatello-navy group-hover:text-donatello-terracotta transition-colors duration-300">
                               {item.title}
                             </h3>
                             <p className="text-donatello-navy/60 leading-relaxed text-sm mb-6 line-clamp-3">{item.description}</p>
@@ -234,7 +234,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
               )}
               <div className="p-8">
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-3xl font-display text-donatello-navy">{selectedItem.title}</h3>
+                  <h3 className="text-3xl font-heading text-donatello-navy">{selectedItem.title}</h3>
                   <span className="bg-donatello-terracotta/10 text-donatello-terracotta font-bold px-4 py-2 rounded-full text-sm whitespace-nowrap ml-4">
                     {typeof selectedItem.price === 'number' ? selectedItem.price.toFixed(1) : selectedItem.price} DT
                   </span>

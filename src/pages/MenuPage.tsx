@@ -43,19 +43,24 @@ function parseMenuHTML(html: string): MenuItem[] {
 }
 
 
-// Memoized card components — avoid re-renders when category changes
+// ── Drink card — compact list style ──
 const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void }) => (
   <div
-    className="group flex items-center bg-white border border-donatello-terracotta/10 rounded-2xl p-3 sm:p-4 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+    className="group flex items-center rounded-xl p-3 sm:p-4 cursor-pointer transition-all duration-300 hover:-translate-y-0.5"
     onClick={onClick}
+    style={{
+      background: '#fff',
+      border: '1px solid rgba(180,83,9,0.08)',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+    }}
   >
-    <div className="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 mr-4">
+    <div className="flex-shrink-0 w-14 h-14 sm:w-[72px] sm:h-[72px] mr-3.5">
       {item.image ? (
-        <div className="w-full h-full bg-donatello-cream rounded-xl overflow-hidden">
+        <div className="w-full h-full rounded-lg overflow-hidden" style={{ background: '#F5E6D3' }}>
           <img
             src={item.image}
             alt={item.title}
-            className="w-full h-full object-cover rounded-xl"
+            className="w-full h-full object-cover rounded-lg"
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -64,36 +69,53 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
           />
         </div>
       ) : (
-        <div className="w-full h-full bg-donatello-navy/5 rounded-xl flex items-center justify-center">
+        <div className="w-full h-full rounded-lg flex items-center justify-center" style={{ background: 'rgba(28,25,23,0.04)' }}>
           <span className="text-xl">🍹</span>
         </div>
       )}
     </div>
-    <div className="flex-grow min-w-0 pr-4">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-1 gap-1">
-        <h3 className="text-base sm:text-lg font-display text-donatello-navy truncate">{item.title}</h3>
-        <span className="font-bold text-sm sm:text-base text-donatello-terracotta whitespace-nowrap">
+    <div className="flex-grow min-w-0 pr-3">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-0.5 gap-0.5">
+        <h3
+          className="truncate"
+          style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1rem', color: '#1C1917', fontWeight: 400 }}
+        >
+          {item.title}
+        </h3>
+        <span style={{ fontFamily: '"Inter",sans-serif', fontWeight: 700, fontSize: '0.88rem', color: '#B45309', whiteSpace: 'nowrap' }}>
           {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
         </span>
       </div>
       {item.description && (
-        <p className="text-donatello-navy/60 text-xs sm:text-sm line-clamp-2">{item.description}</p>
+        <p className="line-clamp-2" style={{ fontSize: '0.78rem', color: '#9A7B5A', fontFamily: '"Merriweather",serif', fontWeight: 300 }}>
+          {item.description}
+        </p>
       )}
     </div>
-    <div className="flex-shrink-0 text-donatello-terracotta/30 group-hover:text-donatello-terracotta transition-colors ml-auto mr-2">
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+    <div className="flex-shrink-0 ml-auto mr-1 transition-colors" style={{ color: 'rgba(180,83,9,0.2)' }}>
+      <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
     </div>
   </div>
 ));
 
+// ── Food card — visual card with image ──
 const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void }) => (
-  <div className="group glass-card rounded-[1.75rem] sm:rounded-[2.5rem] overflow-hidden bg-white border border-donatello-terracotta/5 shadow-sm hover:shadow-2xl transition-shadow duration-300">
-    <div className="relative h-40 sm:h-72 overflow-hidden bg-donatello-cream">
+  <div
+    className="group overflow-hidden cursor-pointer transition-all duration-500 hover:-translate-y-1"
+    style={{
+      background: '#fff',
+      borderRadius: '16px',
+      border: '1px solid rgba(180,83,9,0.06)',
+      boxShadow: '0 4px 16px rgba(0,0,0,0.04)',
+    }}
+    onClick={onClick}
+  >
+    <div className="relative h-40 sm:h-56 overflow-hidden" style={{ background: '#F5E6D3' }}>
       {item.image && (
         <img
           src={item.image}
           alt={item.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           loading="eager"
           fetchPriority="high"
           decoding="async"
@@ -101,27 +123,44 @@ const FoodCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void 
           style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
         />
       )}
-      <div className="absolute top-3 right-3 sm:top-6 sm:right-6 bg-white/90 backdrop-blur-md px-3 sm:px-4 py-1 sm:py-1.5 rounded-full shadow-lg">
-        <span className="font-bold text-[13px] sm:text-base text-donatello-terracotta tracking-tight">
+      <div
+        className="absolute top-3 right-3"
+        style={{
+          background: 'rgba(28,25,23,0.85)',
+          backdropFilter: 'blur(8px)',
+          padding: '6px 14px',
+          borderRadius: '6px',
+        }}
+      >
+        <span style={{ fontFamily: '"Inter",sans-serif', fontWeight: 700, fontSize: '0.82rem', color: '#FDF8EF' }}>
           {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
         </span>
       </div>
     </div>
-    <div className="p-4 sm:p-8">
-      <h3 className="text-[17px] sm:text-2xl mb-1.5 sm:mb-3 font-display text-donatello-navy group-hover:text-donatello-terracotta transition-colors">{item.title}</h3>
-      <p className="text-donatello-navy/60 text-[13px] sm:text-sm mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3 leading-snug">{item.description}</p>
-      <button
-        onClick={onClick}
-        className="text-[10px] font-bold uppercase tracking-[0.2em] text-donatello-terracotta flex items-center gap-2 hover:gap-4 transition-all cursor-pointer"
+    <div className="p-4 sm:p-6">
+      <h3
+        className="mb-1.5 transition-colors duration-300"
+        style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(1rem, 1.2vw, 1.25rem)', color: '#1C1917', fontWeight: 400 }}
+      >
+        {item.title}
+      </h3>
+      <p
+        className="line-clamp-2 mb-4"
+        style={{ fontSize: '0.8rem', color: '#9A7B5A', fontFamily: '"Merriweather",serif', fontWeight: 300, lineHeight: 1.7 }}
+      >
+        {item.description}
+      </p>
+      <span
+        className="flex items-center gap-1.5 group-hover:gap-3 transition-all"
+        style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.68rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2px', color: '#1A6B6A', cursor: 'pointer' }}
       >
         Détails <span>→</span>
-      </button>
+      </span>
     </div>
   </div>
 ));
 
 // ── Local / GitHub Pages URL ──
-// We use the deployed file on GitHub Pages to avoid the 5-minute cache of raw.githubusercontent.com
 const MENU_RAW_URL = import.meta.env.BASE_URL + 'menu-data.html';
 
 const MenuPage = () => {
@@ -180,7 +219,6 @@ const MenuPage = () => {
   // Prefetch first category eagerly, rest lazily during idle time
   useEffect(() => {
     if (!plats || plats.length === 0) return;
-    // Prefetch ALL images in background (no blocking) so subsequent visits are instant
     const prefetch = () => {
       plats.forEach(item => {
         if (item.image) {
@@ -196,10 +234,8 @@ const MenuPage = () => {
     }
   }, [plats]);
 
-  // We compute whether a category is drink-like to apply the correct grid structure per category.
   const isCategoryDrinkLike = (cat: string) => cat.includes("Boisson") || cat.includes("Viennoiserie");
 
-  // Instant switch — no blocking, images appear as they load
   const handleCategoryChange = useCallback((cat: string) => {
     if (activeTab === cat) return;
     startTransition(() => {
@@ -213,13 +249,13 @@ const MenuPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col bg-white">
+      <div className="min-h-screen flex flex-col" style={{ background: '#FDF8EF' }}>
         <Header />
         <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
           <div className="min-h-[50vh] flex items-center justify-center">
             <div className="flex flex-col items-center animate-fadeIn">
-              <div className="w-8 h-8 border-4 border-donatello-terracotta/20 border-t-donatello-terracotta rounded-full animate-spin mb-4"></div>
-              <div className="font-display text-donatello-navy/40">Chargement...</div>
+              <div className="w-8 h-8 rounded-full animate-spin mb-4" style={{ border: '3px solid rgba(26,107,106,0.15)', borderTopColor: '#1A6B6A' }} />
+              <div style={{ fontFamily: '"Merriweather",serif', color: '#9A7B5A', fontSize: '0.9rem' }}>Chargement...</div>
             </div>
           </div>
         </main>
@@ -229,31 +265,45 @@ const MenuPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div className="min-h-screen flex flex-col" style={{ background: '#FDF8EF' }}>
       <Header />
 
       <main className="flex-grow pt-28 pb-20 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10 px-6">
+        <div className="max-w-[1140px] mx-auto relative z-10 px-6">
           {/* Heading */}
-          <div className="text-center mb-6 sm:mb-10 md:mb-16">
-            <h2 className="text-5xl md:text-7xl mb-6 font-allenoire text-donatello-navy">
-              Menu <span className="text-donatello-terracotta font-heading">Donatello</span>
+          <div className="text-center mb-6 sm:mb-10 md:mb-14">
+            <span className="section-label">La Carte</span>
+            <h2
+              className="mb-4"
+              style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: '#78350F', lineHeight: 1.1 }}
+            >
+              Menu <span style={{ color: '#B45309' }}>Donatello</span>
             </h2>
-            <div className="h-1 w-24 bg-donatello-terracotta mx-auto" />
+            <div className="divider" />
           </div>
 
           {/* Categories Tab */}
           {categories.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3 mb-8 sm:mb-12 md:mb-16">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-8 sm:mb-12">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`relative px-4 py-2 sm:px-6 sm:py-2.5 md:px-8 md:py-3 rounded-full text-[10px] sm:text-[11px] md:text-[12px] font-bold uppercase tracking-widest transition-all duration-200 ${
-                    activeTab === cat 
-                      ? 'bg-donatello-navy text-white shadow-lg scale-105' 
-                      : 'bg-transparent text-donatello-navy hover:text-donatello-terracotta hover:bg-donatello-navy/5'
-                  }`}
+                  className="transition-all duration-200 cursor-pointer"
+                  style={{
+                    padding: '8px 18px',
+                    borderRadius: '6px',
+                    fontFamily: '"Inter",sans-serif',
+                    fontSize: '0.7rem',
+                    fontWeight: 600,
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                    border: '1px solid',
+                    ...(activeTab === cat
+                      ? { background: '#1C1917', color: '#FDF8EF', borderColor: '#1C1917' }
+                      : { background: 'transparent', color: '#9A7B5A', borderColor: 'rgba(180,83,9,0.15)' }
+                    ),
+                  }}
                 >
                   {cat}
                 </button>
@@ -261,7 +311,7 @@ const MenuPage = () => {
             </div>
           )}
 
-          {/* Items Grid/List — instant render, images appear as they load */}
+          {/* Items Grid/List */}
           <div className="min-h-[50vh]">
             <div style={{ animation: 'fadeIn 0.2s ease-out' }}>
               {categories.map((cat) => {
@@ -272,7 +322,7 @@ const MenuPage = () => {
                   <div
                     key={cat}
                     style={{ animation: 'fadeIn 0.2s ease-out' }}
-                    className={drinkLike ? "flex flex-col gap-4 max-w-3xl mx-auto" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10"}
+                    className={drinkLike ? "flex flex-col gap-3 max-w-3xl mx-auto" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"}
                   >
                     {itemsInCat.map((item) =>
                       drinkLike ? (
@@ -297,7 +347,8 @@ const MenuPage = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.15 }}
-            className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+            className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+            style={{ background: 'rgba(28,25,23,0.5)', backdropFilter: 'blur(6px)' }}
             onClick={closeModal}
           >
             <motion.div
@@ -305,11 +356,12 @@ const MenuPage = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.97 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="bg-white rounded-[2rem] overflow-hidden max-w-lg w-full shadow-2xl"
+              className="overflow-hidden max-w-lg w-full"
+              style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 32px 80px rgba(0,0,0,0.2)' }}
               onClick={(e) => e.stopPropagation()}
             >
               {selectedItem.image && (
-                <div className="h-64 overflow-hidden bg-donatello-cream">
+                <div className="h-64 overflow-hidden" style={{ background: '#F5E6D3' }}>
                   <img
                     src={selectedItem.image}
                     alt={selectedItem.title}
@@ -321,20 +373,47 @@ const MenuPage = () => {
                   />
                 </div>
               )}
-              <div className="p-8">
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-3xl font-display text-donatello-navy">{selectedItem.title}</h3>
-                  <span className="bg-donatello-terracotta/10 text-donatello-terracotta font-bold px-4 py-2 rounded-full text-sm whitespace-nowrap ml-4">
+              <div className="p-7">
+                <div className="flex items-start justify-between mb-3">
+                  <h3 style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#1C1917', fontWeight: 400 }}>{selectedItem.title}</h3>
+                  <span
+                    style={{
+                      background: 'rgba(180,83,9,0.08)',
+                      color: '#B45309',
+                      fontFamily: '"Inter",sans-serif',
+                      fontWeight: 700,
+                      padding: '6px 16px',
+                      borderRadius: '6px',
+                      fontSize: '0.85rem',
+                      whiteSpace: 'nowrap',
+                      marginLeft: '16px',
+                    }}
+                  >
                     {typeof selectedItem.price === 'number' ? selectedItem.price.toFixed(1) : selectedItem.price} DT
                   </span>
                 </div>
-                <p className="text-sm text-donatello-navy/40 uppercase tracking-widest font-bold mb-4">{selectedItem.category}</p>
+                <p style={{ fontFamily: '"Inter",sans-serif', fontSize: '0.72rem', color: '#9A7B5A', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginBottom: '12px' }}>
+                  {selectedItem.category}
+                </p>
                 {selectedItem.description && (
-                  <p className="text-donatello-navy/70 leading-relaxed mb-6">{selectedItem.description}</p>
+                  <p style={{ fontFamily: '"Merriweather",serif', fontSize: '0.9rem', color: 'rgba(28,25,23,0.6)', lineHeight: 1.8, fontWeight: 300, marginBottom: '24px' }}>
+                    {selectedItem.description}
+                  </p>
                 )}
                 <button
                   onClick={closeModal}
-                  className="w-full py-3 bg-donatello-navy text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-donatello-terracotta transition-colors"
+                  className="w-full py-3 cursor-pointer transition-colors duration-300 hover:bg-[#115E5D]"
+                  style={{
+                    background: '#1A6B6A',
+                    color: '#FDF8EF',
+                    borderRadius: '8px',
+                    fontFamily: '"Inter",sans-serif',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase',
+                    border: 'none',
+                  }}
                 >
                   Fermer
                 </button>

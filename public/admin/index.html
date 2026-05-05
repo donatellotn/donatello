@@ -20,13 +20,17 @@
 
     :root {
       --terracotta: #B45309;
+      --teal: #1A6B6A;
+      --teal-dark: #115E5D;
       --navy: #1C1917;
       --cream: #FDF8EF;
+      --warm: #F5E6D3;
       --white: #ffffff;
       --border: #e8e2da;
       --danger: #e05252;
       --success: #52a060;
       --text-muted: #8a7f74;
+      --primary: #78350F;
     }
 
     body {
@@ -69,10 +73,10 @@
     }
 
     .gate-logo span {
-      font-family: 'Playfair Display', serif;
+      font-family: 'Abril Fatface', serif;
       font-size: 24px;
       color: var(--terracotta);
-      font-style: italic;
+      font-style: normal;
     }
 
     .gate-card h1 {
@@ -111,7 +115,7 @@
     .gate-card button {
       width: 100%;
       padding: 14px;
-      background: var(--terracotta);
+      background: var(--teal);
       color: white;
       border: none;
       border-radius: 12px;
@@ -124,7 +128,7 @@
     }
 
     .gate-card button:hover {
-      background: #b5603f;
+      background: var(--teal-dark);
       transform: translateY(-1px);
     }
 
@@ -169,7 +173,7 @@
       background: #ffffff;
       border-radius: 50%;
       overflow: hidden;
-      border: 1px solid rgba(166,75,42,0.2);
+      border: 1px solid rgba(180,83,9,0.2);
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
     
@@ -177,12 +181,13 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transform: scale(1.45);
     }
 
     .header-brand h2 {
-      font-size: 15px;
-      font-weight: 600;
+      font-family: 'Abril Fatface', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--primary);
     }
 
     .header-brand p {
@@ -214,12 +219,12 @@
     }
 
     .btn-primary {
-      background: var(--terracotta);
+      background: var(--teal);
       color: white;
     }
 
     .btn-primary:hover {
-      background: #b5603f;
+      background: var(--teal-dark);
     }
 
     .btn-secondary {
@@ -767,6 +772,7 @@
           <div class="filter-tabs" id="filter-tabs"></div>
         </div>
         <div style="display:flex;gap:8px;">
+          <button class="btn btn-secondary" onclick="openCategoryManager()">📂 Catégories</button>
           <button class="btn btn-primary" id="save-btn" onclick="saveToFile()">💾 Sauvegarder</button>
         </div>
       </div>
@@ -809,12 +815,6 @@
           <label>Catégorie *</label>
           <select id="f-category" required>
             <option value="">-- Choisir --</option>
-            <option value="☕ Boisson chaude">☕ Boisson chaude</option>
-            <option value="🧃 Boisson fraîche">🧃 Boisson fraîche</option>
-            <option value="🍰 Gâteaux et tartes">🍰 Gâteaux et tartes</option>
-            <option value="🍽️ Plats">🍽️ Plats</option>
-            <option value="🥐 Viennoiseries">🥐 Viennoiseries</option>
-            <option value="✨ Autres">✨ Autres</option>
           </select>
         </div>
         <div class="form-group">
@@ -865,6 +865,23 @@
       <div style="display:flex;gap:10px;margin-top:24px">
         <button class="btn btn-primary" style="flex:1" onclick="saveSettings()">💾 Enregistrer</button>
         <button class="btn btn-secondary" style="flex:1" onclick="closeSettings()">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORY MANAGER MODAL -->
+  <div class="modal-overlay" id="category-overlay" onclick="if(event.target===this)closeCategoryManager()">
+    <div class="modal" style="max-width:480px">
+      <h3>📂 Gérer les Catégories</h3>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">Ajoutez ou supprimez des catégories du menu.</p>
+      <div id="category-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px"></div>
+      <div style="display:flex;gap:8px">
+        <input id="new-cat-input" type="text" placeholder="Ex: 🍕 Pizza" style="flex:1;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--cream)" />
+        <button class="btn btn-primary" onclick="addCategory()">+ Ajouter</button>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:24px">
+        <button class="btn btn-primary" style="flex:1" onclick="saveCategoriesAndClose()">✅ Valider</button>
+        <button class="btn btn-secondary" style="flex:1" onclick="closeCategoryManager()">Fermer</button>
       </div>
     </div>
   </div>
@@ -1486,6 +1503,123 @@
       clearTimeout(el._t);
       el._t = setTimeout(() => el.className = '', 3500);
     }
+
+    // ══════════════════════════════════════════
+    // ██  CATEGORY MANAGEMENT                 ██
+    // ══════════════════════════════════════════
+
+    const DEFAULT_CATEGORIES = [
+      "☕ Boisson chaude",
+      "🧃 Boisson fraîche",
+      "🥐 Viennoiseries",
+      "🍰 Gâteaux et tartes",
+      "🍽️ Plats",
+      "✨ Autres"
+    ];
+
+    function getCategories() {
+      const saved = localStorage.getItem('donatello_categories');
+      if (saved) {
+        try { return JSON.parse(saved); } catch(e) {}
+      }
+      return [...DEFAULT_CATEGORIES];
+    }
+
+    function saveCategories(cats) {
+      localStorage.setItem('donatello_categories', JSON.stringify(cats));
+      repopulateCategorySelect();
+    }
+
+    function repopulateCategorySelect() {
+      const select = document.getElementById('f-category');
+      if (!select) return;
+      const currentVal = select.value;
+      select.innerHTML = '<option value="">-- Choisir --</option>';
+      getCategories().forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        select.appendChild(opt);
+      });
+      if (currentVal) select.value = currentVal;
+    }
+
+    function openCategoryManager() {
+      const overlay = document.getElementById('category-overlay');
+      overlay.classList.add('open');
+      renderCategoryList();
+    }
+
+    function closeCategoryManager() {
+      document.getElementById('category-overlay').classList.remove('open');
+    }
+
+    function renderCategoryList() {
+      const list = document.getElementById('category-list');
+      const cats = getCategories();
+      list.innerHTML = '';
+      cats.forEach((cat, i) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--cream);border:1px solid var(--border);border-radius:10px;';
+        row.innerHTML = `
+          <span style="flex:1;font-size:14px;font-weight:500">${cat}</span>
+          <button class="btn btn-danger btn-sm" onclick="removeCategory(${i})" title="Supprimer">✕</button>
+        `;
+        list.appendChild(row);
+      });
+    }
+
+    function addCategory() {
+      const input = document.getElementById('new-cat-input');
+      const val = input.value.trim();
+      if (!val) return;
+      const cats = getCategories();
+      if (cats.includes(val)) {
+        toast('⚠️ Cette catégorie existe déjà', 'error');
+        return;
+      }
+      cats.push(val);
+      saveCategories(cats);
+      input.value = '';
+      renderCategoryList();
+      toast(`✅ Catégorie "${val}" ajoutée`);
+    }
+
+    function removeCategory(index) {
+      const cats = getCategories();
+      const removed = cats[index];
+      // Check if any items use this category
+      const itemsUsingCat = menuItems.filter(item => item.category === removed);
+      if (itemsUsingCat.length > 0) {
+        if (!confirm(`⚠️ ${itemsUsingCat.length} plat(s) utilisent "${removed}". Supprimer quand même ?`)) return;
+      }
+      cats.splice(index, 1);
+      saveCategories(cats);
+      renderCategoryList();
+      toast(`Catégorie "${removed}" supprimée`);
+    }
+
+    function saveCategoriesAndClose() {
+      closeCategoryManager();
+      // Refresh filter tabs
+      renderFilterTabs();
+      toast('✅ Catégories mises à jour');
+    }
+
+    function renderFilterTabs() {
+      const container = document.getElementById('filter-tabs');
+      const cats = getCategories();
+      const usedCats = new Set(menuItems.map(i => i.category));
+      const allCats = ['all', ...cats.filter(c => usedCats.has(c))];
+      container.innerHTML = allCats.map(c =>
+        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" onclick="filterBy('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tous' : c}</button>`
+      ).join('');
+    }
+
+    // Override init to use dynamic categories
+    document.addEventListener('DOMContentLoaded', () => {
+      repopulateCategorySelect();
+    });
   </script>
 </body>
 
