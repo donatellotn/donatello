@@ -300,24 +300,13 @@ const MenuPage = () => {
         <div className="max-w-[1140px] mx-auto relative z-10 px-6">
           {/* Heading */}
           <div className="text-center mb-6 sm:mb-10 md:mb-14">
-            <span className="section-label">{tr('specials_label')}</span>
+            <span className="section-label">{tr('menu_label')}</span>
             <h2
               className="mb-4"
               style={{ fontFamily: '"Abril Fatface",serif', fontSize: 'clamp(2rem, 4vw, 3.2rem)', color: '#5E3A25', lineHeight: 1.1 }}
             >
-              {tr('specials_title')}
+              {tr('menu_title_prefix')} <span style={{ color: '#C15C3D' }}>{tr('menu_title_suffix')}</span>
             </h2>
-            <p style={{
-              fontFamily: '"Merriweather",serif',
-              fontSize: '0.95rem',
-              color: '#A68A6D',
-              maxWidth: '480px',
-              fontWeight: 300,
-              lineHeight: 1.8,
-              margin: '0 auto',
-            }}>
-              {tr('specials_desc')}
-            </p>
             <div className="divider" />
           </div>
 
