@@ -1677,33 +1677,80 @@
     // ══════════════════════════════════════════
     // ██  AUTO-TRANSLATE API                  ██
     // ══════════════════════════════════════════
+
+    // Primary: Google Translate (unofficial gtx endpoint)
+    async function _translateGoogle(text, targetLang) {
+      const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Google HTTP ${res.status}`);
+      const data = await res.json();
+      if (!data || !data[0]) throw new Error('Google: unexpected response');
+      return data[0].map(x => x[0]).join('');
+    }
+
+    // Fallback: MyMemory free API
+    async function _translateMyMemory(text, targetLang) {
+      const langPair = targetLang === 'en' ? 'fr|en' : 'en|fr';
+      const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`MyMemory HTTP ${res.status}`);
+      const data = await res.json();
+      if (data.responseStatus !== 200) throw new Error('MyMemory: ' + (data.responseDetails || 'error'));
+      return data.responseData.translatedText;
+    }
+
+    // Main translate function with fallback
     async function autoTranslateAPI(text, targetLang) {
-      if (!text) return '';
+      if (!text || !text.trim()) return '';
+      
+      // Try Google first
       try {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        return data[0].map(x => x[0]).join('');
+        const result = await _translateGoogle(text, targetLang);
+        console.log(`[Translate] Google OK: "${text}" → "${result}"`);
+        return result;
       } catch (e) {
-        console.error('Translation error', e);
-        return text;
+        console.warn('[Translate] Google failed:', e.message, '— trying fallback...');
+      }
+
+      // Fallback to MyMemory
+      try {
+        const result = await _translateMyMemory(text, targetLang);
+        console.log(`[Translate] MyMemory OK: "${text}" → "${result}"`);
+        return result;
+      } catch (e2) {
+        console.error('[Translate] Both APIs failed:', e2.message);
+        toast('⚠️ Traduction auto indisponible', 'error');
+        return ''; // return empty so user knows to fill manually
       }
     }
 
+    // Shared translate-on-blur handler for ALL fields (dishes + categories)
     async function handleAutoTranslate(sourceId, targetId, targetLang, spinnerId) {
       const sourceEl = document.getElementById(sourceId);
       const targetEl = document.getElementById(targetId);
       const spinnerEl = document.getElementById(spinnerId);
       
       const text = sourceEl.value.trim();
-      // Skip if empty or if the text hasn't changed since last translation
-      if (!text || sourceEl.dataset.lastTranslated === text) return; 
+      if (!text) return; // nothing to translate
+      
+      // Skip only if we already successfully translated this exact text
+      const lastSrc = sourceEl.dataset.lastTranslated || '';
+      const lastResult = sourceEl.dataset.lastTranslateResult || '';
+      if (lastSrc === text && lastResult && targetEl.value === lastResult) return;
       
       if (spinnerEl) spinnerEl.style.display = 'inline';
-      const translated = await autoTranslateAPI(text, targetLang);
-      targetEl.value = translated;
-      sourceEl.dataset.lastTranslated = text; // track so we don't re-translate unnecessarily
-      if (spinnerEl) spinnerEl.style.display = 'none';
+      try {
+        const translated = await autoTranslateAPI(text, targetLang);
+        if (translated) {
+          targetEl.value = translated;
+          sourceEl.dataset.lastTranslated = text;
+          sourceEl.dataset.lastTranslateResult = translated;
+        }
+      } catch (e) {
+        console.error('[Translate] handleAutoTranslate error:', e);
+      } finally {
+        if (spinnerEl) spinnerEl.style.display = 'none';
+      }
     }
 
     // ══════════════════════════════════════════
@@ -1804,21 +1851,9 @@
       });
     }
 
+    // Category auto-translate: uses the same handleAutoTranslate as dishes
     async function handleCatAutoTranslate() {
-      const frInput = document.getElementById('new-cat-input');
-      const enInput = document.getElementById('new-cat-input-en');
-      const spinner = document.getElementById('cat-fr-spinner');
-      const text = frInput.value.trim();
-      if (!text || frInput.dataset.lastTranslated === text) return;
-      if (enInput.value.trim() && frInput.dataset.lastTranslated) return; // user already typed EN
-      
-      if (spinner) spinner.style.display = 'inline';
-      try {
-        const translated = await autoTranslateAPI(text, 'en');
-        enInput.value = translated;
-        frInput.dataset.lastTranslated = text;
-      } catch(e) { console.error(e); }
-      if (spinner) spinner.style.display = 'none';
+      await handleAutoTranslate('new-cat-input', 'new-cat-input-en', 'en', 'cat-fr-spinner');
     }
 
     async function addCategory(e) {
