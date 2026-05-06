@@ -973,14 +973,14 @@
               <input id="new-cat-input" type="text" placeholder="Ex: 🍕 Pizza" 
                 style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--white);transition:border-color 0.2s" 
                 onfocus="this.style.borderColor='var(--terracotta)'" 
-                onblur="this.style.borderColor='var(--border)'; handleCatAutoTranslate()" />
+                onblur="this.style.borderColor='var(--border)'; handleCatAutoTranslate('fr-to-en')" />
             </div>
             <div style="flex:1;min-width:150px">
               <label style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;display:block">Name (EN) <span id="cat-en-spinner" style="display:none;font-size:11px">🤖...</span></label>
               <input id="new-cat-input-en" type="text" placeholder="Ex: 🍕 Pizza" 
                 style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--white);transition:border-color 0.2s" 
                 onfocus="this.style.borderColor='var(--terracotta)'" 
-                onblur="this.style.borderColor='var(--border)'" />
+                onblur="this.style.borderColor='var(--border)'; handleCatAutoTranslate('en-to-fr')" />
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
@@ -1384,33 +1384,34 @@
         const item = menuItems[idx];
         document.getElementById('f-title').value = item.title || '';
         document.getElementById('f-title').dataset.lastTranslated = item.title || '';
-        document.getElementById('f-title').dataset.lastResult = item.title_en || '';
         document.getElementById('f-title-en').value = item.title_en || '';
         document.getElementById('f-title-en').dataset.lastTranslated = item.title_en || '';
-        document.getElementById('f-title-en').dataset.lastResult = item.title || '';
         document.getElementById('f-price').value = item.price || '';
         document.getElementById('f-category').value = item.category || '';
         document.getElementById('f-image').value = item.image || '';
         document.getElementById('f-description').value = item.description || '';
         document.getElementById('f-description').dataset.lastTranslated = item.description || '';
-        document.getElementById('f-description').dataset.lastResult = item.description_en || '';
         document.getElementById('f-description-en').value = item.description_en || '';
         document.getElementById('f-description-en').dataset.lastTranslated = item.description_en || '';
-        document.getElementById('f-description-en').dataset.lastResult = item.description || '';
         previewImg(item.image);
       } else {
         document.getElementById('item-form').reset();
         document.getElementById('f-title-en').value = '';
         document.getElementById('f-description-en').value = '';
         document.getElementById('img-preview').className = '';
-        
-        // Clear all translation tracking
-        ['f-title', 'f-title-en', 'f-description', 'f-description-en'].forEach(id => {
-          const el = document.getElementById(id);
-          el.dataset.lastTranslated = '';
-          el.dataset.lastResult = '';
-        });
       }
+
+      // Reset all translation tracking + proposals
+      ['f-title', 'f-title-en', 'f-description', 'f-description-en'].forEach(id => {
+        const el = document.getElementById(id);
+        if (idx === null) el.dataset.lastTranslated = '';
+        el.dataset.proposal = '';
+        // Reset placeholders to defaults
+      });
+      document.getElementById('f-title').placeholder = 'Ex: Cappuccino Donatello';
+      document.getElementById('f-title-en').placeholder = 'Ex: Donatello Cappuccino';
+      document.getElementById('f-description').placeholder = 'Description courte du plat...';
+      document.getElementById('f-description-en').placeholder = 'Short description of the dish...';
 
       document.getElementById('modal-overlay').classList.add('open');
       document.body.style.overflow = 'hidden';
@@ -1524,11 +1525,11 @@
         category: catObj.fr,
         category_en: catObj.en,
         title: document.getElementById('f-title').value.trim(),
-        title_en: document.getElementById('f-title-en').value.trim(),
+        title_en: getValueOrProposal('f-title-en'),
         price: parseFloat(document.getElementById('f-price').value),
         image: document.getElementById('f-image').value.trim(),
         description: document.getElementById('f-description').value.trim(),
-        description_en: document.getElementById('f-description-en').value.trim(),
+        description_en: getValueOrProposal('f-description-en'),
       };
 
       if (idxStr === '') {
@@ -1765,6 +1766,8 @@
     }
 
     // Shared translate-on-blur handler for ALL fields (dishes + categories)
+    // Translation is set as PLACEHOLDER (proposal) — user's own text always takes priority.
+    // On save, if the field is empty, the placeholder proposal is used.
     async function handleAutoTranslate(sourceId, targetId, targetLang, spinnerId) {
       const sourceEl = document.getElementById(sourceId);
       const targetEl = document.getElementById(targetId);
@@ -1775,11 +1778,10 @@
       const text = sourceEl.value.trim();
       if (!text) return;
 
-      // Skip only if we successfully translated this exact text already AND target still has that result
+      // Skip if we already proposed a translation for this exact text
       const prev = sourceEl.dataset.lastTranslated || '';
-      const prevResult = sourceEl.dataset.lastResult || '';
-      if (prev === text && prevResult && targetEl.value === prevResult) {
-        console.log('[Translate] Skip (already translated):', text);
+      if (prev === text) {
+        console.log('[Translate] Skip (already proposed):', text);
         return;
       }
 
@@ -1787,16 +1789,25 @@
       try {
         const translated = await autoTranslateAPI(text, targetLang);
         if (translated) {
-          targetEl.value = translated;
+          // Set as placeholder (proposal) — not as value
+          targetEl.placeholder = '💡 ' + translated;
+          targetEl.dataset.proposal = translated;
           sourceEl.dataset.lastTranslated = text;
-          sourceEl.dataset.lastResult = translated;
-          console.log('[Translate] Done:', text, '→', translated);
+          console.log('[Translate] Proposal:', text, '→', translated);
         }
       } catch (e) {
         console.error('[Translate] Handler error:', e);
       } finally {
         if (spinnerEl) spinnerEl.style.display = 'none';
       }
+    }
+
+    // Helper: get the real value or fall back to the translation proposal
+    function getValueOrProposal(id) {
+      const el = document.getElementById(id);
+      const val = el.value.trim();
+      if (val) return val;
+      return el.dataset.proposal || '';
     }
 
     // ══════════════════════════════════════════
@@ -1897,9 +1908,13 @@
       });
     }
 
-    // Category auto-translate: uses the same handleAutoTranslate as dishes
-    async function handleCatAutoTranslate() {
-      await handleAutoTranslate('new-cat-input', 'new-cat-input-en', 'en', 'cat-fr-spinner');
+    // Category auto-translate: bidirectional (FR→EN and EN→FR)
+    async function handleCatAutoTranslate(direction) {
+      if (direction === 'en-to-fr') {
+        await handleAutoTranslate('new-cat-input-en', 'new-cat-input', 'fr', 'cat-en-spinner');
+      } else {
+        await handleAutoTranslate('new-cat-input', 'new-cat-input-en', 'en', 'cat-fr-spinner');
+      }
     }
 
     async function addCategory(e) {
@@ -1918,9 +1933,8 @@
       try {
         // Use the EN input if user typed something, otherwise auto-translate
         let enVal = inputEn.value.trim();
-        if (!enVal) {
-          enVal = await autoTranslateAPI(val, 'en');
-        }
+        if (!enVal) enVal = inputEn.dataset.proposal || '';
+        if (!enVal) enVal = await autoTranslateAPI(val, 'en');
 
         const cats = getCategories();
         if (cats.some(c => c.fr.toLowerCase() === val.toLowerCase())) {
