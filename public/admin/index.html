@@ -881,11 +881,11 @@
         <div class="form-row">
           <div class="form-group">
             <label>Nom du plat (FR) * <span id="f-title-spinner" style="display:none;font-size:11px;">🤖...</span></label>
-            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" onblur="handleAutoTranslate('f-title', 'f-title-en', 'en', 'f-title-spinner')" />
+            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" onblur="handleAutoTranslate('f-title', 'f-title-en', 'fr', 'en', 'f-title-spinner')" />
           </div>
           <div class="form-group">
             <label>Nom du plat (EN) <span id="f-title-en-spinner" style="display:none;font-size:11px;">🤖...</span></label>
-            <input type="text" id="f-title-en" placeholder="Ex: Donatello Cappuccino" onblur="handleAutoTranslate('f-title-en', 'f-title', 'fr', 'f-title-en-spinner')" />
+            <input type="text" id="f-title-en" placeholder="Ex: Donatello Cappuccino" onblur="handleAutoTranslate('f-title-en', 'f-title', 'en', 'fr', 'f-title-en-spinner')" />
           </div>
           <div class="form-group">
             <label>Prix (DT) *</label>
@@ -916,11 +916,11 @@
         <div class="form-row">
           <div class="form-group">
             <label>Description (FR) <span id="f-desc-spinner" style="display:none;font-size:11px;">🤖...</span></label>
-            <textarea id="f-description" placeholder="Description courte du plat..." onblur="handleAutoTranslate('f-description', 'f-description-en', 'en', 'f-desc-spinner')"></textarea>
+            <textarea id="f-description" placeholder="Description courte du plat..." onblur="handleAutoTranslate('f-description', 'f-description-en', 'fr', 'en', 'f-desc-spinner')"></textarea>
           </div>
           <div class="form-group">
             <label>Description (EN) <span id="f-desc-en-spinner" style="display:none;font-size:11px;">🤖...</span></label>
-            <textarea id="f-description-en" placeholder="Short description of the dish..." onblur="handleAutoTranslate('f-description-en', 'f-description', 'fr', 'f-desc-en-spinner')"></textarea>
+            <textarea id="f-description-en" placeholder="Short description of the dish..." onblur="handleAutoTranslate('f-description-en', 'f-description', 'en', 'fr', 'f-desc-en-spinner')"></textarea>
           </div>
         </div>
         <div class="modal-actions">
@@ -1524,11 +1524,11 @@
       const newData = {
         category: catObj.fr,
         category_en: catObj.en,
-        title: document.getElementById('f-title').value.trim(),
+        title: getValueOrProposal('f-title'),
         title_en: getValueOrProposal('f-title-en'),
         price: parseFloat(document.getElementById('f-price').value),
         image: document.getElementById('f-image').value.trim(),
-        description: document.getElementById('f-description').value.trim(),
+        description: getValueOrProposal('f-description'),
         description_en: getValueOrProposal('f-description-en'),
       };
 
@@ -1685,10 +1685,10 @@
     // ██  AUTO-TRANSLATE API                  ██
     // ══════════════════════════════════════════
 
-    // Method 1: Google Translate via fetch (works on localhost)
-    function _translateGoogleFetch(text, targetLang) {
+    // Method 1: Google Translate via fetch
+    function _translateGoogleFetch(text, sourceLang, targetLang) {
       return new Promise((resolve, reject) => {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
         fetch(url, { method: 'GET', mode: 'cors' })
           .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
           .then(data => {
@@ -1699,10 +1699,10 @@
       });
     }
 
-    // Method 2: Google Translate via XHR (sometimes bypasses CORS fetch blocks)
-    function _translateGoogleXHR(text, targetLang) {
+    // Method 2: Google Translate via XHR
+    function _translateGoogleXHR(text, sourceLang, targetLang) {
       return new Promise((resolve, reject) => {
-        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`;
         const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.onload = function () {
@@ -1721,9 +1721,9 @@
     }
 
     // Method 3: MyMemory free API (reliable CORS)
-    function _translateMyMemory(text, targetLang) {
+    function _translateMyMemory(text, sourceLang, targetLang) {
       return new Promise((resolve, reject) => {
-        const langPair = targetLang === 'en' ? 'fr|en' : 'en|fr';
+        const langPair = `${sourceLang}|${targetLang}`;
         const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
         fetch(url)
           .then(r => r.json())
@@ -1735,28 +1735,28 @@
       });
     }
 
-    // Main translate — tries 3 methods in sequence
-    async function autoTranslateAPI(text, targetLang) {
+    // Main translate — tries 3 methods with explicit source/target langs
+    async function autoTranslateAPI(text, sourceLang, targetLang) {
       if (!text || !text.trim()) return '';
-      console.log('[Translate] Starting:', text, '→', targetLang);
+      console.log(`[Translate] ${sourceLang}→${targetLang}: "${text}"`);
 
       // 1) Google via fetch
       try {
-        const r = await _translateGoogleFetch(text, targetLang);
+        const r = await _translateGoogleFetch(text, sourceLang, targetLang);
         console.log('[Translate] Google-fetch OK:', r);
         return r;
       } catch (e) { console.warn('[Translate] Google-fetch fail:', e.message); }
 
       // 2) Google via XHR
       try {
-        const r = await _translateGoogleXHR(text, targetLang);
+        const r = await _translateGoogleXHR(text, sourceLang, targetLang);
         console.log('[Translate] Google-XHR OK:', r);
         return r;
       } catch (e) { console.warn('[Translate] Google-XHR fail:', e.message); }
 
       // 3) MyMemory
       try {
-        const r = await _translateMyMemory(text, targetLang);
+        const r = await _translateMyMemory(text, sourceLang, targetLang);
         console.log('[Translate] MyMemory OK:', r);
         return r;
       } catch (e) { console.error('[Translate] All 3 methods failed:', e.message); }
@@ -1766,9 +1766,10 @@
     }
 
     // Shared translate-on-blur handler for ALL fields (dishes + categories)
+    // Args: sourceId, targetId, sourceLang ('fr'/'en'), targetLang ('en'/'fr'), spinnerId
     // Translation is set as PLACEHOLDER (proposal) — user's own text always takes priority.
     // On save, if the field is empty, the placeholder proposal is used.
-    async function handleAutoTranslate(sourceId, targetId, targetLang, spinnerId) {
+    async function handleAutoTranslate(sourceId, targetId, sourceLang, targetLang, spinnerId) {
       const sourceEl = document.getElementById(sourceId);
       const targetEl = document.getElementById(targetId);
       const spinnerEl = spinnerId ? document.getElementById(spinnerId) : null;
@@ -1787,7 +1788,7 @@
 
       if (spinnerEl) spinnerEl.style.display = 'inline';
       try {
-        const translated = await autoTranslateAPI(text, targetLang);
+        const translated = await autoTranslateAPI(text, sourceLang, targetLang);
         if (translated) {
           // Set as placeholder (proposal) — not as value
           targetEl.placeholder = '💡 ' + translated;
@@ -1911,9 +1912,9 @@
     // Category auto-translate: bidirectional (FR→EN and EN→FR)
     async function handleCatAutoTranslate(direction) {
       if (direction === 'en-to-fr') {
-        await handleAutoTranslate('new-cat-input-en', 'new-cat-input', 'fr', 'cat-en-spinner');
+        await handleAutoTranslate('new-cat-input-en', 'new-cat-input', 'en', 'fr', 'cat-en-spinner');
       } else {
-        await handleAutoTranslate('new-cat-input', 'new-cat-input-en', 'en', 'cat-fr-spinner');
+        await handleAutoTranslate('new-cat-input', 'new-cat-input-en', 'fr', 'en', 'cat-fr-spinner');
       }
     }
 
@@ -1934,7 +1935,7 @@
         // Use the EN input if user typed something, otherwise auto-translate
         let enVal = inputEn.value.trim();
         if (!enVal) enVal = inputEn.dataset.proposal || '';
-        if (!enVal) enVal = await autoTranslateAPI(val, 'en');
+        if (!enVal) enVal = await autoTranslateAPI(val, 'fr', 'en');
 
         const cats = getCategories();
         if (cats.some(c => c.fr.toLowerCase() === val.toLowerCase())) {
