@@ -45,7 +45,7 @@ export const t = {
     contact_address: 'Adresse',
     contact_address_val: 'Bizerte, Tunisie',
     contact_hours: 'Horaires',
-    contact_hours_val: 'Tous les jours : 7h00 — Tard le soir',
+    contact_hours_val: 'Tous les jours : 7h00 — 23h:00',
     contact_phone: 'Téléphone',
     contact_map_title: 'Donatello sur Google Maps',
 
@@ -119,7 +119,7 @@ export const t = {
     contact_address: 'Address',
     contact_address_val: 'Bizerte, Tunisia',
     contact_hours: 'Opening Hours',
-    contact_hours_val: 'Every day: 7:00am — Late night',
+    contact_hours_val: 'Every day: 7:00am — 11:00pm',
     contact_phone: 'Phone',
     contact_map_title: 'Donatello on Google Maps',
 
