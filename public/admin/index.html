@@ -591,27 +591,70 @@
         padding: 16px;
         flex-direction: column;
         height: auto;
-        gap: 16px;
+        gap: 12px;
       }
 
       .header-actions {
         width: 100%;
-        justify-content: space-between;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 8px;
+      }
+
+      .header-actions .btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 12px;
+        padding: 12px 10px;
+      }
+
+      .header-actions .btn:last-child {
+        grid-column: 1 / -1;
       }
 
       main {
-        padding: 24px 16px;
+        padding: 20px 12px;
       }
 
       .stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 8px;
+      }
+
+      .stat-card {
+        padding: 14px 12px;
+        border-radius: 12px;
+      }
+
+      .stat-card .value {
+        font-size: 22px;
+      }
+
+      .stat-card .label {
+        font-size: 9px;
       }
 
       .toolbar {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .toolbar-left {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .filter-tabs {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 6px;
+      }
+
+      .filter-tab {
+        text-align: center;
+        padding: 10px 8px;
+        font-size: 11px;
       }
 
       .table-wrap {
@@ -639,7 +682,7 @@
         background: var(--white);
         border: 1px solid var(--border);
         border-radius: 16px;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
         padding: 16px;
       }
 
@@ -659,7 +702,7 @@
       tbody td:nth-child(5) { 
         grid-area: actions; 
         border-top: 1px solid var(--border); 
-        padding-top: 16px; 
+        padding-top: 12px; 
         margin-top: 4px; 
       }
 
@@ -676,6 +719,8 @@
       .td-actions .btn {
         flex: 1;
         justify-content: center;
+        padding: 12px 10px;
+        font-size: 12px;
       }
 
       .form-row {
@@ -683,13 +728,14 @@
       }
 
       #modal-overlay,
-      #settings-overlay {
+      #settings-overlay,
+      #category-overlay {
         align-items: flex-end;
         padding: 0;
       }
 
       .modal {
-        padding: 16px 24px 40px 24px;
+        padding: 16px 20px 32px 20px;
         max-height: 92vh;
         width: 100%;
         border-radius: 28px 28px 0 0;
@@ -704,7 +750,7 @@
         height: 5px;
         background: var(--border);
         border-radius: 10px;
-        margin: 0 auto 24px auto;
+        margin: 0 auto 20px auto;
       }
       
       @keyframes slideUp {
@@ -712,34 +758,60 @@
         to { transform: translateY(0); }
       }
 
+      .modal h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+
       .modal-actions {
         flex-direction: column-reverse;
       }
 
-      .btn {
-        padding: 14px 16px; /* Touch target */
+      .modal-actions .btn {
         width: 100%;
+        padding: 14px 16px;
         justify-content: center;
         font-size: 13px;
       }
-      
-      .header-actions .btn-secondary, 
-      .header-actions .btn-primary {
-        width: auto;
+
+      /* Category manager mobile */
+      #category-list .cat-row {
+        flex-direction: column;
+        align-items: stretch !important;
+        gap: 8px !important;
+        padding: 14px !important;
+      }
+
+      #category-list .cat-row .cat-info {
+        width: 100%;
+      }
+
+      #category-list .cat-row .cat-actions-row {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-end;
+      }
+
+      .cat-add-section {
+        flex-direction: column !important;
+      }
+
+      .cat-add-section input {
+        width: 100% !important;
+      }
+
+      .cat-add-section .cat-inputs {
+        flex-direction: column !important;
       }
     }
 
     @media (max-width: 480px) {
       .stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
       }
 
       .header-actions {
-        justify-content: center;
-      }
-
-      .btn {
-        padding: 8px 12px;
+        grid-template-columns: 1fr 1fr;
       }
     }
   </style>
@@ -886,19 +958,42 @@
 
   <!-- CATEGORY MANAGER MODAL -->
   <div class="modal-overlay" id="category-overlay" onclick="if(event.target===this)closeCategoryManager()">
-    <div class="modal" style="max-width:480px">
+    <div class="modal" style="max-width:520px">
       <h3>📂 Gérer les Catégories</h3>
       <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">Ajoutez ou supprimez des catégories du menu.</p>
-      <div id="category-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px"></div>
-      <div style="display:flex;gap:8px">
-        <input id="new-cat-input" type="text" placeholder="Ex: 🍕 Pizza" style="flex:1;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--cream)" />
-        <button class="btn btn-primary" onclick="addCategory(event)">+ Ajouter</button>
+      <div id="category-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;max-height:40vh;overflow-y:auto;-webkit-overflow-scrolling:touch"></div>
+      
+      <!-- Add category section with FR/EN fields -->
+      <div style="background:var(--cream);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--text-muted);margin-bottom:12px">Nouvelle catégorie</div>
+        <div class="cat-add-section" style="display:flex;flex-direction:column;gap:10px">
+          <div class="cat-inputs" style="display:flex;gap:8px;flex-wrap:wrap">
+            <div style="flex:1;min-width:150px">
+              <label style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;display:block">Nom (FR) <span id="cat-fr-spinner" style="display:none;font-size:11px">🤖...</span></label>
+              <input id="new-cat-input" type="text" placeholder="Ex: 🍕 Pizza" 
+                style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--white);transition:border-color 0.2s" 
+                onfocus="this.style.borderColor='var(--terracotta)'" 
+                onblur="this.style.borderColor='var(--border)'; handleCatAutoTranslate()" />
+            </div>
+            <div style="flex:1;min-width:150px">
+              <label style="font-size:10px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px;display:block">Name (EN) <span id="cat-en-spinner" style="display:none;font-size:11px">🤖...</span></label>
+              <input id="new-cat-input-en" type="text" placeholder="Ex: 🍕 Pizza" 
+                style="width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'Inter',sans-serif;outline:none;background:var(--white);transition:border-color 0.2s" 
+                onfocus="this.style.borderColor='var(--terracotta)'" 
+                onblur="this.style.borderColor='var(--border)'" />
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);cursor:pointer;flex:1;min-width:200px">
+              <input type="checkbox" id="new-cat-is-list" style="width:16px;height:16px;accent-color:var(--teal)" />
+              Format liste (sans images)
+            </label>
+            <button class="btn btn-primary" onclick="addCategory(event)" style="white-space:nowrap">+ Ajouter</button>
+          </div>
+        </div>
       </div>
-      <label style="margin-top:10px;display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-muted);cursor:pointer">
-        <input type="checkbox" id="new-cat-is-list" />
-        Format liste simple (sans grandes images)
-      </label>
-      <div style="display:flex;gap:10px;margin-top:24px">
+
+      <div style="display:flex;gap:10px;margin-top:16px">
         <button class="btn btn-primary" style="flex:1" onclick="saveCategoriesAndClose()">💾 Valider & Sauvegarder</button>
         <button class="btn btn-secondary" style="flex:1" onclick="closeCategoryManager()">Fermer</button>
       </div>
@@ -1688,21 +1783,47 @@
       const cats = getCategories();
       list.innerHTML = '';
       cats.forEach((catObj, i) => {
+        const itemCount = menuItems.filter(m => m.category === catObj.fr).length;
         const row = document.createElement('div');
-        row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--cream);border:1px solid var(--border);border-radius:10px;';
+        row.className = 'cat-row';
+        row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:12px;transition:all 0.15s;';
         row.innerHTML = `
-          <div style="flex:1;display:flex;flex-direction:column;gap:2px;">
-            <span style="font-size:14px;font-weight:500">${catObj.fr} ${catObj.isList ? '<span style="font-size:11px;background:#e2e8f0;padding:2px 6px;border-radius:4px;margin-left:6px">Liste</span>' : ''}</span>
-            <span style="font-size:12px;color:var(--text-muted)">${catObj.en}</span>
+          <div class="cat-info" style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0;">
+            <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+              <span style="font-size:14px;font-weight:600;color:var(--navy)">${catObj.fr}</span>
+              ${catObj.isList ? '<span style="font-size:10px;background:var(--teal);color:white;padding:2px 8px;border-radius:20px;font-weight:600;letter-spacing:0.05em">LISTE</span>' : ''}
+              <span style="font-size:11px;color:var(--text-muted);background:var(--cream);padding:2px 8px;border-radius:20px">${itemCount} plat${itemCount !== 1 ? 's' : ''}</span>
+            </div>
+            <span style="font-size:12px;color:var(--text-muted)">🇬🇧 ${catObj.en}</span>
           </div>
-          <button class="btn btn-danger btn-sm" onclick="removeCategory(${i})" title="Supprimer">✕</button>
+          <div class="cat-actions-row">
+            <button class="btn btn-danger btn-sm" onclick="removeCategory(${i})" title="Supprimer" style="min-width:36px;justify-content:center">✕</button>
+          </div>
         `;
         list.appendChild(row);
       });
     }
 
+    async function handleCatAutoTranslate() {
+      const frInput = document.getElementById('new-cat-input');
+      const enInput = document.getElementById('new-cat-input-en');
+      const spinner = document.getElementById('cat-fr-spinner');
+      const text = frInput.value.trim();
+      if (!text || frInput.dataset.lastTranslated === text) return;
+      if (enInput.value.trim() && frInput.dataset.lastTranslated) return; // user already typed EN
+      
+      if (spinner) spinner.style.display = 'inline';
+      try {
+        const translated = await autoTranslateAPI(text, 'en');
+        enInput.value = translated;
+        frInput.dataset.lastTranslated = text;
+      } catch(e) { console.error(e); }
+      if (spinner) spinner.style.display = 'none';
+    }
+
     async function addCategory(e) {
       const input = document.getElementById('new-cat-input');
+      const inputEn = document.getElementById('new-cat-input-en');
       const val = input.value.trim();
       if (!val) return;
       
@@ -1714,7 +1835,11 @@
       }
 
       try {
-        const enVal = await autoTranslateAPI(val, 'en');
+        // Use the EN input if user typed something, otherwise auto-translate
+        let enVal = inputEn.value.trim();
+        if (!enVal) {
+          enVal = await autoTranslateAPI(val, 'en');
+        }
 
         const cats = getCategories();
         if (cats.some(c => c.fr.toLowerCase() === val.toLowerCase())) {
@@ -1726,6 +1851,9 @@
         cats.push({ fr: val, en: enVal, isList: isList });
         saveCategories(cats);
         input.value = '';
+        inputEn.value = '';
+        input.dataset.lastTranslated = '';
+        document.getElementById('new-cat-is-list').checked = false;
         renderCategoryList();
         toast(`✅ Catégorie "${val}" ajoutée`);
       } catch (err) {
