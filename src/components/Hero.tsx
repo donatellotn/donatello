@@ -43,7 +43,7 @@ export const Hero = () => {
       >
         {/* Logo badge */}
         <img
-          src={`${import.meta.env.BASE_URL}logos/Logo-donatello.jpg`}
+          src={`${import.meta.env.BASE_URL}logos/Logo-donatello.ico`}
           alt="Donatello"
           className="w-[100px] h-[100px] rounded-full object-cover mb-8 transition-all duration-700"
           style={{

@@ -31,7 +31,7 @@ export const Footer = () => {
             {/* Brand */}
             <div className="flex flex-col gap-3.5">
               <img
-                src={`${base}logos/Logo-donatello.jpg`}
+                src={`${base}logos/Logo-donatello.ico`}
                 alt="Donatello"
                 className="h-12 w-12 rounded-full object-cover"
               />
