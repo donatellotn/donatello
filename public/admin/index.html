@@ -880,8 +880,8 @@
         <input type="hidden" id="item-index" />
         <div class="form-row">
           <div class="form-group">
-            <label>Nom du plat (FR) * <span id="f-title-spinner" style="display:none;font-size:11px;">🤖...</span></label>
-            <input type="text" id="f-title" required placeholder="Ex: Cappuccino Donatello" onblur="handleAutoTranslate('f-title', 'f-title-en', 'fr', 'en', 'f-title-spinner')" />
+            <label>Nom du plat (FR) <span id="f-title-spinner" style="display:none;font-size:11px;">🤖...</span></label>
+            <input type="text" id="f-title" placeholder="Ex: Cappuccino Donatello" onblur="handleAutoTranslate('f-title', 'f-title-en', 'fr', 'en', 'f-title-spinner')" />
           </div>
           <div class="form-group">
             <label>Nom du plat (EN) <span id="f-title-en-spinner" style="display:none;font-size:11px;">🤖...</span></label>
@@ -1521,11 +1521,19 @@
       const cats = getCategories();
       const catObj = cats.find(c => c.fr === selectedCatFr) || { fr: selectedCatFr, en: selectedCatFr };
 
+      const titleFr = getValueOrProposal('f-title');
+      const titleEn = getValueOrProposal('f-title-en');
+
+      if (!titleFr && !titleEn) {
+        toast('⚠️ Veuillez entrer un nom de plat (FR ou EN)', 'error');
+        return;
+      }
+
       const newData = {
         category: catObj.fr,
         category_en: catObj.en,
-        title: getValueOrProposal('f-title'),
-        title_en: getValueOrProposal('f-title-en'),
+        title: titleFr,
+        title_en: titleEn,
         price: parseFloat(document.getElementById('f-price').value),
         image: document.getElementById('f-image').value.trim(),
         description: getValueOrProposal('f-description'),
