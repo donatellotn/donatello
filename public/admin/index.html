@@ -1067,12 +1067,18 @@
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-            <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:8px">
-              <label style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Style :</label>
-              <select id="new-cat-is-list" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--white);cursor:pointer;flex:1">
-                <option value="false">📸 Style Icones (Grille)</option>
-                <option value="true">📄 Style Liste (Texte)</option>
-              </select>
+            <div style="flex:1;min-width:200px;display:flex;flex-direction:column;gap:8px">
+              <label style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Style d'affichage :</label>
+              <div style="display:flex;gap:16px;">
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+                  <input type="radio" name="cat-style" id="style-icon" value="false" checked style="width:16px;height:16px;accent-color:var(--teal)" />
+                  Grille (Images)
+                </label>
+                <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+                  <input type="radio" name="cat-style" id="style-list" value="true" style="width:16px;height:16px;accent-color:var(--teal)" />
+                  Liste (Texte)
+                </label>
+              </div>
             </div>
             <button class="btn btn-primary" onclick="addCategory(event)" style="white-space:nowrap">+ Ajouter</button>
           </div>
@@ -2037,13 +2043,13 @@
           if (btn) { btn.textContent = origText; btn.disabled = false; }
           return;
         }
-        const isList = document.getElementById('new-cat-is-list').value === 'true';
+        const isList = document.querySelector('input[name="cat-style"]:checked').value === 'true';
         cats.push({ fr: val, en: enVal, isList: isList });
         saveCategories(cats);
         input.value = '';
         inputEn.value = '';
         input.dataset.lastTranslated = '';
-        document.getElementById('new-cat-is-list').value = 'false';
+        document.getElementById('style-icon').checked = true;
         renderCategoryList();
         toast(`✅ Catégorie "${val}" ajoutée`);
       } catch (err) {
