@@ -65,9 +65,10 @@ export const Header = () => {
   );
 
   return (
-    <header
-      id="site-header"
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+    <>
+      <header
+        id="site-header"
+        className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-500 ${
         isScrolled
           ? 'py-3'
           : 'py-5'
@@ -170,6 +171,7 @@ export const Header = () => {
           {isMobileMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
         </button>
       </div>
+      </header>
 
       {/* Mobile Menu Drawer */}
       <AnimatePresence>
@@ -217,7 +219,7 @@ export const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
 
