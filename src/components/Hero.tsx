@@ -13,8 +13,14 @@ export const Hero = () => {
       className={`relative min-h-screen grid overflow-hidden ${visible ? 'hero-visible' : ''}`}
       style={{ gridTemplateColumns: '1fr 1fr', background: '#FDFCFB' }}
     >
-      {/* Left — Image */}
-      <div className="relative overflow-hidden hero-visual max-md:h-[55vh]">
+      {/* Mobile background accent */}
+      <div 
+        className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[150vw] h-[150vw] rounded-full blur-[100px] md:hidden" 
+        style={{ background: 'radial-gradient(circle, rgba(74, 124, 89, 0.08) 0%, transparent 70%)', zIndex: 0, pointerEvents: 'none' }} 
+      />
+
+      {/* Left — Image (Hidden on mobile) */}
+      <div className="relative overflow-hidden hero-visual max-md:hidden">
         <img
           src={`https://i.ibb.co/SXv4yBx0/donatello-hero.jpg`}
           alt="Intérieur Donatello"
@@ -29,10 +35,6 @@ export const Hero = () => {
         <div
           className="absolute inset-0 max-md:hidden"
           style={{ background: 'linear-gradient(to right, transparent 50%, #FDFCFB 100%)' }}
-        />
-        <div
-          className="absolute inset-0 md:hidden"
-          style={{ background: 'linear-gradient(to bottom, #FDFCFB 0%, transparent 25%)' }}
         />
       </div>
 
@@ -156,16 +158,22 @@ export const Hero = () => {
       {/* Mobile: stack layout override */}
       <style>{`
         @media (max-width: 900px) {
-          #hero { display: flex !important; flex-direction: column-reverse !important; min-height: auto !important; }
-          #hero > div:first-child { height: 45vh !important; }
+          #hero { display: flex !important; min-height: 100vh !important; align-items: center; justify-content: center; }
           #hero > div:last-child { 
-            padding: 130px 24px 32px !important; 
+            padding: 80px 24px 40px !important; 
             align-items: center !important;
             text-align: center !important;
+            width: 100% !important;
           }
-          #hero > div:last-child > img { margin: 0 auto 24px auto !important; border: none; }
-          #hero > div:last-child > p { margin: 0 auto 32px auto !important; }
-          #hero > div:last-child > div.flex { justify-content: center !important; }
+          #hero > div:last-child > img { 
+            margin: 0 auto 32px auto !important; 
+            width: 110px !important; 
+            height: 110px !important; 
+            box-shadow: 0 16px 40px rgba(44, 94, 90, 0.12) !important;
+          }
+          #hero > div:last-child > h1 { font-size: 3.5rem !important; }
+          #hero > div:last-child > p { margin: 0 auto 36px auto !important; font-size: 1.1rem !important; }
+          #hero > div:last-child > div.flex { justify-content: center !important; width: 100% !important; gap: 12px !important; }
           #hero > div:last-child > div.mb-6 { transform-origin: center !important; }
         }
       `}</style>

@@ -73,10 +73,10 @@ export const Header = () => {
           : 'py-5'
       }`}
       style={{
-        background: isScrolled ? 'rgba(253, 252, 251, 0.95)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        boxShadow: isScrolled ? '0 1px 0 rgba(44, 94, 90, 0.08)' : 'none',
+        background: (isScrolled && !isMobileMenuOpen) ? 'rgba(253, 252, 251, 0.95)' : 'transparent',
+        backdropFilter: (isScrolled && !isMobileMenuOpen) ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: (isScrolled && !isMobileMenuOpen) ? 'blur(20px)' : 'none',
+        boxShadow: (isScrolled && !isMobileMenuOpen) ? '0 1px 0 rgba(44, 94, 90, 0.08)' : 'none',
       }}
     >
       <div className="max-w-[1140px] mx-auto px-6 flex items-center justify-between">
