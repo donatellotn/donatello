@@ -1071,11 +1071,11 @@
               <label style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Style d'affichage :</label>
               <div style="display:flex;gap:16px;">
                 <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
-                  <input type="radio" name="cat-style" id="style-icon" value="false" checked style="width:16px;height:16px;accent-color:var(--teal)" />
+                  <input type="radio" name="cat-style" id="style-icon" value="false" style="width:16px;height:16px;accent-color:var(--teal)" />
                   Grille (Images)
                 </label>
                 <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
-                  <input type="radio" name="cat-style" id="style-list" value="true" style="width:16px;height:16px;accent-color:var(--teal)" />
+                  <input type="radio" name="cat-style" id="style-list" value="true" checked style="width:16px;height:16px;accent-color:var(--teal)" />
                   Liste (Texte)
                 </label>
               </div>
@@ -2049,7 +2049,7 @@
         input.value = '';
         inputEn.value = '';
         input.dataset.lastTranslated = '';
-        document.getElementById('style-icon').checked = true;
+        document.getElementById('style-list').checked = true;
         renderCategoryList();
         toast(`✅ Catégorie "${val}" ajoutée`);
       } catch (err) {
