@@ -6,16 +6,6 @@ import { useLang } from '../i18n/LangContext';
 
 import { MenuItem, parseMenuHTML } from '../utils/menuParser';
 
-const ORDER = [
-  "☕ Boisson chaude",
-  "🧃 Boisson fraîche",
-  "🥐 Viennoiseries",
-  "🍰 Gâteaux et tartes",
-  "🍽️ Plats",
-  "✨ Autres"
-];
-
-
 // ── Drink card — compact list style ──
 const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void }) => (
   <div
@@ -176,15 +166,7 @@ const MenuPage = () => {
         setPlats(items);
 
         // Set initial category
-        const cats = Array.from(new Set(items.map(i => i.category)))
-          .sort((a, b) => {
-            const iA = ORDER.indexOf(a);
-            const iB = ORDER.indexOf(b);
-            if (iA === -1 && iB === -1) return a.localeCompare(b);
-            if (iA === -1) return 1;
-            if (iB === -1) return -1;
-            return iA - iB;
-          });
+        const cats = Array.from(new Set(items.map(i => i.category)));
         if (cats.length > 0) {
           setActiveCategory(cats[0]);
           setActiveTab(cats[0]);
@@ -199,15 +181,7 @@ const MenuPage = () => {
   }, []);
 
   // Compute categories from loaded items
-  const categories = (Array.from(new Set(plats.map(item => item.category))) as string[])
-    .sort((a, b) => {
-      const indexA = ORDER.indexOf(a);
-      const indexB = ORDER.indexOf(b);
-      if (indexA === -1 && indexB === -1) return a.localeCompare(b);
-      if (indexA === -1) return 1;
-      if (indexB === -1) return -1;
-      return indexA - indexB;
-    });
+  const categories = Array.from(new Set(plats.map(item => item.category))) as string[];
 
   // Prefetch first category eagerly, rest lazily during idle time
   useEffect(() => {
