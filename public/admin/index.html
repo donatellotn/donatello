@@ -588,73 +588,128 @@
     /* ── MOBILE RESPONSIVE ── */
     @media (max-width: 768px) {
       header {
-        padding: 16px;
+        padding: 16px 20px;
         flex-direction: column;
+        align-items: flex-start;
         height: auto;
-        gap: 12px;
+        gap: 16px;
+        border-bottom: none;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+      }
+
+      .header-brand {
+        width: 100%;
       }
 
       .header-actions {
         width: 100%;
-        display: grid;
-        grid-template-columns: auto auto;
-        gap: 8px;
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .header-actions::-webkit-scrollbar {
+        display: none;
       }
 
       .header-actions .btn {
-        width: 100%;
-        justify-content: center;
-        font-size: 12px;
-        padding: 12px 10px;
-      }
-
-      .header-actions .btn:last-child {
-        grid-column: 1 / -1;
-      }
-
-      main {
-        padding: 20px 12px;
-      }
-
-      .stats {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 8px;
-      }
-
-      .stat-card {
-        padding: 14px 12px;
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-size: 13px;
+        padding: 10px 16px;
         border-radius: 12px;
       }
 
+      /* Floating Action Button for 'Add Dish' */
+      .header-actions .btn-primary {
+        position: fixed;
+        bottom: 24px;
+        right: 20px;
+        z-index: 900;
+        box-shadow: 0 10px 30px rgba(44, 94, 90, 0.35);
+        padding: 16px 24px;
+        border-radius: 50px;
+        font-size: 14px;
+        letter-spacing: 0.05em;
+        transition: transform 0.2s;
+      }
+
+      .header-actions .btn-primary:active {
+        transform: scale(0.95);
+      }
+
+      main {
+        padding: 24px 16px 100px 16px; /* Extra bottom padding for FAB */
+      }
+
+      .stats {
+        display: flex;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 8px;
+        margin-bottom: 28px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .stats::-webkit-scrollbar {
+        display: none;
+      }
+
+      .stat-card {
+        flex-shrink: 0;
+        min-width: 140px;
+        padding: 16px 20px;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      }
+
       .stat-card .value {
-        font-size: 22px;
+        font-size: 24px;
       }
 
       .stat-card .label {
-        font-size: 9px;
+        font-size: 10px;
       }
 
       .toolbar {
         flex-direction: column;
         align-items: stretch;
-        gap: 12px;
+        gap: 16px;
+        margin-bottom: 16px;
       }
 
       .toolbar-left {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
+      }
+
+      .toolbar h3 {
+        font-size: 20px;
       }
 
       .filter-tabs {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 6px;
+        display: flex;
+        overflow-x: auto;
+        gap: 8px;
+        flex-wrap: nowrap;
+        padding-bottom: 6px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .filter-tabs::-webkit-scrollbar {
+        display: none;
       }
 
       .filter-tab {
+        flex-shrink: 0;
+        white-space: nowrap;
         text-align: center;
-        padding: 10px 8px;
-        font-size: 11px;
+        padding: 10px 16px;
+        font-size: 12px;
+        border-radius: 20px;
       }
 
       .table-wrap {
@@ -663,7 +718,12 @@
         background: transparent;
       }
 
-      table, thead, tbody, th, td, tr {
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
         display: block;
       }
 
@@ -673,17 +733,18 @@
 
       tbody tr {
         display: grid;
-        grid-template-columns: 56px 1fr;
-        grid-template-areas: 
+        grid-template-columns: 64px 1fr;
+        grid-template-areas:
           "photo details"
           "category price"
           "actions actions";
         gap: 12px 16px;
         background: var(--white);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        margin-bottom: 12px;
+        border-radius: 20px;
+        margin-bottom: 16px;
         padding: 16px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.02);
       }
 
       tbody tr:last-child {
@@ -698,33 +759,44 @@
       tbody td:nth-child(1) { grid-area: photo; }
       tbody td:nth-child(2) { grid-area: details; }
       tbody td:nth-child(3) { grid-area: category; align-self: center; }
-      tbody td:nth-child(4) { grid-area: price; text-align: right; align-self: center; font-size: 15px; }
-      tbody td:nth-child(5) { 
-        grid-area: actions; 
-        border-top: 1px solid var(--border); 
-        padding-top: 12px; 
-        margin-top: 4px; 
+      tbody td:nth-child(4) { grid-area: price; text-align: right; align-self: center; font-size: 16px; }
+      tbody td:nth-child(5) {
+        grid-area: actions;
+        border-top: 1px dashed var(--border);
+        padding-top: 16px;
+        margin-top: 8px;
+      }
+
+      .td-img img {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
       }
 
       .td-desc {
-         white-space: normal;
-         max-width: none;
-         margin-top: 4px;
+        white-space: normal;
+        max-width: none;
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 1.4;
       }
 
       .td-actions {
         justify-content: space-between;
+        gap: 12px;
       }
-      
+
       .td-actions .btn {
         flex: 1;
         justify-content: center;
-        padding: 12px 10px;
+        padding: 12px;
         font-size: 12px;
+        border-radius: 12px;
       }
 
       .form-row {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       #modal-overlay,
@@ -735,51 +807,56 @@
       }
 
       .modal {
-        padding: 16px 20px 32px 20px;
-        max-height: 92vh;
+        padding: 24px 20px 36px 20px;
+        max-height: 90vh;
         width: 100%;
-        border-radius: 28px 28px 0 0;
+        border-radius: 32px 32px 0 0;
         animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         overscroll-behavior: contain;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
       }
-      
+
       .modal::before {
         content: '';
         display: block;
-        width: 40px;
-        height: 5px;
+        width: 48px;
+        height: 6px;
         background: var(--border);
         border-radius: 10px;
-        margin: 0 auto 20px auto;
+        margin: 0 auto 24px auto;
       }
-      
+
       @keyframes slideUp {
         from { transform: translateY(100%); }
         to { transform: translateY(0); }
       }
 
       .modal h3 {
-        font-size: 18px;
-        margin-bottom: 16px;
+        font-size: 20px;
+        margin-bottom: 20px;
       }
 
       .modal-actions {
         flex-direction: column-reverse;
+        gap: 12px;
+        margin-top: 32px;
       }
 
       .modal-actions .btn {
         width: 100%;
-        padding: 14px 16px;
+        padding: 16px;
         justify-content: center;
-        font-size: 13px;
+        font-size: 14px;
+        border-radius: 14px;
       }
 
       /* Category manager mobile */
       #category-list .cat-row {
         flex-direction: column;
         align-items: stretch !important;
-        gap: 8px !important;
-        padding: 14px !important;
+        gap: 12px !important;
+        padding: 16px !important;
+        border-radius: 16px !important;
       }
 
       #category-list .cat-row .cat-info {
@@ -788,30 +865,45 @@
 
       #category-list .cat-row .cat-actions-row {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         justify-content: flex-end;
+        border-top: 1px dashed var(--border);
+        padding-top: 12px;
+      }
+      
+      #category-list .cat-actions-row .btn {
+        flex: 1;
+        justify-content: center;
+        padding: 12px;
       }
 
       .cat-add-section {
         flex-direction: column !important;
+        padding: 16px !important;
+        border-radius: 16px !important;
       }
 
       .cat-add-section input {
         width: 100% !important;
+        padding: 14px !important;
       }
 
       .cat-add-section .cat-inputs {
         flex-direction: column !important;
+        gap: 12px !important;
       }
-    }
-
-    @media (max-width: 480px) {
-      .stats {
-        grid-template-columns: 1fr 1fr 1fr;
+      
+      .cat-add-section button {
+        width: 100%;
+        padding: 14px !important;
+        border-radius: 12px !important;
       }
-
-      .header-actions {
-        grid-template-columns: 1fr 1fr;
+      
+      /* Gate Card Mobile */
+      .gate-card {
+        width: 90%;
+        padding: 40px 24px;
+        border-radius: 28px;
       }
     }
   </style>
