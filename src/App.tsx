@@ -6,6 +6,7 @@ import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import MenuPage from './pages/MenuPage';
 import { LangProvider } from './i18n/LangContext';
+import { ScrollToTop } from './components/ScrollToTop';
 
 
 // Scroll to #hash after navigation
@@ -38,6 +39,7 @@ export default function App() {
             
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+          <ScrollToTop />
         </div>
       </Router>
     </LangProvider>
