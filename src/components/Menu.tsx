@@ -159,10 +159,10 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
                       {catItems.map((item) => (
                         <div
                           key={item.id}
-                          className="group glass-card rounded-[2.5rem] overflow-hidden hover:shadow-2xl transition-all duration-500 bg-white border border-donatello-terracotta/5"
+                          className="group glass-card rounded-3xl md:rounded-[2.5rem] overflow-hidden hover:shadow-2xl transition-all duration-500 bg-white border border-donatello-terracotta/5"
                         >
                           {/* Skeleton shimmer while image loads */}
-                          <div className="relative h-[180px] sm:h-[220px] md:h-64 lg:h-72 overflow-hidden bg-donatello-cream">
+                          <div className="relative h-[140px] sm:h-[180px] md:h-64 lg:h-72 overflow-hidden bg-donatello-cream">
                             <img
                               src={item.image}
                               alt={item.title}
@@ -173,17 +173,17 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
                               onLoad={e => (e.currentTarget.style.opacity = '1')}
                               style={{ opacity: 0, transition: 'opacity 0.3s ease' }}
                             />
-                            <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-lg">
+                            <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/90 backdrop-blur-md px-3 py-1 md:px-4 md:py-1.5 rounded-full shadow-lg">
                               <span className="font-bold text-donatello-terracotta tracking-tight">
                                 {typeof item.price === 'number' ? item.price.toFixed(1) : item.price} DT
                               </span>
                             </div>
                           </div>
-                          <div className="p-8 text-left">
-                            <h3 className="text-2xl mb-3 font-heading text-donatello-navy group-hover:text-donatello-terracotta transition-colors duration-300">
+                          <div className="p-5 md:p-8 text-left">
+                            <h3 className="text-xl md:text-2xl mb-1.5 md:mb-3 font-heading text-donatello-navy group-hover:text-donatello-terracotta transition-colors duration-300">
                               {item.title}
                             </h3>
-                            <p className="text-donatello-navy/60 leading-relaxed text-sm mb-6 line-clamp-3">{item.description}</p>
+                            <p className="text-donatello-navy/60 leading-relaxed text-xs md:text-sm mb-4 md:mb-6 line-clamp-3">{item.description}</p>
                             <button 
                               onClick={() => setSelectedItem(item)}
                               className="text-[10px] font-bold uppercase tracking-[0.2em] text-donatello-terracotta flex items-center gap-2 hover:translate-x-1.5 transition-transform cursor-pointer"
