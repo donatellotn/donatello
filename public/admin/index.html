@@ -1067,10 +1067,13 @@
             </div>
           </div>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);cursor:pointer;flex:1;min-width:200px">
-              <input type="checkbox" id="new-cat-is-list" style="width:16px;height:16px;accent-color:var(--teal)" />
-              Format liste (sans images)
-            </label>
+            <div style="flex:1;min-width:200px;display:flex;align-items:center;gap:8px">
+              <label style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;">Style :</label>
+              <select id="new-cat-is-list" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;background:var(--white);cursor:pointer;flex:1">
+                <option value="false">📸 Style Icones (Grille)</option>
+                <option value="true">📄 Style Liste (Texte)</option>
+              </select>
+            </div>
             <button class="btn btn-primary" onclick="addCategory(event)" style="white-space:nowrap">+ Ajouter</button>
           </div>
         </div>
@@ -2034,13 +2037,13 @@
           if (btn) { btn.textContent = origText; btn.disabled = false; }
           return;
         }
-        const isList = document.getElementById('new-cat-is-list').checked;
+        const isList = document.getElementById('new-cat-is-list').value === 'true';
         cats.push({ fr: val, en: enVal, isList: isList });
         saveCategories(cats);
         input.value = '';
         inputEn.value = '';
         input.dataset.lastTranslated = '';
-        document.getElementById('new-cat-is-list').checked = false;
+        document.getElementById('new-cat-is-list').value = 'false';
         renderCategoryList();
         toast(`✅ Catégorie "${val}" ajoutée`);
       } catch (err) {
