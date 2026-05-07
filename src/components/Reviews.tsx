@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useLang } from '../i18n/LangContext';
 
 const StarIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '18px', height: '18px', color: '#C15C3D' }}>
+  <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '18px', height: '18px', color: '#4A7C59' }}>
     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
   </svg>
 );
@@ -26,7 +26,7 @@ export const Reviews = () => {
     <section
       id="testimonials"
       className="py-16 md:py-[100px]"
-      style={{ background: '#F8F5F0', position: 'relative', overflow: 'hidden' }}
+      style={{ background: '#FDFCFB', position: 'relative', overflow: 'hidden' }}
     >
       {/* Big decorative quote */}
       <div
@@ -37,7 +37,7 @@ export const Reviews = () => {
           transform: 'translateX(-50%)',
           fontSize: '16rem',
           fontFamily: '"Abril Fatface",serif',
-          color: '#C15C3D',
+          color: '#2C5E5A',
           opacity: 0.05,
           lineHeight: 1,
           pointerEvents: 'none',
@@ -57,8 +57,8 @@ export const Reviews = () => {
           className="text-center mb-14"
         >
           <span className="section-label">{tr('reviews_label')}</span>
-          <h2 className="section-title">{tr('reviews_title')}</h2>
-          <div className="divider" />
+          <h2 className="section-title" style={{ color: '#1F4037' }}>{tr('reviews_title')}</h2>
+          <div className="divider" style={{ background: '#4A7C59' }} />
         </motion.div>
 
         {/* Slider */}
@@ -92,7 +92,7 @@ export const Reviews = () => {
                   fontFamily: '"Merriweather",serif',
                   fontSize: '1.05rem',
                   fontStyle: 'italic',
-                  color: '#4A3424',
+                  color: '#2B3A32',
                   lineHeight: 1.9,
                   marginBottom: '24px',
                 }}
@@ -107,7 +107,7 @@ export const Reviews = () => {
                   fontWeight: 700,
                   letterSpacing: '2px',
                   textTransform: 'uppercase',
-                  color: '#C15C3D',
+                  color: '#2C5E5A',
                   fontStyle: 'normal',
                 }}
               >
@@ -128,7 +128,7 @@ export const Reviews = () => {
                 width: current === i ? '28px' : '8px',
                 height: '8px',
                 borderRadius: '4px',
-                background: current === i ? '#C15C3D' : 'rgba(193,92,61,0.25)',
+                background: current === i ? '#2C5E5A' : 'rgba(44, 94, 90, 0.25)',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 300ms',

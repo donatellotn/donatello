@@ -28,7 +28,7 @@ export const ContactForm = () => {
     <section
       id="info"
       className="py-16 md:py-[100px]"
-      style={{ background: '#F8F5F0' }}
+      style={{ background: '#F7F9F7' }}
     >
       <div className="max-w-[1140px] mx-auto px-6">
         {/* Header */}
@@ -40,8 +40,8 @@ export const ContactForm = () => {
           className="text-center mb-14"
         >
           <span className="section-label">{tr('contact_label')}</span>
-          <h2 className="section-title">{tr('contact_title')}</h2>
-          <div className="divider" />
+          <h2 className="section-title" style={{ color: '#1F4037' }}>{tr('contact_title')}</h2>
+          <div className="divider" style={{ background: '#4A7C59' }} />
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
@@ -64,22 +64,22 @@ export const ContactForm = () => {
                     width: '40px',
                     height: '40px',
                     borderRadius: '10px',
-                    background: '#3A2A22',
+                    background: '#2C5E5A',
                     color: '#FFFFFF',
                   }}
                 >
                   {item.icon}
                 </div>
                 <div>
-                  <h4 style={{ fontFamily: '"Inter",sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#5E3A25', marginBottom: '2px' }}>
+                  <h4 style={{ fontFamily: '"Inter",sans-serif', fontWeight: 600, fontSize: '0.88rem', color: '#1F4037', marginBottom: '2px' }}>
                     {item.label}
                   </h4>
                   {item.href ? (
-                    <a href={item.href} style={{ fontSize: '0.88rem', color: '#2C5E5A', fontWeight: 600, cursor: 'pointer', fontFamily: '"Merriweather",serif' }}>
+                    <a href={item.href} style={{ fontSize: '0.88rem', color: '#4A7C59', fontWeight: 600, cursor: 'pointer', fontFamily: '"Merriweather",serif' }}>
                       {item.value}
                     </a>
                   ) : (
-                    <p style={{ fontSize: '0.88rem', color: '#A68A6D', fontWeight: 300, fontFamily: '"Merriweather",serif' }}>
+                    <p style={{ fontSize: '0.88rem', color: '#7E8D85', fontWeight: 300, fontFamily: '"Merriweather",serif' }}>
                       {item.value}
                     </p>
                   )}
@@ -97,7 +97,7 @@ export const ContactForm = () => {
             style={{
               borderRadius: '16px',
               overflow: 'hidden',
-              boxShadow: '0 12px 32px rgba(0,0,0,0.08)',
+              boxShadow: '0 12px 32px rgba(44, 94, 90, 0.08)',
               height: '380px',
             }}
           >

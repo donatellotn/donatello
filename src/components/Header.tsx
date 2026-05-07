@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Phone } from 'lucide-react';
-import { useScroll } from 'framer-motion';
+import { Phone, Menu as MenuIcon, X } from 'lucide-react';
+import { useScroll, motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLang } from '../i18n/LangContext';
 
@@ -13,6 +13,16 @@ export const Header = () => {
   useEffect(() => {
     return scrollY.on('change', (v) => setIsScrolled(v > 60));
   }, [scrollY]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMobileMenuOpen]);
 
   const navItems = [
     { label: tr('nav_about'), href: '/#about' },
@@ -34,20 +44,20 @@ export const Header = () => {
         textTransform: 'uppercase' as const,
         padding: '6px 12px',
         borderRadius: '6px',
-        border: '1.5px solid rgba(193,92,61,0.35)',
+        border: '1.5px solid rgba(44, 94, 90, 0.35)', // Teal border
         background: 'transparent',
-        color: '#C15C3D',
+        color: '#2C5E5A', // Teal text
         cursor: 'pointer',
         transition: 'all 200ms',
         lineHeight: 1,
       }}
       onMouseEnter={e => {
-        (e.target as HTMLButtonElement).style.background = '#C15C3D';
+        (e.target as HTMLButtonElement).style.background = '#2C5E5A';
         (e.target as HTMLButtonElement).style.color = '#fff';
       }}
       onMouseLeave={e => {
         (e.target as HTMLButtonElement).style.background = 'transparent';
-        (e.target as HTMLButtonElement).style.color = '#C15C3D';
+        (e.target as HTMLButtonElement).style.color = '#2C5E5A';
       }}
     >
       {lang === 'fr' ? 'EN' : 'FR'}
@@ -63,10 +73,10 @@ export const Header = () => {
           : 'py-5'
       }`}
       style={{
-        background: isScrolled ? 'rgba(248,245,240,0.92)' : 'transparent',
+        background: isScrolled ? 'rgba(253, 252, 251, 0.95)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(20px)' : 'none',
         WebkitBackdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        boxShadow: isScrolled ? '0 1px 0 rgba(0,0,0,0.06)' : 'none',
+        boxShadow: isScrolled ? '0 1px 0 rgba(44, 94, 90, 0.08)' : 'none',
       }}
     >
       <div className="max-w-[1140px] mx-auto px-6 flex items-center justify-between">
@@ -81,6 +91,7 @@ export const Header = () => {
             if (window.location.pathname === '/' || window.location.pathname === '/donatello/') {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
+              setIsMobileMenuOpen(false);
             }
           }}
         >
@@ -89,7 +100,7 @@ export const Header = () => {
             alt="Donatello"
             className="h-11 w-11 rounded-full object-cover"
           />
-          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#5E3A25' }}>
+          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#1F4037' }}>
             Donatello
           </span>
         </Link>
@@ -104,8 +115,8 @@ export const Header = () => {
               style={{
                 fontFamily: '"Inter",sans-serif',
                 fontSize: '0.82rem',
-                fontWeight: 500,
-                color: '#A68A6D',
+                fontWeight: 600,
+                color: '#7E8D85',
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase' as const,
                 transition: 'color 300ms',
@@ -114,7 +125,7 @@ export const Header = () => {
                 minWidth: '85px',
                 display: 'inline-block'
               }}
-              className="hover:!text-[#5E3A25]"
+              className="hover:!text-[#1F4037]"
             >
               {item.label}
             </Link>
@@ -122,27 +133,28 @@ export const Header = () => {
         </nav>
 
         {/* CTA + Lang toggle */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-4">
           <LangToggle />
           <a
             href="tel:+21655540520"
             id="nav-phone-btn"
-            className="flex justify-center items-center gap-2 transition-all duration-300 hover:bg-[#2C5E5A]"
+            className="flex justify-center items-center gap-2 transition-all duration-300 hover:bg-[#1F4037]"
             style={{
-              background: '#3A2A22',
+              background: '#2C5E5A',
               color: '#FFFFFF',
               padding: '10px 0',
               width: '160px',
-              borderRadius: '6px',
+              borderRadius: '8px',
               fontFamily: '"Inter",sans-serif',
               fontSize: '0.78rem',
               fontWeight: 600,
               letterSpacing: '1px',
               textTransform: 'uppercase' as const,
               cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(44, 94, 90, 0.25)',
             }}
           >
-            <Phone size={14} strokeWidth={1.5} />
+            <Phone size={14} strokeWidth={2} />
             {tr('nav_call')}
           </a>
         </div>
@@ -151,56 +163,61 @@ export const Header = () => {
         <button
           id="nav-mobile-toggle"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 cursor-pointer"
-          style={{ background: 'none', border: 'none', color: '#5E3A25' }}
-          aria-label={tr('nav_open')}
+          className="md:hidden p-2 cursor-pointer flex items-center justify-center z-[1000] relative"
+          style={{ background: 'none', border: 'none', color: '#1F4037' }}
+          aria-label={isMobileMenuOpen ? tr('nav_close') : tr('nav_open')}
         >
-          {isMobileMenuOpen ? (
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          ) : (
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-            </svg>
-          )}
+          {isMobileMenuOpen ? <X size={28} /> : <MenuIcon size={28} />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-[999] flex flex-col items-center justify-center gap-7"
-          style={{
-            background: 'rgba(248,245,240,0.98)',
-            backdropFilter: 'blur(20px)',
-          }}
-        >
-          <button
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="absolute top-5 right-6 cursor-pointer"
-            style={{ background: 'none', border: 'none', color: '#5E3A25' }}
-            aria-label={tr('nav_close')}
+      {/* Mobile Menu Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: '-100%' }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: '-100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="md:hidden fixed inset-0 z-[990] flex flex-col items-center justify-center gap-8 pt-16"
+            style={{
+              background: 'rgba(253, 252, 251, 0.98)',
+              backdropFilter: 'blur(25px)',
+              WebkitBackdropFilter: 'blur(25px)',
+            }}
           >
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-            </svg>
-          </button>
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              to={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.6rem', color: '#5E3A25', cursor: 'pointer', transition: 'color 300ms' }}
-              className="hover:!text-[#C15C3D]"
-            >
-              {item.label}
-            </Link>
-          ))}
-          <LangToggle className="mt-2" />
-          <a href="tel:+21655540520" className="btn-primary mt-2">{tr('nav_call')}</a>
-        </div>
-      )}
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{ 
+                  fontFamily: '"Abril Fatface",serif', 
+                  fontSize: '2rem', 
+                  color: '#1F4037', 
+                  cursor: 'pointer', 
+                  transition: 'color 300ms' 
+                }}
+                className="hover:!text-[#2C5E5A]"
+              >
+                {item.label}
+              </Link>
+            ))}
+            <div className="flex flex-col items-center gap-6 mt-4">
+              <LangToggle className="scale-110" />
+              <a 
+                href="tel:+21655540520" 
+                className="btn-primary flex items-center gap-2 mt-2 px-8 py-4 text-sm"
+                style={{ borderRadius: '12px', boxShadow: '0 8px 24px rgba(44, 94, 90, 0.25)' }}
+              >
+                <Phone size={16} strokeWidth={2} />
+                {tr('nav_call')}
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
+

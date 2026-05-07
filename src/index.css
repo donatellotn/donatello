@@ -20,33 +20,25 @@
   --font-body: "Merriweather", serif;
   --font-allenoire: "Allenoire", serif;
 
-  /* Donatello palette */
-  --color-primary: #5E3A25;
-  --color-accent: #C15C3D;
-  --color-teal: #2C5E5A;
-  --color-teal-dark: #115E5D;
+  /* Donatello palette (Fresh Green & White) */
+  --color-primary: #1F4037;
+  --color-accent: #2C5E5A;
+  --color-teal: #4A7C59;
+  --color-teal-dark: #1F4037;
   --color-cream: #FFFFFF;
-  --color-warm: #F8F5F0;
-  --color-dark: #3A2A22;
-  --color-text: #4A3424;
-  --color-muted: #A68A6D;
-
-  /* Donatello menu aliases */
-  --color-donatello-terracotta: #C15C3D;
-  --color-donatello-peach: #D97706;
-  --color-donatello-navy: #3A2A22;
-  --color-donatello-mustard: #F8F5F0;
-  --color-donatello-cream: #FFFFFF;
-  --color-donatello-wood: #A68A6D;
+  --color-warm: #FDFCFB;
+  --color-dark: #111D13;
+  --color-text: #2B3A32;
+  --color-muted: #7E8D85;
 
   /* Donatello semantic aliases */
-  --color-terracotta: #C15C3D;
-  --color-terracotta-light: #D97706;
-  --color-terracotta-pale: #FDE68A;
-  --color-cream-dark: #F8F5F0;
+  --color-terracotta: #2C5E5A;
+  --color-terracotta-light: #4A7C59;
+  --color-terracotta-pale: #E8F0EA;
+  --color-cream-dark: #F7F9F7;
   --color-warm-white: #FFFFFF;
-  --color-charcoal: #3A2A22;
-  --color-stone: #A68A6D;
+  --color-charcoal: #111D13;
+  --color-stone: #7E8D85;
 }
 
 /* ── Base ── */
@@ -56,8 +48,8 @@
   }
 
   body {
-    background-color: #F8F5F0;
-    color: #4A3424;
+    background-color: #FDFCFB;
+    color: #2B3A32;
     font-family: "Merriweather", Georgia, serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
