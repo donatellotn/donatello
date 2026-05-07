@@ -162,7 +162,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
                           className="group glass-card rounded-[2.5rem] overflow-hidden hover:shadow-2xl transition-all duration-500 bg-white border border-donatello-terracotta/5"
                         >
                           {/* Skeleton shimmer while image loads */}
-                          <div className="relative h-72 overflow-hidden bg-donatello-cream">
+                          <div className="relative h-[180px] sm:h-[220px] md:h-64 lg:h-72 overflow-hidden bg-donatello-cream">
                             <img
                               src={item.image}
                               alt={item.title}
