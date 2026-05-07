@@ -249,14 +249,13 @@ const MenuPage = () => {
 
           {/* Categories Tab */}
           {categories.length > 0 && (
-            <div className="flex overflow-x-auto gap-2 mb-8 sm:mb-12 pb-2 px-2 -mx-2 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center hide-scrollbar" style={{ scrollSnapType: 'x mandatory' }}>
+            <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-12">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
                   className="transition-all duration-200 cursor-pointer whitespace-nowrap shrink-0"
                   style={{
-                    scrollSnapAlign: 'start',
                     padding: '8px 18px',
                     borderRadius: '6px',
                     fontFamily: '"Inter",sans-serif',
