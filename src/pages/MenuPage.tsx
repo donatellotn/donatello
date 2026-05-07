@@ -166,7 +166,7 @@ const MenuPage = () => {
         setPlats(items);
 
         // Set initial category
-        const cats = Array.from(new Set(items.map(i => i.category)));
+        const cats = Array.from(new Set(items.map(i => i.category))).reverse();
         if (cats.length > 0) {
           setActiveCategory(cats[0]);
           setActiveTab(cats[0]);
@@ -181,7 +181,7 @@ const MenuPage = () => {
   }, []);
 
   // Compute categories from loaded items
-  const categories = Array.from(new Set(plats.map(item => item.category))) as string[];
+  const categories = Array.from(new Set(plats.map(item => item.category))).reverse() as string[];
 
   // Prefetch first category eagerly, rest lazily during idle time
   useEffect(() => {

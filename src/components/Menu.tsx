@@ -66,7 +66,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
     fetchMenu();
   }, []);
 
-  const categories = Array.from(new Set(plats.map(item => item.category))) as string[];
+  const categories = Array.from(new Set(plats.map(item => item.category))).reverse() as string[];
 
   useEffect(() => {
     if (categories.length > 0 && !activeCategory) {
