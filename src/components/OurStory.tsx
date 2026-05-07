@@ -41,6 +41,7 @@ export const OurStory = () => {
                 className="w-full object-cover transition-transform duration-[8s] ease hover:scale-[1.04]"
                 style={{ height: '520px' }}
                 loading="lazy"
+                decoding="async"
               />
             </div>
             {/* Accent border */}

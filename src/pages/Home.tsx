@@ -72,7 +72,7 @@ export const Home = () => {
             <div className="divider" />
           </motion.div>
 
-          {/* Madelina-style Card Grid */}
+          {/* Category Card Grid */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}

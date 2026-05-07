@@ -1,37 +1,14 @@
-# Madelina
+# Donatello Cafe
 
-A premium digital experience for **Donatello** — café in Bizerte, Tunisia.
-
-
----
+A modern, fast, and highly optimized React application for the Donatello Cafe in Bizerte.
 
 ## Features
+- SEO optimized, responsive layout
+- Modern white/green theme using Tailwind CSS & Framer Motion
+- Admin panel to securely manage digital menu via GitHub API
+- Fully hosted on GitHub Pages with instant deployments
 
-- **Smooth UI** — Fluid animations and seamless transitions powered by Framer Motion
-- **Responsive Design** — Optimized for all screen sizes, from mobile to desktop
-- **Fast Performance** — Built with Vite for instant load times
-- **Dynamic Menu** — Live menu managed through a custom admin panel
-- **SEO Ready** — Structured data, Open Graph tags, and semantic HTML
-
----
-
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Framework | React 19 + TypeScript |
-| Styling | Tailwind CSS v4 |
-| Bundler | Vite 6 |
-| Animations | Framer Motion |
-| Hosting | GitHub Pages |
-
----
-
-## Contact
-
-**Mohamed Amine El Arbi**  
-medamineelarbi1@gmail.com
-
----
-
-*Fait maison. Fait avec le cœur. Fait pour vous.*
+## Commands
+- `npm run dev` - Start local server
+- `npm run build` - Build for production
+- `npm run clean` - Clean build artifacts

@@ -1114,14 +1114,9 @@
 
     // ── GITHUB CONFIG ──
     function getGH() {
-      let savedRepo = localStorage.getItem('gh_repo');
-      if (savedRepo === 'madelina-coffee' || savedRepo === 'madelina-coffeev3' || savedRepo === 'madelina-coffeev5' || savedRepo === 'madelina') {
-        savedRepo = 'donatello';
-        localStorage.setItem('gh_repo', savedRepo);
-      }
       return {
         owner: localStorage.getItem('gh_owner') || 'donatellotn',
-        repo: savedRepo || 'donatello',
+        repo: localStorage.getItem('gh_repo') || 'donatello',
         token: localStorage.getItem('gh_token') || '',
       };
     }
