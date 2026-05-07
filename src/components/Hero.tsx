@@ -32,7 +32,7 @@ export const Hero = () => {
         />
         <div
           className="absolute inset-0 md:hidden"
-          style={{ background: 'linear-gradient(to bottom, transparent 60%, #FDFCFB 100%)' }}
+          style={{ background: 'linear-gradient(to bottom, #FDFCFB 0%, transparent 25%)' }}
         />
       </div>
 
@@ -156,13 +156,14 @@ export const Hero = () => {
       {/* Mobile: stack layout override */}
       <style>{`
         @media (max-width: 900px) {
-          #hero { grid-template-columns: 1fr !important; min-height: auto !important; }
+          #hero { display: flex !important; flex-direction: column-reverse !important; min-height: auto !important; }
+          #hero > div:first-child { height: 45vh !important; }
           #hero > div:last-child { 
-            padding: 20px 24px 64px !important; 
+            padding: 130px 24px 32px !important; 
             align-items: center !important;
             text-align: center !important;
           }
-          #hero > div:last-child > img { margin: -50px auto 24px auto !important; position: relative; z-index: 20; border: 4px solid #FDFCFB; }
+          #hero > div:last-child > img { margin: 0 auto 24px auto !important; border: none; }
           #hero > div:last-child > p { margin: 0 auto 32px auto !important; }
           #hero > div:last-child > div.flex { justify-content: center !important; }
           #hero > div:last-child > div.mb-6 { transform-origin: center !important; }
