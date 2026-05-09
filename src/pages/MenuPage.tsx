@@ -40,8 +40,8 @@ const DrinkCard = memo(({ item, onClick }: { item: MenuItem; onClick: () => void
     <div className="flex-grow min-w-0 pr-3">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-0.5 gap-0.5">
         <h3
-          className="truncate"
-          style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1rem', color: '#3A2A22', fontWeight: 400 }}
+          className="pr-2"
+          style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.05rem', color: '#3A2A22', fontWeight: 400, lineHeight: 1.3 }}
         >
           {item.title}
         </h3>

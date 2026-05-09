@@ -84,11 +84,11 @@ export const Home = () => {
               <Link 
                 key={idx} 
                 to="/menu" 
-                className="group flex flex-col bg-white rounded-[3rem] overflow-hidden border border-[#EAE3D9] transition-all duration-500 hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2"
+                className="group flex flex-col bg-white rounded-[2rem] sm:rounded-[3rem] overflow-hidden border border-[#EAE3D9] transition-all duration-500 hover:shadow-[0_15px_40px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2 w-full max-w-[340px] sm:max-w-none mx-auto"
                 style={{ backgroundColor: '#FCFAF8' }}
               >
                 {/* Image Section */}
-                <div className="relative h-[200px] sm:h-[220px] md:h-[240px] w-full overflow-hidden">
+                <div className="relative h-[160px] sm:h-[180px] md:h-[220px] w-full overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.title}
