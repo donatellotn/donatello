@@ -31,38 +31,45 @@ export const Header = () => {
     { label: tr('nav_contact'),  href: '/#info' },
   ];
 
-  const LangToggle = ({ className = '' }: { className?: string }) => (
-    <button
-      onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
-      aria-label="Switch language"
-      className={className}
-      style={{
-        fontFamily: '"Inter",sans-serif',
-        fontSize: '0.72rem',
-        fontWeight: 700,
-        letterSpacing: '1.5px',
-        textTransform: 'uppercase' as const,
-        padding: '6px 12px',
-        borderRadius: '6px',
-        border: '1.5px solid rgba(44, 94, 90, 0.35)', // Teal border
-        background: 'transparent',
-        color: '#2C5E5A', // Teal text
-        cursor: 'pointer',
-        transition: 'all 200ms',
-        lineHeight: 1,
-      }}
-      onMouseEnter={e => {
-        (e.target as HTMLButtonElement).style.background = '#2C5E5A';
-        (e.target as HTMLButtonElement).style.color = '#fff';
-      }}
-      onMouseLeave={e => {
-        (e.target as HTMLButtonElement).style.background = 'transparent';
-        (e.target as HTMLButtonElement).style.color = '#2C5E5A';
-      }}
-    >
-      {lang === 'fr' ? 'EN' : 'FR'}
-    </button>
-  );
+  const LangToggle = ({ className = '' }: { className?: string }) => {
+    const baseColor = isScrolled ? '#2C5E5A' : '#FFFFFF';
+    const borderColor = isScrolled ? 'rgba(44, 94, 90, 0.35)' : 'rgba(255, 255, 255, 0.4)';
+    const hoverBg = isScrolled ? '#2C5E5A' : 'rgba(255, 255, 255, 0.15)';
+    const hoverText = isScrolled ? '#fff' : '#FFFFFF';
+
+    return (
+      <button
+        onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
+        aria-label="Switch language"
+        className={className}
+        style={{
+          fontFamily: '"Inter",sans-serif',
+          fontSize: '0.72rem',
+          fontWeight: 700,
+          letterSpacing: '1.5px',
+          textTransform: 'uppercase' as const,
+          padding: '6px 12px',
+          borderRadius: '6px',
+          border: `1.5px solid ${borderColor}`,
+          background: 'transparent',
+          color: baseColor,
+          cursor: 'pointer',
+          transition: 'all 200ms',
+          lineHeight: 1,
+        }}
+        onMouseEnter={e => {
+          (e.target as HTMLButtonElement).style.background = hoverBg;
+          (e.target as HTMLButtonElement).style.color = hoverText;
+        }}
+        onMouseLeave={e => {
+          (e.target as HTMLButtonElement).style.background = 'transparent';
+          (e.target as HTMLButtonElement).style.color = baseColor;
+        }}
+      >
+        {lang === 'fr' ? 'EN' : 'FR'}
+      </button>
+    );
+  };
 
   return (
     <>
@@ -101,7 +108,7 @@ export const Header = () => {
             alt="Donatello"
             className="h-11 w-11 rounded-full object-cover"
           />
-          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: '#1F4037' }}>
+          <span style={{ fontFamily: '"Abril Fatface",serif', fontSize: '1.3rem', color: isScrolled ? '#1F4037' : '#FFFFFF', transition: 'color 300ms' }}>
             Donatello
           </span>
         </Link>
@@ -117,7 +124,7 @@ export const Header = () => {
                 fontFamily: '"Inter",sans-serif',
                 fontSize: '0.82rem',
                 fontWeight: 600,
-                color: '#7E8D85',
+                color: isScrolled ? '#7E8D85' : 'rgba(255, 255, 255, 0.85)',
                 letterSpacing: '1.5px',
                 textTransform: 'uppercase' as const,
                 transition: 'color 300ms',
@@ -126,7 +133,12 @@ export const Header = () => {
                 minWidth: '85px',
                 display: 'inline-block'
               }}
-              className="hover:!text-[#1F4037]"
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = isScrolled ? '#1F4037' : '#FFFFFF';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = isScrolled ? '#7E8D85' : 'rgba(255, 255, 255, 0.85)';
+              }}
             >
               {item.label}
             </Link>
@@ -139,20 +151,28 @@ export const Header = () => {
           <a
             href="tel:+21655540520"
             id="nav-phone-btn"
-            className="flex justify-center items-center gap-2 transition-all duration-300 hover:bg-[#1F4037]"
+            className="flex justify-center items-center gap-2 transition-all duration-300"
             style={{
-              background: '#2C5E5A',
-              color: '#FFFFFF',
+              background: isScrolled ? '#2C5E5A' : '#FFFFFF',
+              color: isScrolled ? '#FFFFFF' : '#2C5E5A',
               padding: '10px 0',
               width: '160px',
               borderRadius: '8px',
               fontFamily: '"Inter",sans-serif',
               fontSize: '0.78rem',
-              fontWeight: 600,
+              fontWeight: 700,
               letterSpacing: '1px',
               textTransform: 'uppercase' as const,
               cursor: 'pointer',
-              boxShadow: '0 4px 14px rgba(44, 94, 90, 0.25)',
+              boxShadow: isScrolled ? '0 4px 12px rgba(44,94,90,0.15)' : '0 4px 12px rgba(0,0,0,0.1)',
+            }}
+            onMouseEnter={e => {
+              (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)';
+              (e.currentTarget as HTMLElement).style.boxShadow = isScrolled ? '0 6px 16px rgba(44,94,90,0.25)' : '0 6px 16px rgba(0,0,0,0.15)';
+            }}
+            onMouseLeave={e => {
+              (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
+              (e.currentTarget as HTMLElement).style.boxShadow = isScrolled ? '0 4px 12px rgba(44,94,90,0.15)' : '0 4px 12px rgba(0,0,0,0.1)';
             }}
           >
             <Phone size={14} strokeWidth={2} />
