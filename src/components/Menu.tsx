@@ -151,7 +151,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
 
           <div className="px-6">
             <div className="min-h-[50vh]">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10">
                 {categories.map(cat => {
                   const catItems = isPreview ? plats.filter(item => item.category === cat).slice(0, 3) : plats.filter(item => item.category === cat);
                   return (
@@ -162,7 +162,7 @@ export const Menu = ({ isPreview = false }: { isPreview?: boolean }) => {
                           className="group glass-card rounded-3xl md:rounded-[2.5rem] overflow-hidden hover:shadow-2xl transition-all duration-500 bg-white border border-donatello-terracotta/5"
                         >
                           {/* Skeleton shimmer while image loads */}
-                          <div className="relative h-36 sm:h-48 md:h-64 lg:h-72 overflow-hidden bg-donatello-cream">
+                          <div className="relative h-40 sm:h-44 md:h-56 lg:h-64 overflow-hidden bg-donatello-cream">
                             <img
                               src={item.image}
                               alt={item.title}

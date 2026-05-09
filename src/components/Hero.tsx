@@ -26,6 +26,7 @@ export const Hero = () => {
           alt="Intérieur Donatello"
           className="w-full h-full object-cover transition-transform duration-[12s] ease-out"
           style={{
+            objectPosition: 'top',
             filter: 'saturate(1.05) contrast(1.02) brightness(1.05)',
             transform: visible ? 'scale(1)' : 'scale(1.05)',
           }}
@@ -34,7 +35,7 @@ export const Hero = () => {
         />
         <div
           className="absolute inset-0 max-md:hidden"
-          style={{ background: 'linear-gradient(to right, transparent 50%, #FDFCFB 100%)' }}
+          style={{ background: 'linear-gradient(to bottom, transparent 50%, #FDFCFB 100%), linear-gradient(to right, transparent 50%, #FDFCFB 100%)' }}
         />
       </div>
 

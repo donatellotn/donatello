@@ -107,12 +107,12 @@ export const Header = () => {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-9" aria-label="Navigation principale">
+        <nav className="hidden lg:flex items-center gap-9" aria-label="Navigation principale">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              id={`nav-${item.label.toLowerCase().replace(/\W+/g, '-')}`}
+              id={`nav-${item.label.toLowerCase().replace(/\\W+/g, '-')}`}
               style={{
                 fontFamily: '"Inter",sans-serif',
                 fontSize: '0.82rem',
@@ -134,7 +134,7 @@ export const Header = () => {
         </nav>
 
         {/* CTA + Lang toggle */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           <LangToggle />
           <a
             href="tel:+21655540520"
@@ -164,7 +164,7 @@ export const Header = () => {
         <button
           id="nav-mobile-toggle"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="md:hidden p-2 cursor-pointer flex items-center justify-center z-[1000] relative"
+          className="lg:hidden p-2 cursor-pointer flex items-center justify-center z-[1000] relative"
           style={{ background: 'none', border: 'none', color: '#1F4037' }}
           aria-label={isMobileMenuOpen ? tr('nav_close') : tr('nav_open')}
         >
@@ -181,7 +181,7 @@ export const Header = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: '-100%' }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="md:hidden fixed inset-0 z-[990] flex flex-col items-center justify-center gap-8 pt-16"
+            className="lg:hidden fixed inset-0 z-[990] flex flex-col items-center justify-center gap-8 pt-16"
             style={{
               background: 'rgba(253, 252, 251, 0.98)',
               backdropFilter: 'blur(25px)',
