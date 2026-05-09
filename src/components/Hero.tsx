@@ -35,7 +35,7 @@ export const Hero = () => {
         />
         <div
           className="absolute inset-0 max-md:hidden"
-          style={{ background: 'linear-gradient(to bottom, transparent 50%, #FDFCFB 100%), linear-gradient(to right, transparent 50%, #FDFCFB 100%)' }}
+          style={{ background: 'linear-gradient(to bottom, #FDFCFB 0%, rgba(253,252,251,0.85) 6%, rgba(253,252,251,0) 18%, rgba(253,252,251,0) 70%, #FDFCFB 100%), linear-gradient(to right, rgba(253,252,251,0) 50%, #FDFCFB 100%)' }}
         />
       </div>
 
