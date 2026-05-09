@@ -78,7 +78,7 @@ export const Home = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="max-w-[1100px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8"
           >
             {displayItems.map((item, idx) => (
               <Link 
@@ -88,7 +88,7 @@ export const Home = () => {
                 style={{ backgroundColor: '#FCFAF8' }}
               >
                 {/* Image Section */}
-                <div className="relative h-[240px] w-full overflow-hidden">
+                <div className="relative h-[200px] sm:h-[220px] md:h-[240px] w-full overflow-hidden">
                   <img
                     src={item.image}
                     alt={item.title}
