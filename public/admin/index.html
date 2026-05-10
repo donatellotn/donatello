@@ -1360,7 +1360,7 @@
       const allCats = ['all', ...activeCats];
 
       document.getElementById('filter-tabs').innerHTML = allCats.map(c =>
-        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" data-filter-cat="${c}" onclick="setFilter('${c.replace(/'/g, "\\')}')">${c === 'all' ? 'Tous' : c}</button>`
+        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" data-filter-cat="${c}" onclick="setFilter('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tous' : c}</button>`
       ).join('');
     }
 
