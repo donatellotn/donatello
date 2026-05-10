@@ -1342,7 +1342,7 @@
     }
 
     function renderStats() {
-      const cats = [...new Set(menuItems.map(p => p.category))];
+      const cats = getCategories();
       const prices = menuItems.map(p => parseFloat(p.price) || 0);
       const max = prices.length ? Math.max(...prices).toFixed(1) : 0;
 
