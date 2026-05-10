@@ -1572,7 +1572,7 @@
     // ██  ADD / EDIT / DELETE  (Live DOM editing)      ██
     // ══════════════════════════════════════════════════
 
-    function saveItem(e) {
+    async function saveItem(e) {
       e.preventDefault();
       const idxStr = document.getElementById('item-index').value;
       
@@ -1582,43 +1582,86 @@
         return;
       }
       
-      const cats = getCategories();
-      const catObj = cats.find(c => c.fr === selectedCatFr) || { fr: selectedCatFr, en: selectedCatFr };
-
-      const titleFr = getValueOrProposal('f-title');
-      const titleEn = getValueOrProposal('f-title-en');
-
-      if (!titleFr && !titleEn) {
-        toast('⚠️ Veuillez entrer un nom de plat (FR ou EN)', 'error');
-        return;
+      const btn = e.submitter || document.querySelector('#item-modal button[type="submit"]');
+      const origText = btn ? btn.textContent : 'Enregistrer';
+      if (btn) {
+        btn.textContent = '🤖...';
+        btn.disabled = true;
       }
 
-      const newData = {
-        category: catObj.fr,
-        category_en: catObj.en,
-        title: titleFr,
-        title_en: titleEn,
-        price: parseFloat(document.getElementById('f-price').value),
-        image: document.getElementById('f-image').value.trim(),
-        description: getValueOrProposal('f-description'),
-        description_en: getValueOrProposal('f-description-en'),
-      };
+      try {
+        const cats = getCategories();
+        const catObj = cats.find(c => c.fr === selectedCatFr) || { fr: selectedCatFr, en: selectedCatFr };
 
-      if (idxStr === '') {
-        // ── ADD NEW ITEM ──
-        const uniqueId = 'plat-' + Date.now();
-        newData.id = uniqueId;
-        menuItems.unshift(newData);
-        toast('✅ Plat ajouté — pensez à sauvegarder !', 'success');
-      } else {
-        // ── EDIT EXISTING ──
-        const idx = parseInt(idxStr);
-        const existing = menuItems[idx];
-        menuItems[idx] = { ...existing, ...newData, id: existing.id };
-        toast('✅ Modifications enregistrées — pensez à sauvegarder !', 'success');
+        let titleFr = document.getElementById('f-title').value.trim();
+        let titleEn = document.getElementById('f-title-en').value.trim();
+
+        if (!titleFr && !titleEn) {
+          toast('⚠️ Veuillez entrer un nom de plat (FR ou EN)', 'error');
+          if (btn) { btn.textContent = origText; btn.disabled = false; }
+          return;
+        }
+
+        if (!titleFr && titleEn) {
+          titleFr = document.getElementById('f-title').dataset.proposal || '';
+          if (!titleFr) titleFr = await autoTranslateAPI(titleEn, 'en', 'fr');
+          if (!titleFr) titleFr = titleEn;
+        }
+        if (!titleEn && titleFr) {
+          titleEn = document.getElementById('f-title-en').dataset.proposal || '';
+          if (!titleEn) titleEn = await autoTranslateAPI(titleFr, 'fr', 'en');
+          if (!titleEn) titleEn = titleFr;
+        }
+
+        let descFr = document.getElementById('f-description').value.trim();
+        let descEn = document.getElementById('f-description-en').value.trim();
+
+        if (!descFr && descEn) {
+          descFr = document.getElementById('f-description').dataset.proposal || '';
+          if (!descFr) descFr = await autoTranslateAPI(descEn, 'en', 'fr');
+          if (!descFr) descFr = descEn;
+        }
+        if (!descEn && descFr) {
+          descEn = document.getElementById('f-description-en').dataset.proposal || '';
+          if (!descEn) descEn = await autoTranslateAPI(descFr, 'fr', 'en');
+          if (!descEn) descEn = descFr;
+        }
+
+        const newData = {
+          category: catObj.fr,
+          category_en: catObj.en,
+          title: titleFr,
+          title_en: titleEn,
+          price: parseFloat(document.getElementById('f-price').value),
+          image: document.getElementById('f-image').value.trim(),
+          description: descFr,
+          description_en: descEn,
+        };
+
+        if (idxStr === '') {
+          // ── ADD NEW ITEM ──
+          const uniqueId = 'plat-' + Date.now();
+          newData.id = uniqueId;
+          menuItems.unshift(newData);
+          toast('✅ Plat ajouté — pensez à sauvegarder !', 'success');
+        } else {
+          // ── EDIT EXISTING ──
+          const idx = parseInt(idxStr);
+          const existing = menuItems[idx];
+          menuItems[idx] = { ...existing, ...newData, id: existing.id };
+          toast('✅ Modifications enregistrées — pensez à sauvegarder !', 'success');
+        }
+        closeModal();
+        render();
+      } catch (err) {
+        toast('❌ Erreur lors de l\'enregistrement', 'error');
+        console.error(err);
+      } finally {
+        if (btn) {
+          btn.textContent = origText;
+          btn.disabled = false;
+        }
       }
-      closeModal();
-      render();
     }
 
     function deleteItem(idx) {
@@ -1995,8 +2038,9 @@
     async function addCategory(e) {
       const input = document.getElementById('new-cat-input');
       const inputEn = document.getElementById('new-cat-input-en');
-      const val = input.value.trim();
-      if (!val) return;
+      let val = input.value.trim();
+      let enVal = inputEn.value.trim();
+      if (!val && !enVal) return;
       
       const btn = e ? e.target : document.querySelector('button[onclick="addCategory(event)"]');
       const origText = btn ? btn.textContent : '+ Ajouter';
@@ -2006,10 +2050,16 @@
       }
 
       try {
-        // Use the EN input if user typed something, otherwise auto-translate
-        let enVal = inputEn.value.trim();
-        if (!enVal) enVal = inputEn.dataset.proposal || '';
-        if (!enVal) enVal = await autoTranslateAPI(val, 'fr', 'en');
+        if (!val && enVal) {
+          val = input.dataset.proposal || '';
+          if (!val) val = await autoTranslateAPI(enVal, 'en', 'fr');
+          if (!val) val = enVal;
+        }
+        if (!enVal && val) {
+          enVal = inputEn.dataset.proposal || '';
+          if (!enVal) enVal = await autoTranslateAPI(val, 'fr', 'en');
+          if (!enVal) enVal = val;
+        }
 
         const cats = getCategories();
         if (cats.some(c => c.fr.toLowerCase() === val.toLowerCase())) {
