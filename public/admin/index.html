@@ -1353,33 +1353,15 @@
     `;
     }
 
-    const CATEGORY_ORDER = [
-      "☕ Boisson chaude",
-      "🥐 Viennoiseries",
-      "🧃 Boisson fraîche",
-      "🍰 Gâteaux et tartes",
-      "🍽️ Plats",
-      "✨ Autres"
-    ];
-
     function renderFilters() {
-      const catsSet = Array.from(new Set(menuItems.map(p => p.category)));
-      const sortedCats = catsSet.sort((a, b) => {
-        const indexA = CATEGORY_ORDER.indexOf(a);
-        const indexB = CATEGORY_ORDER.indexOf(b);
-        if (indexA === -1 && indexB === -1) return a.localeCompare(b);
-        if (indexA === -1) return 1;
-        if (indexB === -1) return -1;
-        return indexA - indexB;
-      });
-      const cats = ['all', ...sortedCats];
-      const labels = { all: 'Tous' };
+      const cats = getCategories();
+      const usedCats = new Set(menuItems.map(i => i.category));
+      const activeCats = cats.filter(c => usedCats.has(c.fr)).map(c => c.fr);
+      const allCats = ['all', ...activeCats];
 
-      document.getElementById('filter-tabs').innerHTML = cats.map(c => `
-      <button class="filter-tab ${activeFilter === c ? 'active' : ''}" data-filter-cat="${c}" onclick="setFilter('${c.replace(/'/g, "\\'")}')">
-        ${labels[c] || c}
-      </button>
-    `).join('');
+      document.getElementById('filter-tabs').innerHTML = allCats.map(c =>
+        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" data-filter-cat="${c}" onclick="setFilter('${c.replace(/'/g, "\\')}')">${c === 'all' ? 'Tous' : c}</button>`
+      ).join('');
     }
 
     // ── INSTANT FILTER ──
@@ -2076,8 +2058,7 @@
 
     async function saveCategoriesAndClose() {
       closeCategoryManager();
-      // Refresh filter tabs
-      renderFilterTabs();
+      render();
       
       const btn = document.querySelector('button[onclick="saveCategoriesAndClose()"]');
       const origText = btn ? btn.textContent : 'Enregistrer les changements';
@@ -2099,18 +2080,7 @@
       if (btn) { btn.textContent = origText; btn.disabled = false; }
     }
 
-    function renderFilterTabs() {
-      const container = document.getElementById('filter-tabs');
-      const cats = getCategories();
-      const usedCats = new Set(menuItems.map(i => i.category));
-      const allCats = ['all', ...cats.filter(c => usedCats.has(c.fr)).map(c => c.fr)];
-      container.innerHTML = allCats.map(c =>
-        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" onclick="setFilter('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tous' : c}</button>`
-      ).join('');
-    }
-
-    // Override init to use dynamic categories
-    // (Categories are now populated via render() after loadMenu)
+    // Categories are populated dynamically via render() after loadMenu
   </script>
 </body>
 
