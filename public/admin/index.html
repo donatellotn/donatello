@@ -1966,11 +1966,13 @@
     function openCategoryManager() {
       const overlay = document.getElementById('category-overlay');
       overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
       renderCategoryList();
     }
 
     function closeCategoryManager() {
       document.getElementById('category-overlay').classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     function renderCategoryList() {
@@ -2059,12 +2061,17 @@
       // Check if any items use this category
       const itemsUsingCat = menuItems.filter(item => item.category === removed.fr);
       if (itemsUsingCat.length > 0) {
-        if (!confirm(`⚠️ ${itemsUsingCat.length} plat(s) utilisent "${removed.fr}". Supprimer quand même ?`)) return;
+        if (!confirm(`⚠️ ${itemsUsingCat.length} plat(s) utilisent "${removed.fr}".\nSupprimer la catégorie ET tous ses plats ?`)) return;
+        // Delete all dishes belonging to this category
+        menuItems = menuItems.filter(item => item.category !== removed.fr);
+      } else {
+        if (!confirm(`Supprimer la catégorie "${removed.fr}" ?`)) return;
       }
       cats.splice(index, 1);
       saveCategories(cats);
       renderCategoryList();
-      toast(`Catégorie "${removed.fr}" supprimée`);
+      render();
+      toast(`🗑️ Catégorie "${removed.fr}" et ${itemsUsingCat.length} plat(s) supprimés — pensez à sauvegarder !`);
     }
 
     async function saveCategoriesAndClose() {
@@ -2098,7 +2105,7 @@
       const usedCats = new Set(menuItems.map(i => i.category));
       const allCats = ['all', ...cats.filter(c => usedCats.has(c.fr)).map(c => c.fr)];
       container.innerHTML = allCats.map(c =>
-        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" onclick="filterBy('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tous' : c}</button>`
+        `<button class="filter-tab${activeFilter === c ? ' active' : ''}" onclick="setFilter('${c.replace(/'/g, "\\'")}')">${c === 'all' ? 'Tous' : c}</button>`
       ).join('');
     }
 
